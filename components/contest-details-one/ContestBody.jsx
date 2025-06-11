@@ -4,14 +4,128 @@ import RendererCountdown from "../common/RendererCountdown";
 import VehicleOverview from "../common/VehicleOverview";
 import ContestRight from "./ContestRight";
 import ContestSlider from "./ContestSlider";
-import { useSearchParams } from 'next/navigation';
-import apiRequest from '../../utils/apiRequest';
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import apiRequest from "../../utils/apiRequest";
+import { useEffect, useState, useContext } from "react";
+import auth from '@/utils/auth';
+import { AppContext } from "../../context/context";
+import { useRouter } from 'next/navigation';
 
+import "./Luckydraw.scss";
+
+const coupons = [
+  {
+    discount: "",
+    title: "Summer Lucky Draw 2024",
+    subtitle: "Congratulations! You're our lucky winner!",
+    code: "Rs. 400",
+    totalCoins: 1200,
+    validTill: "Dec 31, 2024",
+    conditions: [
+      "Valid for one-time use only",
+      "Cannot be combined with other offers",
+      "Applicable on orders above $50",
+      "Non-transferable",
+    ],
+  },
+  {
+    discount: "",
+    title: "Mega Jackpot Campaign",
+    subtitle: "Jackpot Winner – Premium Reward",
+    code: "Rs. 800",
+    totalCoins: 3200,
+    validTill: "Jan 15, 2025",
+    conditions: [
+      "Exclusive premium member offer",
+      "Valid for all product categories",
+      "Cannot be exchanged for cash",
+      "Limited time offer",
+    ],
+  },
+  {
+    discount: "",
+    title: "Golden Hour Special",
+    subtitle: "Golden Hour Lucky Draw Winner",
+    code: "Rs. 1200",
+    totalCoins: 5600,
+    validTill: "Nov 30, 2024",
+    conditions: [
+      "Minimum purchase of $200 required",
+      "Valid during golden hours (6–8 PM)",
+      "One coupon per customer",
+      "Cannot be combined with sale items",
+    ],
+  },
+];
+
+const LuckyDrawCoupons = ({campaignData}) => {
+  const { incrementHandle, decrementHandle, quantity } = useContext(AppContext);
+  const token = auth()?.access_token;
+  const router = useRouter();
+
+  const handleBuyCoins = async () => {
+      try {
+        const reqBody = {
+          "camp_id": campaignData?.id,
+          "amount": campaignData?.ticket_price,
+          "quantity": quantity,
+        }
+        const response = await apiRequest.coinPurchase(reqBody, token);
+        console.log("response", response);
+        router.push("/thank-you");
+      } catch (error) {
+        console.error("Error during buy coins:", error);
+      }
+    }
+
+  return (
+    <div className="coupon-section">
+      <h1 className="main-title">Single Purchase Plan</h1>
+      <p className="subtitle">
+        Beautiful, engaging coupon designs for your promotional campaigns
+      </p>
+      <div className="coupon-container">
+        {coupons?.map((coupon, index) => (
+          <div className="coupon-card" key={index}>
+            {/* <div className="card-header">
+              <div className="icon">🏆</div>
+              <div className="discount">{coupon?.discount}</div>
+            </div> */}
+            <div className="card-body">
+              <h2 className="coupon-title">{coupon?.title}</h2>
+              <p className="coupon-subtitle font-weight-bold">
+                {/* {coupon?.subtitle} */}
+              <b>Total Coins:</b>&nbsp;
+               {coupon?.totalCoins}
+
+              </p>
+              <div className="coupon-code">
+                <span>PLAN PRICE</span>
+                <strong>{coupon?.code}</strong>
+              </div>
+              {/* <div className="validity">
+                📅 Valid until: <strong>{coupon?.validTill}</strong>
+              </div> */}
+              <ul className="terms">
+                {coupon?.conditions.map((cond, i) => (
+                  <li key={i}>• {cond}</li>
+                ))}
+              </ul>
+            </div>
+            <br />
+            <button className="btn btn-primary" onClick={handleBuyCoins}>
+              Buy Now 
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ContestBody = () => {
   const searchParams = useSearchParams();
-  const campaignId = searchParams.get('id');
+  const campaignId = searchParams.get("id");
   const [campaignData, setCampaignData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -20,15 +134,15 @@ const ContestBody = () => {
       setLoading(true);
       try {
         const response = await apiRequest.getCoinCampaignDetails(campaignId);
-        setCampaignData(response.data?.data || []);
-        console.log("Campaigns fetched:", response.data?.data);
+        setCampaignData(response?.data?.data || []);
+        console.log("Campaigns fetched:", response?.data?.data);
       } catch (error) {
         console.error("Error fetching campaigns:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchCampaigns();
   }, []);
 
@@ -56,6 +170,10 @@ const ContestBody = () => {
               {/* Contest right section */}
               <ContestRight campaignData={campaignData} />
             </div>
+          </div>
+
+          <div className="col-lg-12">
+            <LuckyDrawCoupons campaignData={campaignData} />
           </div>
 
           <div className="col-lg-10">
