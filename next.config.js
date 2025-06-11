@@ -1,9 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const { hostname } = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`);
+const nextConfig={
   reactStrictMode: true,
   images: {
-    domains: ['3.106.247.74'],
+    domains: [`${hostname}`]
   },
 }
+const pwa = process.env.NEXT_PWA_STATUS;
 
-module.exports = nextConfig
+module.exports = nextConfig; 
+

@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from "next/link";
 import { useContext } from "react";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
@@ -5,6 +6,7 @@ import { AppContext } from "../../context/context";
 import apiRequest from "../../utils/apiRequest";
 import { useRouter } from 'next/navigation';
 import auth from '@/utils/auth';
+
 
 const ContestRight = ({campaignData}) => {
   const { incrementHandle, decrementHandle, quantity } = useContext(AppContext);
@@ -43,12 +45,12 @@ const ContestRight = ({campaignData}) => {
         </div>
         <p>Only {campaignData?.total_tickets} remaining!</p>
       </div>
-      <div className="ticket-price">
+      {/* <div className="ticket-price">
         <span className="amount">Rs.{campaignData?.ticket_price}</span>
         <small>Per coin</small>
-      </div>
+      </div> */}
       <div className="d-flex flex-wrap align-items-center mb-30">
-        <div className="select-quantity">
+        {/* <div className="select-quantity">
           <span className="caption">Quantity</span>
           <div className="quantity">
             <input
@@ -73,8 +75,8 @@ const ContestRight = ({campaignData}) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="mt-sm-0 mt-3">
+        </div> */}
+        {/* <div className="mt-sm-0 mt-3">
           <button
             className="cmn-btn active"
             id="description-tab"
@@ -87,9 +89,9 @@ const ContestRight = ({campaignData}) => {
           >
             buy coins
           </button>
-        </div>
+        </div> */}
       </div>
-      <ul className="social-links align-items-center">
+      {/* <ul className="social-links align-items-center">
         <li>Share :</li>
         <li>
           <Link href="/#">
@@ -106,7 +108,7 @@ const ContestRight = ({campaignData}) => {
             <FaLinkedinIn />
           </Link>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };

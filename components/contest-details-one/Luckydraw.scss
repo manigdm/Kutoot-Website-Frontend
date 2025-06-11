@@ -1,0 +1,113 @@
+$bg-gradient: linear-gradient(135deg, #ffd200, #ff3cac, #33ccff);
+$primary-color: #b000b5;
+$text-dark: #444;
+$text-light: #555;
+
+// body {
+//   margin: 0;
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   background: #f7f3fc;
+// }
+
+.coupon-section {
+  padding: 40px 20px;
+  text-align: center;
+
+  .main-title {
+    color: $primary-color;
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: $text-light;
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+
+  .coupon-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    .coupon-card {
+      background: $bg-gradient;
+      padding: 3px;
+      border-radius: 16px;
+      width: 300px;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      .card-header {
+        background: rgba(255, 255, 255, 0.15);
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 20px;
+        color: white;
+
+        .icon {
+          font-size: 32px;
+        }
+
+        .discount {
+          font-size: 20px;
+          font-weight: bold;
+        }
+      }
+
+      .card-body {
+        background: white;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        padding: 20px;
+        text-align: left;
+        min-height: 420px;
+        border-radius: 20px;
+        .coupon-title {
+          color: #7e22ce;
+          font-size: 18px;
+          margin: 10px 0 5px;
+        }
+
+        .coupon-subtitle {
+          font-size: 14px;
+          color: $text-light;
+        }
+
+        .coupon-code {
+          margin: 15px 0;
+          border: 2px dashed #ccc;
+          padding: 10px;
+          text-align: center;
+          font-size: 16px;
+
+          strong {
+            font-size: 18px;
+            display: block;
+            margin-top: 5px;
+            letter-spacing: 1px;
+          }
+        }
+
+        .validity {
+          font-size: 14px;
+          margin-bottom: 10px;
+        }
+
+        .terms {
+          font-size: 13px;
+          color: $text-dark;
+          padding-left: 16px;
+
+          li {
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+}

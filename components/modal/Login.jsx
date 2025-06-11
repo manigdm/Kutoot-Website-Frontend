@@ -60,14 +60,14 @@ const Login = () => {
           <div className="modal-content">
             <div className="modal-body">
               <div className="account-form-area">
-                <button
+                {/* <button
                   type="button"
                   className="close-btn"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                   <i className="las la-times"></i>
-                </button>
+                </button> */}
                 <h3 className="title">Welcome Back</h3>
                 <div className="account-form-wrapper">
                   <form
