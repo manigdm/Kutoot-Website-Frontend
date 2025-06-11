@@ -8,4 +8,4 @@ const nextConfig={
 }
 const pwa = process.env.NEXT_PWA_STATUS;
 
-module.exports = nextConfig;
+module.exports = nextConfig; 

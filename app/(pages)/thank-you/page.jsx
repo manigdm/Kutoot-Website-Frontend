@@ -1,6 +1,102 @@
 import Banner from "@/components/common/Banner";
 import contest_1 from "/public/images/contest/1.png";
 import Image from "next/image";
+import './LuckyDraw.scss';
+
+
+const coupons = [
+  {
+    discount: "Win Big Prizes",
+    title: "Summer Lucky Draw 2024",
+    subtitle: "Congratulations! You're our lucky winner!",
+    code: "LUCKY2024",
+    validTill: "Dec 31, 2024",
+    conditions: [
+      "Valid for one-time use only",
+      "Cannot be combined with other offers",
+      "Applicable on orders above $50",
+      "Non-transferable",
+    ],
+  },
+  {
+    discount: "Win Big Prizes",
+    title: "Mega Jackpot Campaign",
+    subtitle: "Jackpot Winner – Premium Reward",
+    code: "MEGA777",
+    validTill: "Jan 15, 2025",
+    conditions: [
+      "Exclusive premium member offer",
+      "Valid for all product categories",
+      "Cannot be exchanged for cash",
+      "Limited time offer",
+    ],
+  },
+  {
+    discount: "Win Big Prizes",
+    title: "Golden Hour Special",
+    subtitle: "Golden Hour Lucky Draw Winner",
+    code: "G0LD123",
+    validTill: "Nov 30, 2024",
+    conditions: [
+      "Minimum purchase of $200 required",
+      "Valid during golden hours (6–8 PM)",
+      "One coupon per customer",
+      "Cannot be combined with sale items",
+    ],
+  },
+  {
+    discount: "Win Big Prizes",
+    title: "Golden Hour Special",
+    subtitle: "Golden Hour Lucky Draw Winner",
+    code: "G0LD123",
+    validTill: "Nov 30, 2024",
+    conditions: [
+      "Minimum purchase of $200 required",
+      "Valid during golden hours (6–8 PM)",
+      "One coupon per customer",
+      "Cannot be combined with sale items",
+    ],
+  },
+];
+
+const LuckyDrawCoupons = () => {
+
+  // useEffect(() => {
+
+
+  // },[])
+
+  return (
+    <div className="coupon-section">
+      <h1 className="main-title">Your Lucky Draw Coupons</h1>
+      <p className="subtitle">Win a Prize</p>
+      <div className="coupon-container flex-row">
+        {coupons?.map((coupon, index) => (
+          <div className="coupon-card" key={index}>
+            <div className="card-header">
+              <div className="icon">🏆</div>
+              <div className="discount">{coupon?.discount}</div>
+            </div>
+            <div className="card-body">
+              <h2 className="coupon-title">{coupon?.title}</h2>
+              <p className="coupon-subtitle">{coupon?.subtitle}</p>
+              <div className="coupon-code">
+                <span>COUPON CODE</span>
+                <strong>{coupon?.code}</strong>
+              </div>
+              <div className="validity">📅 Valid until: <strong>{coupon?.validTill}</strong></div>
+              <ul className="terms">
+                {coupon?.conditions.map((cond, i) => (
+                  <li key={i}>• {cond}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const page = () => {
   return (
@@ -30,13 +126,13 @@ const page = () => {
                         <strong>Order Id: <span>#1234</span></strong> Friday June 06, 2025
                       </p>
                       <div className="line"></div>
-                      <h4 className="title">Your Lucky Draw Coupons:</h4>
-                      <ul className="numbers" style={{ justifyContent: "center", gap: "10px" }}>
+                      {/* <h4 className="title">Your Lucky Draw Coupons:</h4> */}
+                      {/* <ul className="numbers" style={{ justifyContent: "center", gap: "10px" }}>
                         <li style={{ width: "fit-content" }}>1188239192687</li>
                         <li style={{ width: "fit-content" }}>2938749872937</li>
                         <li style={{ width: "fit-content" }}>1188239192687</li>
                         <li style={{ width: "fit-content" }}>2938749872937</li>
-                      </ul>
+                      </ul> */}
                       <div className="btn-grp">
                         <a href="#0" className="btn-border">
                           Order Details
@@ -45,6 +141,9 @@ const page = () => {
                             How to Claim
                         </a> */}
                       </div>
+                    </div>
+                    <div className="flex flex-row justify-content-center">
+                      <LuckyDrawCoupons />
                     </div>
                   </div>
               </div>
