@@ -1,18 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaRegHeart } from "react-icons/fa";
 
 const ContestCard = ({ itm }) => {
-
-  console.log("item data",itm);
   return (
     <div className="contest-card">
-      <Link href={`/contest-details-one?id=${itm.id}`} className="item-link"></Link>
+      <Link href={`/contest-details-one?id=${itm?.id}`} className="item-link"></Link>
       <div className="contest-card__thumb">
-        <Image src={itm.img} alt={itm.title} width={700} height={400} />
-        {/* <a href="#0" className="action-icon">
-          <FaRegHeart />
-        </a> */}
+        {itm?.img && (
+          <Image src={itm?.img} alt={itm?.title} width={700} height={400} />
+        )}
         <div className="contest-num">
           <span>total coins:</span>
           <h4 className="number">{itm?.coins_per_campaign}</h4>
