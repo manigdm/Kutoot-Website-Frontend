@@ -1,8 +1,10 @@
+"use client";
 import Banner from "@/components/common/Banner";
-import contest_1 from "/public/images/contest/1.png";
-import Image from "next/image";
-import './LuckyDraw.scss';
-
+import "./LuckyDraw.scss";
+import apiRequest from "@/utils/apiRequest";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import auth from "@/utils/auth";
 
 const coupons = [
   {
@@ -60,33 +62,64 @@ const coupons = [
 ];
 
 const LuckyDrawCoupons = () => {
+  const token = auth()?.access_token;
+  const searchParams = useSearchParams();
+  const [allcoupons, setAllCoupons] = useState([]);
+  const [campaignData, setCampaignData] = useState(null);
 
-  // useEffect(() => {
-
-
-  // },[])
+  const id = searchParams.get("id");
+  useEffect(() => {
+    if (id && token)
+      apiRequest
+        .purchaseDetails(id, token)
+        .then((res) => {
+          setCampaignData(res.data.data);
+          setAllCoupons(res.data.data.coupons || []);
+        })
+        .catch((err) => {
+          console.error("Error fetching purchase details:", err);
+        });
+  }, [id]);
 
   return (
     <div className="coupon-section">
       <h1 className="main-title">Your Lucky Draw Coupons</h1>
       <p className="subtitle">Win a Prize</p>
       <div className="coupon-container flex-row">
-        {coupons?.map((coupon, index) => (
+        {allcoupons?.map((coupon, index) => (
           <div className="coupon-card" key={index}>
             <div className="card-header">
               <div className="icon">🏆</div>
-              <div className="discount">{coupon?.discount}</div>
+              <div className="discount">Win Big Prizes</div>
             </div>
             <div className="card-body">
-              <h2 className="coupon-title">{coupon?.title}</h2>
-              <p className="coupon-subtitle">{coupon?.subtitle}</p>
+              <h2 className="coupon-title">{campaignData?.camp_title}</h2>
+              {/* <p className="coupon-subtitle">{campaignData?.camp_title}</p> */}
               <div className="coupon-code">
                 <span>COUPON CODE</span>
-                <strong>{coupon?.code}</strong>
+                <strong>{coupon?.coupon_code}</strong>
               </div>
-              <div className="validity">📅 Valid until: <strong>{coupon?.validTill}</strong></div>
+              <div className="validity">
+                📅 Valid until:{" "}
+                <strong>
+                  {coupon?.coupon_expires &&
+                    new Date(coupon.coupon_expires).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      }
+                    )}
+                </strong>
+              </div>
               <ul className="terms">
-                {coupon?.conditions.map((cond, i) => (
+                {[
+                  "Valid for one-time use only",
+                  "Cannot be combined with other offers",
+                  "Applicable on orders above $50",
+                  "Non-transferable",
+                ].map((cond, i) => (
                   <li key={i}>• {cond}</li>
                 ))}
               </ul>
@@ -111,41 +144,44 @@ const page = () => {
         />
       </div>
       <div className="container text-center my-5">
-          <section className="mt-minus-150">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="winner-details-wrapper bg_img">
-                    <div className="left">
-                      {/* <Image src={contest_1} alt="contest 1" /> */}
-                    </div>
-                    <div className="body">
-                      <h2>Thank you for purchasing!</h2>
-                      <h5 className="contest-number mt-4">Total coins: 1000</h5>
-                      <p className="contest-date">
-                        <strong>Order Id: <span>#1234</span></strong> Friday June 06, 2025
-                      </p>
-                      <div className="line"></div>
-                      {/* <h4 className="title">Your Lucky Draw Coupons:</h4> */}
-                      {/* <ul className="numbers" style={{ justifyContent: "center", gap: "10px" }}>
+        <section className="mt-minus-150">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="winner-details-wrapper bg_img">
+                  <div className="left">
+                    {/* <Image src={contest_1} alt="contest 1" /> */}
+                  </div>
+                  <div className="body">
+                    <h2>Thank you for purchasing!</h2>
+                    <h5 className="contest-number mt-4">Total coins: 1000</h5>
+                    <p className="contest-date">
+                      <strong>
+                        Order Id: <span>#1234</span>
+                      </strong>{" "}
+                      Friday June 06, 2025
+                    </p>
+                    <div className="line"></div>
+                    {/* <h4 className="title">Your Lucky Draw Coupons:</h4> */}
+                    {/* <ul className="numbers" style={{ justifyContent: "center", gap: "10px" }}>
                         <li style={{ width: "fit-content" }}>1188239192687</li>
                         <li style={{ width: "fit-content" }}>2938749872937</li>
                         <li style={{ width: "fit-content" }}>1188239192687</li>
                         <li style={{ width: "fit-content" }}>2938749872937</li>
                       </ul> */}
-                      <div className="btn-grp">
-                        <a href="#0" className="btn-border">
-                          Order Details
-                        </a>
-                        {/* <a href="#0" className="btn-border">
+                    <div className="btn-grp">
+                      <a href="#0" className="btn-border">
+                        Order Details
+                      </a>
+                      {/* <a href="#0" className="btn-border">
                             How to Claim
                         </a> */}
-                      </div>
-                    </div>
-                    <div className="flex flex-row justify-content-center">
-                      <LuckyDrawCoupons />
                     </div>
                   </div>
+                  <div className="flex flex-row justify-content-center">
+                    <LuckyDrawCoupons />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ const page = () => {
   return (
     <>
     {/* Banner section here */}
-    <div className="inner-hero-section">
+    <div className="inner-hero-section" style={{ paddingBottom: '330px'}}>
       <div className="bg-shape">
         <Image src={inner_hero_shape} alt="inner_hero_shape" />
       </div>

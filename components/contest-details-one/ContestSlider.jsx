@@ -64,7 +64,7 @@ const ContestSlider = ({campaignData}) => {
           asNavFor={nav2}
           arrows={false}
           ref={(slider1) => setNav1(slider1)}
-          className="contest-cart__thumb-slider"
+          className="contest-cart__thumb-slider max-h-400"
         >
           <div style={{ minWidth: '700px' }}>
             <Image src={campaignData?.img} alt={campaignData.title} width={700} height={400} />
