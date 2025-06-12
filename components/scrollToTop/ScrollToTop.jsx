@@ -18,7 +18,9 @@ const ScrollToTop = () => {
         scrollTop.current.style.bottom = "30px";
         scrollTop.current.style.transform = "translateY(0%)";
       } else {
-        scrollTop.current.style.display = "none";
+        if(window.scrollY < 200) {
+          scrollTop.current.style.display = "none";
+        }
       }
     });
   }, []);

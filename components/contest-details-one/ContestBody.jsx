@@ -7,9 +7,9 @@ import ContestSlider from "./ContestSlider";
 import { useSearchParams } from "next/navigation";
 import apiRequest from "../../utils/apiRequest";
 import { useEffect, useState, useContext } from "react";
-import auth from '@/utils/auth';
+import auth from "@/utils/auth";
 import { AppContext } from "../../context/context";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 import "./Luckydraw.scss";
 
@@ -58,63 +58,84 @@ const coupons = [
   },
 ];
 
-const LuckyDrawCoupons = ({campaignData}) => {
+const LuckyDrawCoupons = ({ campaignData, campaignId }) => {
   const { incrementHandle, decrementHandle, quantity } = useContext(AppContext);
   const token = auth()?.access_token;
   const router = useRouter();
+  const [basePlans, setBasePlans] = useState([]);
 
   const handleBuyCoins = async () => {
-      try {
-        const reqBody = {
-          "camp_id": campaignData?.id,
-          "amount": campaignData?.ticket_price,
-          "quantity": quantity,
-        }
-        const response = await apiRequest.coinPurchase(reqBody, token);
-        console.log("response", response);
-        router.push("/thank-you");
-      } catch (error) {
-        console.error("Error during buy coins:", error);
-      }
+    try {
+      const reqBody = {
+        camp_id: campaignId,
+        amount: campaignData?.ticket_price,
+        quantity: quantity,
+        base_plan_id: campaignData?.id
+      };
+      const response = await apiRequest.coinPurchase(reqBody, token);
+      console.log("response", response);
+      router.push(`/thank-you?id=${response?.data?.data?.id}`);
+    } catch (error) {
+      console.error("Error during buy coins:", error);
     }
+  };
+
+  useEffect(() => {
+    if (campaignData?.id)
+      apiRequest
+        .getBasePlans(campaignData?.id)
+        .then((res) => {
+          setBasePlans(res?.data?.data || []);
+        })
+        .catch((error) => {
+          console.error("Error fetching base plans:", error);
+        });
+  }, [campaignData]);
 
   return (
-    <div className="coupon-section">
+    <div className="coupon-section" style={{ paddingTop: 20}}>
       <h1 className="main-title">Single Purchase Plan</h1>
       <p className="subtitle">
         Beautiful, engaging coupon designs for your promotional campaigns
       </p>
       <div className="coupon-container">
-        {coupons?.map((coupon, index) => (
-          <div className="coupon-card" key={index}>
+        {basePlans?.map((coupon) => (
+          <div className="coupon-card" key={coupon?.id}>
             {/* <div className="card-header">
               <div className="icon">🏆</div>
               <div className="discount">{coupon?.discount}</div>
             </div> */}
             <div className="card-body">
               <h2 className="coupon-title">{coupon?.title}</h2>
-              <p className="coupon-subtitle font-weight-bold">
-                {/* {coupon?.subtitle} */}
-              <b>Total Coins:</b>&nbsp;
-               {coupon?.totalCoins}
+              <div className="d-flex flex-row justify-content-between">
+                <p className="coupon-subtitle font-weight-bold">
+                  {/* {coupon?.subtitle} */}
+                  <b>Total Coins:</b>&nbsp;
+                  {coupon?.coins_per_campaign || 0}
+                </p>
+                <div className="text-xs">
+                  + {coupon?.coupons_per_campaign} free coin
+                  {coupon?.coupons_per_campaign > 1 ? "s" : ""}
+                </div>
+              </div>
 
-              </p>
               <div className="coupon-code">
                 <span>PLAN PRICE</span>
-                <strong>{coupon?.code}</strong>
+                <strong>{coupon?.ticket_price}</strong>
               </div>
               {/* <div className="validity">
                 📅 Valid until: <strong>{coupon?.validTill}</strong>
               </div> */}
               <ul className="terms">
-                {coupon?.conditions.map((cond, i) => (
-                  <li key={i}>• {cond}</li>
-                ))}
+                {[1, 2, 3, 4, 5].map((num) => {
+                  const point = coupon?.[`point${num}`];
+                  return point ? <li key={num}>• {point}</li> : null;
+                })}
               </ul>
             </div>
             <br />
             <button className="btn btn-primary" onClick={handleBuyCoins}>
-              Buy Now 
+              Buy Now
             </button>
           </div>
         ))}
@@ -169,11 +190,10 @@ const ContestBody = () => {
 
               {/* Contest right section */}
               <ContestRight campaignData={campaignData} />
+              <div className="col-lg-12 mb-30">
+                <LuckyDrawCoupons campaignData={campaignData} campaignId={campaignId} />
+              </div>
             </div>
-          </div>
-
-          <div className="col-lg-12">
-            <LuckyDrawCoupons campaignData={campaignData} />
           </div>
 
           <div className="col-lg-10">
