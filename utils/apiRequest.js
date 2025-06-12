@@ -76,6 +76,18 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-    
+  getBasePlans: (id) =>
+    instance({
+      method: "GET",
+      url: `baseplans?id=${id}`,
+    }),
 
+  purchaseDetails: (id, token) =>
+    instance({
+      method: "GET",
+      url: `user/purchasedetails/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
