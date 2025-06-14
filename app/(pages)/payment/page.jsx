@@ -1,6 +1,4 @@
 // components/PaymentPage.tsx
-
-import { useEffect } from "react";
 import Script from "next/script";
 import './Payment.scss'
 
