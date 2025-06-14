@@ -26,13 +26,13 @@ const page = () => {
         <Winner />
 
         {/*Latest Winner section */}
-        <LatestWinner />
+        {/* <LatestWinner /> */}
 
         {/*Overview section */}
         <Overview />
 
         {/*Features section */}
-        <Features />
+        {/* <Features /> */}
 
         {/*Testimonial section */}
         <Testimonial />

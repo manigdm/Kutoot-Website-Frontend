@@ -8,7 +8,7 @@ const Support = () => {
   return (
     <section className="pb-120">
       <div className="container">
-        <div className="row justify-content-center">
+        {/* <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="section-header text-center">
               <span className="section-sub-title">
@@ -20,8 +20,8 @@ const Support = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="row mb-none-30">
+        </div> */}
+        {/* <div className="row mb-none-30">
           <div className="col-lg-6 mb-30">
             <div className="support-card">
               <div className="support-card__thumb">
@@ -72,7 +72,7 @@ const Support = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
