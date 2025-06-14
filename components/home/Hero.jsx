@@ -9,17 +9,20 @@ import car_main from "/public/images/elements/car-main.png";
 import car_ray from "/public/images/elements/car-ray.png";
 import car_shadow from "/public/images/elements/car-shadow.png";
 import car_star from "/public/images/elements/car-star.png";
-import mini_cooper from '/public/images/mini-cooper.png';
+import mini_cooper from "/public/images/mini-cooper.png";
 import hero_building from "/public/images/elements/hero-building.png";
-import hero_car from "/public/images/elements/hero-car.png";
 import hero_shape from "/public/images/elements/hero-shape.jpg";
+import { useHomePage } from "@/context/HomePageContext";
 
 const Hero = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const homepageData = useHomePage();
+  // console.log("homepageData", homepageData);
+
   return (
     <>
       <VedioModal
-        link="https://www.youtube.com/embed/d6xn5uflUjg"
+        link={homepageData?.data?.banner?.video}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
@@ -35,7 +38,7 @@ const Hero = () => {
           <Image src={car_shadow} alt="image" className="car-shadow" />
           <Image src={car_ray} alt="image" className="car-ray" />
           <Image src={car_light} alt="image" className="car-light" />
-          <Image src={mini_cooper} alt="image" className="hero-car" />
+          <Image src={homepageData?.data?.banner?.img} width={700} height={500} alt="image" className="hero-car" />
           <Image src={car_star} alt="image" className="car-star" />
         </div>
         <div className="container">
@@ -43,12 +46,12 @@ const Hero = () => {
             <div className="col-lg-6 col-md-8">
               <div className="hero__content">
                 <div className="hero__subtitle">Contest FOR YOUR CHANCE to</div>
-                <h5 className="hero__title">Win Car</h5>
-                <p>
-                  Now&#39;s your chance to win a car! Check out the prestige
-                  cars you can win in our car prize draws. Will you be our next
-                  lucky winner?
-                </p>
+                <div className="text-3xl text-white">{homepageData?.data?.banner?.title}</div>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: homepageData?.data?.banner?.description,
+                  }}
+                />
                 <div className="hero__btn">
                   <Link href="/contest" className="cmn-btn">
                     Participate Now

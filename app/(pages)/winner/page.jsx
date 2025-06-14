@@ -3,24 +3,27 @@ import Support from "@/components/common/Support";
 import Testimonial from "@/components/common/Testimonial";
 import Banner from "@/components/winner/Banner";
 import WinningNumber from "@/components/winner/WinningNumber";
+import { WinnerPageProvider } from "@/context/WinnerPageContext";
 
 const page = () => {
   return (
     <>
-      {/* Banner section here*/}
-      <Banner />
+      <WinnerPageProvider>
+        {/* Banner section here*/}
+        <Banner />
 
-      {/* Winning Number section */}
-      <WinningNumber />
+        {/* Winning Number section */}
+        <WinningNumber />
 
-      {/* Latest Winner section */}
-      <LatestWinner />
+        {/* Latest Winner section */}
+        <LatestWinner />
 
-      {/* Testimonial section */}
-      <Testimonial />
+        {/* Testimonial section */}
+        <Testimonial />
 
-      {/* Support section */}
-      <Support />
+        {/* Support section */}
+        <Support />
+      </WinnerPageProvider>
     </>
   );
 };
