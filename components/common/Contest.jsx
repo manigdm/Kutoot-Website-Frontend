@@ -96,7 +96,7 @@ const Contest = () => {
                   Upcoming Campaigns
                 </button>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <button
                   className={`cmn-btn style--two d-flex align-items-center ${activeTab === 3 ? "active" : ""}`}
                   onClick={() => setActiveTab(3)}
@@ -104,7 +104,7 @@ const Contest = () => {
                   <span className="me-3"><Image src={box} alt="icon" /></span>
                   Completed Campaigns
                 </button>
-              </li>
+              </li> */}
             </ul>
 
             <div className="tab-content">

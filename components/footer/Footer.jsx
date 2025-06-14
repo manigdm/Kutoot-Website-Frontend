@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="bg-shape--top">
         <Image src={round_shape_2} alt="image" />
       </div>
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-lg-12">
             <div className="subscribe-area">
@@ -34,7 +34,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="container pt-120">
         <div className="row pb-5 align-items-center">
           <div className="col-lg-4">
