@@ -1,4 +1,4 @@
-// components/PaymentPage.tsx
+"use client";
 import Script from "next/script";
 import './Payment.scss'
 
