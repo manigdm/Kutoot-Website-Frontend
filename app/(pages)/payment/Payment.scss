@@ -1,0 +1,55 @@
+.payment-container {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(to bottom, #1a004c, #0b0123);
+  min-height: 100vh;
+  color: white;
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #ff00d6;
+  }
+
+  .card {
+    background: #1e1149;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fcd303;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f37254;
+      margin: 1rem 0;
+    }
+
+    .pay-btn {
+      background: linear-gradient(to right, #ff00d6, #ff4d00);
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 2rem;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+}

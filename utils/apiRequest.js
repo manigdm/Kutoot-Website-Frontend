@@ -90,4 +90,29 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getHomepageDetails: (token) =>
+    instance({
+      method: "GET",
+      url: `homepage`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  checkWinnerClaim: (token, data) =>
+    instance({
+      method: "POST",
+      url: `user/checkwinnerclaim`,
+      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  getWinnersList: (token) =>
+    instance({
+      method: "GET",
+      url: `winners`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

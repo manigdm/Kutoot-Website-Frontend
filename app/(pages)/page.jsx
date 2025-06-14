@@ -7,36 +7,39 @@ import Support from "@/components/common/Support";
 import Testimonial from "@/components/common/Testimonial";
 import Hero from "@/components/home/Hero";
 import Winner from "@/components/home/Winner";
+import {HomePageProvider} from "@/context/HomePageContext";
 
 const page = () => {
   return (
     <>
-      {/* here section */}
-      <Hero />
+      <HomePageProvider>
+        {/* here section */}
+        <Hero />
 
-      {/* How To Play section */}
-      <HowToPlay />
+        {/* How To Play section */}
+        <HowToPlay />
 
-      {/* Contest section */}
-      <Contest />
+        {/* Contest section */}
+        <Contest />
 
-      {/* Winner section */}
-      <Winner />
+        {/* Winner section */}
+        <Winner />
 
-      {/*Latest Winner section */}
-      <LatestWinner />
+        {/*Latest Winner section */}
+        <LatestWinner />
 
-      {/*Overview section */}
-      <Overview />
+        {/*Overview section */}
+        <Overview />
 
-      {/*Features section */}
-      <Features />
+        {/*Features section */}
+        <Features />
 
-      {/*Testimonial section */}
-      <Testimonial />
+        {/*Testimonial section */}
+        <Testimonial />
 
-      {/*Support section */}
-      <Support />
+        {/*Support section */}
+        <Support />
+      </HomePageProvider>
     </>
   );
 };

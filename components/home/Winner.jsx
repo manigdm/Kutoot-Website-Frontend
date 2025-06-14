@@ -5,8 +5,10 @@ import Slider from "react-slick";
 import winner from "/public/images/bg/winner.jpg";
 import car from "/public/images/elements/car.png";
 import w_1 from "/public/images/winner/w-1.png";
-
+import auth from "@/utils/auth";
+import apiRequest from "@/utils/apiRequest";
 import "slick-carousel/slick/slick.css";
+import { useEffect } from "react";
 
 const NextBtn = ({ onClick }) => {
   return (
@@ -44,6 +46,27 @@ const Winner = () => {
     nextArrow: <PrevBtn />,
     prevArrow: <NextBtn />,
   };
+
+  useEffect(() => {
+    const checkWinnerClaim = async () => {
+      const token = auth()?.access_token;
+      try {
+        if (token) {
+          const res = await apiRequest.checkWinnerClaim(token);
+          if (res.status === 200) {
+            console.log("res", res);
+          } else {
+            console.error("API error:", res);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching winners:", err);
+      }
+    };
+
+    checkWinnerClaim();
+  }, []);
+
   return (
     <section className="position-relative pt-120 pb-120">
       <div className="bg-el">
