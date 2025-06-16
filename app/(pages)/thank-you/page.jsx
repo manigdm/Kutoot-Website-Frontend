@@ -97,7 +97,9 @@ const LuckyDrawCoupons = () => {
               {/* <p className="coupon-subtitle">{campaignData?.camp_title}</p> */}
               <div className="coupon-code">
                 <span>COUPON CODE</span>
-                <strong>{coupon?.coupon_code}</strong>
+                <strong>
+                  {coupon?.coupon_code?.match(/.{1,2}/g)?.join(" ")}
+                </strong>
               </div>
               <div className="validity">
                 📅 Valid until:{" "}

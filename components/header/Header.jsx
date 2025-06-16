@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
 import cartData from "../../data/cartData";
 import { navbarData } from "../../public/data/navbarData";
 import tag from "/public/images/icon/btn/tag.png";
 import logo from "/public/images/logo-kutoot.png";
-import auth from '@/utils/auth'; 
+import auth from '@/utils/auth';
+
 
 const languageDropdownData = [
   {
@@ -25,9 +26,10 @@ const languageDropdownData = [
 ];
 
 const Header = () => {
+  const router = useRouter();
   const [open, setOpen] = useState("");
   const [windowHeight, setWindowHeight] = useState(0);
-  const token = auth()?.access_token;
+  let token = auth()?.access_token;
   const [show, setShow] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [langDropdown, setLanguageDropdown] = useState(
@@ -52,6 +54,15 @@ const Header = () => {
       setWindowHeight(height);
     }
   };
+  const login = () => {
+    router.push('/login');
+  };
+
+  const logOut = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+  
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -126,20 +137,24 @@ const Header = () => {
             <div className="col-sm-6">
               <div className="right">
                 <div className="product__cart">
-                  <span className="total__amount">0.00</span>
-                  <Link href="/cart" className="amount__btn">
+                  <span className="total__amount">{"My Balance"} 0.00</span>
+                  {/*<Link href="/cart" className="amount__btn">
                     <i className="las la-shopping-basket"></i>
                     <span className="cart__num">{cartData.length}</span>
-                  </Link>
+                  </Link>*/}
                 </div>
-                <a
-                  href="#0"
-                  className="user__btn d-flex align-items-center justify-content-center"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                >
-                  <i className="las la-user"></i>
-                </a>
+                { token ?
+                  // <a
+                  //   // href="#0"
+                  //   className="user__btn d-flex align-items-center justify-content-center"
+                  //   // data-bs-toggle="modal"
+                  //   // data-bs-target="#loginModal"
+                  // >
+                  //   <i className="las la-user"></i>
+                  // </a> :
+                  <button type="submit" className="cmn-btn btn--sm" onClick={()=>logOut()}>Logout</button>:
+                  <button type="submit" className="cmn-btn btn--sm" onClick={()=>login()}>Login</button>
+                }
               </div>
             </div>
           </div>

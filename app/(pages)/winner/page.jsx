@@ -10,16 +10,16 @@ const page = () => {
     <>
       <WinnerPageProvider>
         {/* Banner section here*/}
-        <Banner />
+        {/*<Banner />*/}
 
         {/* Winning Number section */}
-        <WinningNumber />
+        {/*<WinningNumber />*/}
 
         {/* Latest Winner section */}
         <LatestWinner />
 
         {/* Testimonial section */}
-        <Testimonial />
+        {/*<Testimonial />*/}
 
         {/* Support section */}
         <Support />

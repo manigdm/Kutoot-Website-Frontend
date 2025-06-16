@@ -18,7 +18,7 @@ const Hero = () => {
   const [isOpen, setIsOpen] = useState(false);
   const homepageData = useHomePage();
   // console.log("homepageData", homepageData);
-
+  console.log('homepageData', homepageData)
   return (
     <>
       <VedioModal

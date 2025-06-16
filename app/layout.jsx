@@ -27,7 +27,7 @@ function LayoutInner({ children }) {
     if (!authChecked) return; // wait until auth check completes
 
     if (!isLoggedIn && pathname !== '/login') {
-      router.push('/login');
+      // router.push('/');
     } else if (isLoggedIn && pathname === '/login') {
       router.push('/');
     }

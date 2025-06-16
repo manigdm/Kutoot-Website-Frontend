@@ -12,14 +12,14 @@ export const HomePageProvider = ({ children }) => {
     const fetchHomePageData = async () => {
       const token = auth()?.access_token;
       try {
-        if (token) {
+        // if (token) {
           const res = await apiRequest.getHomepageDetails(token);
           if (res.status === 200) {
             setHomepageData(res.data);
           } else {
             console.error("API error:", res);
           }
-        }
+        // }
       } catch (err) {
         console.error("Error fetching winners:", err);
       }

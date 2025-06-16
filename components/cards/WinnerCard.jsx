@@ -1,44 +1,53 @@
 import Image from "next/image";
+import { format } from "date-fns";
 
 const WinnerCard = ({ winner }) => {
   const {
-    title,
-    draw_at,
-    winning_number,
-    contest_no,
-    winer_img,
-    winning_price_img,
+    announcing_date,
+    campaign,
+    coupon_number,
+    prize_details,
+    userdetails
   } = winner;
+  const formattedDate = announcing_date && new Date(announcing_date?.replace(" ", "T"))
   return (
     <div className="winner-card mb-30">
       <div className="winner-card__thumb">
-        <Image src={winning_price_img} alt={title} />
+        { campaign?.campaign?.img &&
+          <img
+            src={campaign?.campaign?.img}
+            alt="Coin Campaign"
+            width="500"  // Specify the width
+            height="300"  // Specify the height
+          />
+        }
       </div>
       <div className="winner-card__content">
-        <div className="winner-thumb">
+        {/*<div className="winner-thumb">
           <Image src={winer_img} alt={title} />
-        </div>
+        </div>*/}
         <div className="content-top">
           <div className="left">
-            <h5>{title}</h5>
+            <h5>{userdetails?.name}</h5>
           </div>
           <div className="right">
-            <span>Draw took place on</span>
-            <p>{draw_at}</p>
+            <span>Announcement On</span>
+
+            <p>{ formattedDate ? format(formattedDate, "dd MMM yyyy") : "---"}</p>
           </div>
         </div>
         <div className="content-bottom">
           <div className="number-list-wrapper">
-            <p>Winning Numbers:</p>
+            <p>Coupon Numbers:</p>
             <ul className="number-list mt-2">
-              {winning_number.map((itm, i) => (
-                <li style={{ width: 'fit-content', borderRadius: 0}} key={i}>{itm}</li>
-              ))}
+              
+                <li style={{ width: 'fit-content', borderRadius: 0}}>{coupon_number && coupon_number?.toString()?.match(/.{1,2}/g)?.join(" ")}</li>
+              
             </ul>
           </div>
           <div className="right">
-            <p>Total coins:</p>
-            <span className="contest-num">{contest_no}</span>
+            <p>Prize Won:</p>
+            <span className="contest-num">{prize_details}</span>
           </div>
         </div>
       </div>

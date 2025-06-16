@@ -13,9 +13,13 @@ import winner_tab_2 from "/public/images/icon/winner-tab/2.png";
 import winner_tab_3 from "/public/images/icon/winner-tab/3.png";
 import winner_tab_4 from "/public/images/icon/winner-tab/4.png";
 import winner_tab_5 from "/public/images/icon/winner-tab/5.png";
+import { useWinnerPage } from "@/context/WinnerPageContext";
+import { format } from "date-fns";
 
-const LatestWinner = () => {
+const LatestWinner = (props) => {
   const [winners, setWinners] = useState(winnerData);
+  const winnerpageData = useWinnerPage();
+  console.log('winnerpageData', winnerpageData?.data)
 
   return (
     <section className="latest-winner-section position-relative pt-120 pb-120">
@@ -31,10 +35,10 @@ const LatestWinner = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            <div className="section-header text-center">
-              <span className="section-sub-title">
+            <div className="section-header text-center" style={{paddingTop: "45px"}}>
+              {/*<span className="section-sub-title">
                 Meet the latest winners from your favorite contest
-              </span>
+              </span>*/}
               <h2 className="section-title">Latest Winners</h2>
               <p>
                 Check your ticket number&#39;s to see if you are a Winner in the
@@ -146,15 +150,15 @@ const LatestWinner = () => {
                   <div className="col-lg-8 mb-30">
                     {/* winner card */}
 
-                    {winners.map((winner) => (
+                    {winnerpageData?.data?.map((winner) => (
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 
-                    <div className="btn-grp">
+                    {/*<div className="btn-grp">
                       <Link href="winner" className="btn-border">
                         browse more
                       </Link>
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
               </div>
@@ -177,11 +181,11 @@ const LatestWinner = () => {
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 
-                    <div className="btn-grp">
+                    {/*<div className="btn-grp">
                       <Link href="winner" className="btn-border">
                         browse more
                       </Link>
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
               </div>

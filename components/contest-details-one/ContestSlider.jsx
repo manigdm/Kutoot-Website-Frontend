@@ -56,6 +56,7 @@ const ContestSlider = ({campaignData}) => {
       },
     ],
   };
+  console.log('campaignData--->', campaignData)
 
   return (
     <div className="contest-cart__left">

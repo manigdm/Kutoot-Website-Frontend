@@ -9,6 +9,7 @@ import auth from "@/utils/auth";
 import apiRequest from "@/utils/apiRequest";
 import "slick-carousel/slick/slick.css";
 import { useEffect } from "react";
+import { useHomePage } from "@/context/HomePageContext";
 
 const NextBtn = ({ onClick }) => {
   return (
@@ -39,6 +40,8 @@ const PrevBtn = ({ onClick }) => {
 };
 
 const Winner = () => {
+  const homepageData = useHomePage();
+  console.log('homepageData---dhdd', homepageData?.data?.winners)
   const settings = {
     speed: 700,
     arrows: true,
@@ -97,10 +100,16 @@ const Winner = () => {
               </div>
               <div className="right">
                 <Slider {...settings} className="winner-slider">
-                  {[1, 2, 3, 4, 5].map((itm, i) => (
-                    <div key={itm} className="winner-slide-item">
+                  {homepageData?.data?.winners?.map((itm, i) => (
+                    <div key={i} className="winner-slide-item">
                       <div className="winner-thumb">
-                        <Image src={w_1} alt="image" />
+                        {/*<Image src={} alt="image" />*/}
+                        {/*<img
+                          src={itm?.campaign?.campaign?.img}
+                          alt="Coin Campaign"
+                          width="500"  // Specify the width
+                          height="300"  // Specify the height
+                        />*/}
                       </div>
                       <div className="winner-content bg_img">
                         <h6 className="winner-name">Breeze Zodiac</h6>

@@ -20,7 +20,7 @@ const WinningNumber = () => {
                 <div className="line"></div>
                 <h4 className="title">Latest bigest Winning Numbers:</h4>
                 <ul className="numbers" style={{ justifyContent: "center" }}>
-                  <li style={{ width: "fit-content" }}>1188239192687</li>
+                  <li style={{ width: "fit-content" }}> {'1188239192687'.match(/.{1,2}/g)?.join(" ")}</li>
                 </ul>
                 <div className="btn-grp">
                   <a href="#0" className="btn-border">

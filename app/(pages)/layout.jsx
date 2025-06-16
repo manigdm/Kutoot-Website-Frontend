@@ -19,7 +19,7 @@ export default function Layout({ children }) {
     if (!authChecked) return;
 
     if (!isLoggedIn && pathname !== '/login') {
-      router.push('/login');
+      // router.push('/');
     } else if (isLoggedIn && pathname === '/login') {
       router.push('/');
     }

@@ -65,19 +65,23 @@ const LuckyDrawCoupons = ({ campaignData, campaignId }) => {
   const [basePlans, setBasePlans] = useState([]);
 
   const handleBuyCoins = async (coupon) => {
-    try {
-      const reqBody = {
-        camp_id: campaignId,
-        amount: coupon?.ticket_price,
-        quantity: quantity,
-        base_plan_id: coupon?.id
-      };
-      const response = await apiRequest.coinPurchase(reqBody, token);
-      // console.log("response", response);
-      router.push(`/thank-you?id=${response?.data?.data?.id}`);
-      // router.push(`/payment?id=${response?.data?.data?.id}`);
-    } catch (error) {
-      console.error("Error during buy coins:", error);
+    if(token){
+      try {
+        const reqBody = {
+          camp_id: campaignId,
+          amount: coupon?.ticket_price,
+          quantity: quantity,
+          base_plan_id: coupon?.id
+        };
+        const response = await apiRequest.coinPurchase(reqBody, token);
+        // console.log("response", response);
+        router.push(`/thank-you?id=${response?.data?.data?.id}`);
+        // router.push(`/payment?id=${response?.data?.data?.id}`);
+      } catch (error) {
+        console.error("Error during buy coins:", error);
+      }
+    }else{
+      router.push('/login');
     }
   };
 

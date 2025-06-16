@@ -29,13 +29,13 @@ const page = () => {
         {/* <LatestWinner /> */}
 
         {/*Overview section */}
-        <Overview />
+        {/*<Overview />*/}
 
         {/*Features section */}
         {/* <Features /> */}
 
         {/*Testimonial section */}
-        <Testimonial />
+        {/*<Testimonial />*/}
 
         {/*Support section */}
         <Support />

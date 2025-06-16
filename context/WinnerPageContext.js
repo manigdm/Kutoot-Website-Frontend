@@ -12,14 +12,14 @@ export const WinnerPageProvider = ({ children }) => {
     const fetchWinnerPageData = async () => {
       const token = auth()?.access_token;
       try {
-        if (token) {
+        // if (token) {
           const res = await apiRequest.getWinnersList(token);
           if (res.status === 200) {
             setWinnerpageData(res.data);
           } else {
             console.error("API error:", res);
           }
-        }
+        // }
       } catch (err) {
         console.error("Error fetching winners:", err);
       }
