@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import apiRequest from "@/utils/apiRequest";
-import { Modal } from "bootstrap";
 import "./complete-profile.scss";
-import auth from '@/utils/auth'; 
+import auth from "@/utils/auth";
 
 const CompleteProfileScreen = () => {
   const router = useRouter();
@@ -17,29 +16,46 @@ const CompleteProfileScreen = () => {
   const token = auth()?.access_token;
 
   useEffect(() => {
-    const modalEl = document.getElementById("profileModal");
+    if (typeof window === "undefined") return;
 
-    if (modalEl) {
-      const modal = new Modal(modalEl);
+    // Dynamically import Bootstrap Modal only in browser
+    import("bootstrap").then(({ Modal }) => {
+      const modalEl = document.getElementById("profileModal");
+
+      if (!modalEl) return;
+
+      const modal = new Modal(modalEl, {
+        backdrop: "static",
+        keyboard: false,
+      });
       modal.show();
 
-      const handleModalClose = () => {
-        router.push("/");
+      // define handler OUTSIDE to keep correct scope
+      const handleModalClose = (e) => {
+        if (!name.trim() || !alternate.trim()) {
+          e.preventDefault?.();
+          e.stopImmediatePropagation?.();
+          return false;
+        } else {
+          router.push("/");
+        }
       };
 
-      modalEl.addEventListener("hidden.bs.modal", handleModalClose);
+      modalEl.addEventListener("hide.bs.modal", handleModalClose);
 
-      // Cleanup on unmount
+      // Cleanup
       return () => {
-        modalEl.removeEventListener("hidden.bs.modal", handleModalClose);
+        modalEl.removeEventListener("hide.bs.modal", handleModalClose);
         modal.hide();
-        document.body.classList.remove("modal-open");
-        document
-          .querySelectorAll(".modal-backdrop")
-          .forEach((el) => el.remove());
+        if (typeof document !== "undefined") {
+          document.body.classList.remove("modal-open");
+          document
+            .querySelectorAll(".modal-backdrop")
+            .forEach((el) => el.remove());
+        }
       };
-    }
-  }, []);
+    });
+  }, [name, alternate]);
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
@@ -50,11 +66,14 @@ const CompleteProfileScreen = () => {
     }
 
     try {
-      await apiRequest.updateProfile({
-        identifier,
-        name,
-        ...(isEmail ? { phone: alternate } : { email: alternate })
-      }, token);
+      await apiRequest.updateProfile(
+        {
+          identifier,
+          name,
+          ...(isEmail ? { phone: alternate } : { email: alternate }),
+        },
+        token
+      );
 
       toast.success("Profile updated");
       router.push("/");
