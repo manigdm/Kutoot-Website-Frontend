@@ -16,30 +16,27 @@ const CompleteProfileScreen = () => {
   const [alternate, setAlternate] = useState("");
   const token = auth()?.access_token;
 
+const modalRef = useRef(null);
+
 useEffect(() => {
-  if (typeof window !== "undefined") {
-    const modalEl = document.getElementById("profileModal");
+  if (typeof window !== "undefined" && modalRef.current) {
+    const modal = new Modal(modalRef.current);
+    modal.show();
 
-    if (modalEl) {
-      const modal = new Modal(modalEl);
-      modal.show();
+    const handleModalClose = () => {
+      router.push("/");
+    };
 
-      const handleModalClose = () => {
-        router.push("/");
-      };
+    modalRef.current.addEventListener("hidden.bs.modal", handleModalClose);
 
-      modalEl.addEventListener("hidden.bs.modal", handleModalClose);
-
-      // Cleanup on unmount
-      return () => {
-        modalEl.removeEventListener("hidden.bs.modal", handleModalClose);
-        modal.hide();
-        document.body.classList.remove("modal-open");
-        document
-          .querySelectorAll(".modal-backdrop")
-          .forEach((el) => el.remove());
-      };
-    }
+    return () => {
+      modalRef.current.removeEventListener("hidden.bs.modal", handleModalClose);
+      modal.hide();
+      document.body.classList.remove("modal-open");
+      document
+        .querySelectorAll(".modal-backdrop")
+        .forEach((el) => el.remove());
+    };
   }
 }, []);
 
@@ -68,6 +65,7 @@ useEffect(() => {
 
   return (
     <div
+      ref={modalRef}
       className="modal fade"
       id="profileModal"
       tabIndex="-1"
