@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import apiRequest from "@/utils/apiRequest";
-import { Modal } from "bootstrap";
 import "./complete-profile.scss";
-import auth from '@/utils/auth'; 
+import auth from "@/utils/auth";
 
 const CompleteProfileScreen = () => {
   const router = useRouter();
@@ -16,30 +15,47 @@ const CompleteProfileScreen = () => {
   const [alternate, setAlternate] = useState("");
   const token = auth()?.access_token;
 
-const modalRef = useRef(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-useEffect(() => {
-  if (typeof window !== "undefined" && modalRef.current) {
-    const modal = new Modal(modalRef.current);
-    modal.show();
+    // Dynamically import Bootstrap Modal only in browser
+    import("bootstrap").then(({ Modal }) => {
+      const modalEl = document.getElementById("profileModal");
 
-    const handleModalClose = () => {
-      router.push("/");
-    };
+      if (!modalEl) return;
 
-    modalRef.current.addEventListener("hidden.bs.modal", handleModalClose);
+      const modal = new Modal(modalEl, {
+        backdrop: "static",
+        keyboard: false,
+      });
+      modal.show();
 
-    return () => {
-      modalRef.current.removeEventListener("hidden.bs.modal", handleModalClose);
-      modal.hide();
-      document.body.classList.remove("modal-open");
-      document
-        .querySelectorAll(".modal-backdrop")
-        .forEach((el) => el.remove());
-    };
-  }
-}, []);
+      // define handler OUTSIDE to keep correct scope
+      const handleModalClose = (e) => {
+        if (!name.trim() || !alternate.trim()) {
+          e.preventDefault?.();
+          e.stopImmediatePropagation?.();
+          return false;
+        } else {
+          router.push("/");
+        }
+      };
 
+      modalEl.addEventListener("hide.bs.modal", handleModalClose);
+
+      // Cleanup
+      return () => {
+        modalEl.removeEventListener("hide.bs.modal", handleModalClose);
+        modal.hide();
+        if (typeof document !== "undefined") {
+          document.body.classList.remove("modal-open");
+          document
+            .querySelectorAll(".modal-backdrop")
+            .forEach((el) => el.remove());
+        }
+      };
+    });
+  }, [name, alternate]);
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
@@ -50,11 +66,14 @@ useEffect(() => {
     }
 
     try {
-      await apiRequest.updateProfile({
-        identifier,
-        name,
-        ...(isEmail ? { phone: alternate } : { email: alternate })
-      }, token);
+      await apiRequest.updateProfile(
+        {
+          identifier,
+          name,
+          ...(isEmail ? { phone: alternate } : { email: alternate }),
+        },
+        token
+      );
 
       toast.success("Profile updated");
       router.push("/");
@@ -65,7 +84,6 @@ useEffect(() => {
 
   return (
     <div
-      ref={modalRef}
       className="modal fade"
       id="profileModal"
       tabIndex="-1"
