@@ -22,6 +22,26 @@ export default {
       url: "store-login",
       data,
     }),
+  loginTrigger: (data) =>
+    instance({
+      method: "POST",
+      url: "logintrigger",
+      data,
+    }),
+
+  verifyOtp: (data) =>
+    instance({
+      method: "POST",
+      url: "verify-otp",
+      data,
+    }),
+
+  updateProfile: (data) =>
+    instance({
+      method: "POST",
+      url: "user/v1/update-profile",
+      data,
+    }),
   logout: (token) =>
     instance({
       method: "get",
@@ -111,6 +131,15 @@ export default {
     instance({
       method: "GET",
       url: `winners`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    verifyPaymentStatus: (data) => 
+      instance({
+      method: "POST",
+      url: `user/payment_status`,
+      data,
       headers: {
         Authorization: `Bearer ${token}`,
       },

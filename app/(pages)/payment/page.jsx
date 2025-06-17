@@ -1,30 +1,47 @@
 "use client";
 import Script from "next/script";
-import './Payment.scss'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import "./Payment.scss";
+import apiRequest from "@/utils/apiRequest";
 
 const PaymentPage = () => {
-  const plan = {
-    name: "Initial Plan",
-    coins: 400,
-    freeCoins: 2,
-    price: 100,
-  };
+  const [paymentData, setPaymentData] = useState({});
+  const router = useRouter();
+
   const handleRazorpayPayment = () => {
     const options = {
       key: "rzp_test_LrGJ9RG7cQCKns",
-      amount: plan.price * 100, // in paisa
+      amount: paymentData?.basedetails?.ticket_price,
       currency: "INR",
       name: "Kutoot",
-      description: `Purchase of ${plan.name}`,
-      image: "/logo.png", // Your logo
-      handler: function (response) {
-        alert("Payment Successful!");
-        console.log(response);
-      },
-      prefill: {
-        name: "John Doe",
-        email: "john@example.com",
-        contact: "9999999999",
+      order_id: paymentData?.razor_order_id,
+      description: `Purchase of ${paymentData?.basedetails?.title}`,
+      image: "/logo.png",
+      handler: async function (response) {
+        console.log("Razorpay response:", response);
+
+        try {
+          const verifyPayload = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          const res = await apiRequest.verifyPaymentStatus(verifyPayload);
+
+          if (res.success) {
+            sessionStorage.removeItem("paymentData");
+            router.push(`/thank-you?id=${res.data?.data?.id}`);
+            // router.push(`/thank-you?id=${response?.data?.data?.id}`);
+          } else {
+            console.error("Verification failed", res.message);
+            alert("Payment verification failed. Please contact support.");
+          }
+        } catch (error) {
+          console.error("API call error:", error);
+          alert("Something went wrong. Try again.");
+        }
       },
       theme: {
         color: "#F37254",
@@ -33,18 +50,43 @@ const PaymentPage = () => {
 
     const rzp = new window.Razorpay(options);
     rzp.open();
-
-    // router.push(`/thank-you?id=${response?.data?.data?.id}`);
   };
 
+  useEffect(() => {
+    const data = JSON.parse(sessionStorage.getItem("paymentData"));
+    console.log("data", data);
+    if (data) {
+      setPaymentData(data);
+    }
+  }, []);
+
   return (
-    <div className="payment-container">
+    <div className="payment-container mt-200">
       <h1 className="title">Payment Summary</h1>
       <div className="card">
-        <h2>{plan.name}</h2>
-        <p>Total Coins: {plan.coins}</p>
-        <p>Free Coins: {plan.freeCoins}</p>
-        <p className="price">₹ {plan.price}</p>
+        <h2 className="coupon-title">{paymentData?.basedetails?.title}</h2>
+        <div className="d-flex flex-row gap-4 justify-content-center align-items-center">
+          <p className="coupon-subtitle font-weight-bold">
+            {/* {coupon?.subtitle} */}
+            <b>Total Coins:</b>&nbsp;
+            {paymentData?.basedetails?.coins_per_campaign || 0}
+          </p>
+          <div className="text-xs">
+            + {paymentData?.basedetails?.coupons_per_campaign} free coin
+            {paymentData?.basedetails?.coupons_per_campaign > 1 ? "s" : ""}
+          </div>
+        </div>
+
+        <div className="coupon-code mb-30">
+          <span>PLAN PRICE: </span>&nbsp;
+          <strong>{paymentData?.basedetails?.ticket_price}</strong>
+        </div>
+        <ul className="terms">
+          {[1, 2, 3, 4, 5].map((num) => {
+            const point = paymentData?.basedetails?.[`point${num}`];
+            return point ? <li key={num}>• {point}</li> : null;
+          })}
+        </ul>
         <button className="pay-btn" onClick={handleRazorpayPayment}>
           Pay with Razorpay
         </button>

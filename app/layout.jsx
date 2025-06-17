@@ -1,4 +1,3 @@
-// app/layout.js or app/layout.tsx
 'use client';
 
 import { useEffect } from 'react';
@@ -8,7 +7,6 @@ import { AuthProvider, useAuth } from '@/context/authContext';
 import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
-import Login from '@/components/modal/Login';
 import SignUp from '@/components/modal/SignUp';
 import { AppProvider } from '@/context/context';
 import Bootstrap from '@/components/common/Bootstrap';
@@ -23,23 +21,27 @@ function LayoutInner({ children }) {
   const pathname = usePathname();
   const { isLoggedIn, authChecked } = useAuth();
 
-  useEffect(() => {
-    if (!authChecked) return; // wait until auth check completes
+  const authPages = ['/login', '/verify-otp', '/update-profile'];
 
-    if (!isLoggedIn && pathname !== '/login') {
-      // router.push('/');
-    } else if (isLoggedIn && pathname === '/login') {
+  useEffect(() => {
+    if (!authChecked) return;
+
+    if (!isLoggedIn && !authPages.includes(pathname)) {
+      router.push('/login');
+    } else if (isLoggedIn && authPages.includes(pathname)) {
       router.push('/');
     }
-  }, [isLoggedIn, authChecked, pathname]);
+  }, [isLoggedIn, authChecked, pathname, router]);
 
-  if (!authChecked) return null; // or a loader
+  if (!authChecked) return null;
+
+  const isAuthPage = authPages.includes(pathname);
 
   return (
     <>
       <SignUp />
-      {!isLoggedIn && pathname === '/login' ? (
-        <Login />
+      {isAuthPage ? (
+        children
       ) : (
         <>
           <Header />

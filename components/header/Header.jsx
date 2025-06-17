@@ -137,7 +137,7 @@ const Header = () => {
             <div className="col-sm-6">
               <div className="right">
                 <div className="product__cart">
-                  <span className="total__amount">{"My Balance"} 0.00</span>
+                  {/* <span className="total__amount">{"My Balance"} 0.00</span> */}
                   {/*<Link href="/cart" className="amount__btn">
                     <i className="las la-shopping-basket"></i>
                     <span className="cart__num">{cartData.length}</span>

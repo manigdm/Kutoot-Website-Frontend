@@ -75,8 +75,9 @@ const LuckyDrawCoupons = ({ campaignData, campaignId }) => {
         };
         const response = await apiRequest.coinPurchase(reqBody, token);
         // console.log("response", response);
-        router.push(`/thank-you?id=${response?.data?.data?.id}`);
-        // router.push(`/payment?id=${response?.data?.data?.id}`);
+        sessionStorage.setItem("paymentData", JSON.stringify(response.data.data));
+        // router.push(`/thank-you?id=${response?.data?.data?.id}`);
+        router.push(`/payment?id=${response?.data?.data?.id}`);
       } catch (error) {
         console.error("Error during buy coins:", error);
       }

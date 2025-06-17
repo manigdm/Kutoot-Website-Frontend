@@ -1,0 +1,197 @@
+$primary-bg: #2e026d;
+$card-bg: #4b3ac7;
+$accent: #6455d8;
+$white: #ffffff;
+$text-light: #ccc;
+
+.login {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, $primary-bg, $card-bg);
+  padding: 2rem;
+
+  &__card {
+    background-color: $card-bg;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: $white;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    background-color: $accent;
+    color: $white;
+
+    &::placeholder {
+      color: $text-light;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px lighten($accent, 20%);
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: $white;
+    color: $card-bg;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: lighten($white, 10%);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+.account-form-area {
+  padding: 30px 20px 20px 20px;
+  background-color: rgb(90, 75, 204);
+  box-shadow: 0px 0px 29.4px 0.6px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 20px;
+    background-color: rgba(#ffffff, 0.2);
+    border-radius: 50%;
+  }
+
+  .title {
+    font-size: 28px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .account-form-wrapper {
+    background-color: rgb(78, 64, 185);
+    border-radius: 20px;
+    padding: 30px;
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 0;
+
+      & + .form-group {
+        margin-top: 30px;
+      }
+    }
+
+    label {
+      text-transform: uppercase;
+      font-size: 16px;
+      color: rgba(#ffffff, 0.7);
+
+      sup {
+        color: #f1481f;
+        font-size: 100%;
+        top: 0;
+        right: 3px;
+      }
+    }
+
+    input {
+      padding: 0;
+      padding-bottom: 10px;
+      min-height: auto;
+      font-size: 16px;
+      color: #ffffff;
+      border: none;
+      border-bottom: 1px solid #766bcb;
+      border-radius: 0;
+
+      &::placeholder {
+        color: #94a1dc;
+      }
+    }
+
+    .link {
+      color: #00ffb8;
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .cmn-btn {
+      width: 200px;
+      display: inline-block;
+    }
+  }
+
+  p {
+    font-size: 16px;
+
+    a {
+      color: #31d7a9;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  .divider {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    text-align: center;
+
+    &::after {
+      position: absolute;
+      content: '';
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 2px;
+      border-radius: 50%;
+      background-color: rgba(#bdbdbd, 0.502);
+      z-index: -1;
+    }
+
+    span {
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 5px 30px;
+      background-color: #4e40b9;
+    }
+  }
+}

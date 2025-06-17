@@ -1,14 +1,15 @@
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
-import Login from "./modal/Login";
-import SignUp from "./modal/SignUp";
+// import Login from "./modal/Login";
+import Login from "./login/login";
+// import SignUp from "./modal/SignUp";
 import ScrollToTop from "./scrollToTop/ScrollToTop";
 
 const Layout = ({ children }) => {
   return (
     <>
       {/* SignUp Modal */}
-      <SignUp />
+      {/* <SignUp /> */}
 
       {/* Login Modal */}
       <Login />
