@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./Payment.scss";
 import apiRequest from "@/utils/apiRequest";
+import auth from '@/utils/auth'; 
 
 const PaymentPage = () => {
   const [paymentData, setPaymentData] = useState({});
   const router = useRouter();
+  const token = auth()?.access_token;
 
   const handleRazorpayPayment = () => {
     const options = {
@@ -23,21 +25,19 @@ const PaymentPage = () => {
 
         try {
           const verifyPayload = {
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_order_id: response.razorpay_order_id,
+            payment_id: response.razorpay_payment_id,
+            razor_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
+            payment_status: 'success'
           };
 
-          const res = await apiRequest.verifyPaymentStatus(verifyPayload);
+          const res = await apiRequest.verifyPaymentStatus(verifyPayload, token);
 
-          if (res.success) {
+          if (res) {
             sessionStorage.removeItem("paymentData");
             router.push(`/thank-you?id=${res.data?.data?.id}`);
             // router.push(`/thank-you?id=${response?.data?.data?.id}`);
-          } else {
-            console.error("Verification failed", res.message);
-            alert("Payment verification failed. Please contact support.");
-          }
+          } 
         } catch (error) {
           console.error("API call error:", error);
           alert("Something went wrong. Try again.");

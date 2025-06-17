@@ -36,11 +36,14 @@ export default {
       data,
     }),
 
-  updateProfile: (data) =>
+  updateProfile: (data, token) =>
     instance({
       method: "POST",
       url: "user/v1/update-profile",
       data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }),
   logout: (token) =>
     instance({
@@ -135,7 +138,7 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-    verifyPaymentStatus: (data) => 
+    verifyPaymentStatus: (data, token) => 
       instance({
       method: "POST",
       url: `user/payment_status`,

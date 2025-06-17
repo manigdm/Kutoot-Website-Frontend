@@ -35,21 +35,13 @@ function LayoutInner({ children }) {
 
   if (!authChecked) return null;
 
-  const isAuthPage = authPages.includes(pathname);
-
   return (
     <>
       <SignUp />
-      {isAuthPage ? (
-        children
-      ) : (
-        <>
-          <Header />
-          {children}
-          <Footer />
-          <ScrollToTop />
-        </>
-      )}
+      <Header />
+      {children}
+      <Footer />
+      <ScrollToTop />
     </>
   );
 }

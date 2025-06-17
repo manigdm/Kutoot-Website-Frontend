@@ -103,13 +103,13 @@ const Winner = () => {
                   {homepageData?.data?.winners?.map((itm, i) => (
                     <div key={i} className="winner-slide-item">
                       <div className="winner-thumb">
-                        {/*<Image src={} alt="image" />*/}
-                        {/*<img
+                        {/* <Image src={} alt="image" /> */}
+                        <img
                           src={itm?.campaign?.campaign?.img}
                           alt="Coin Campaign"
                           width="500"  // Specify the width
                           height="300"  // Specify the height
-                        />*/}
+                        />
                       </div>
                       <div className="winner-content bg_img">
                         <h6 className="winner-name">Breeze Zodiac</h6>
