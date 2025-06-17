@@ -127,7 +127,7 @@ const CompleteProfileScreen = () => {
 
                   <button
                     type="submit"
-                    disabled={!name.trim() || !alternate.trim()}
+                    // disabled={!name.trim() || !alternate.trim()}
                     className="btn btn-primary w-100"
                   >
                     Update Profile
