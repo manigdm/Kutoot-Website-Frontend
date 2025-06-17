@@ -17,27 +17,22 @@ export default function Layout({ children }) {
     if (!authChecked) return;
     if (!isLoggedIn && pathname !== '/login' && pathname !== '/verify-otp') {
       router.push('/login');
-    } else if (isLoggedIn && (pathname === '/login' || pathname === '/verify-otp')) {
+    } else if (
+      isLoggedIn &&
+      (pathname === '/login' || pathname === '/verify-otp')
+    ) {
       router.push('/');
     }
   }, [isLoggedIn, authChecked, pathname, router]);
 
   if (!authChecked) return null;
 
-  const isAuthPage = pathname === '/login' || pathname === '/verify-otp' || pathname === '/update-profile';
-
   return (
     <>
-      {isAuthPage ? (
-        children
-      ) : (
-        <>
-          <Header />
-          {children}
-          <ScrollToTop />
-          {/* <Footer /> */}
-        </>
-      )}
+      <Header />
+      {children}
+      <ScrollToTop />
+      {/* <Footer /> */}
     </>
   );
 }

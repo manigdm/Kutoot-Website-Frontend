@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import apiRequest from "@/utils/apiRequest";
 import { Modal } from "bootstrap";
 import "./complete-profile.scss";
+import auth from '@/utils/auth'; 
 
 const CompleteProfileScreen = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const CompleteProfileScreen = () => {
   const isEmail = identifier.includes("@");
   const [name, setName] = useState("");
   const [alternate, setAlternate] = useState("");
+  const token = auth()?.access_token;
 
   useEffect(() => {
     const modalEl = document.getElementById("profileModal");
@@ -29,22 +31,30 @@ const CompleteProfileScreen = () => {
 
       // Cleanup on unmount
       return () => {
-        modalEl.removeEventListener("hidden.bs.modal", onModalHidden);
+        modalEl.removeEventListener("hidden.bs.modal", handleModalClose);
         modal.hide();
         document.body.classList.remove("modal-open");
-        document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+        document
+          .querySelectorAll(".modal-backdrop")
+          .forEach((el) => el.remove());
       };
     }
   }, []);
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+
+    if (!name.trim() || !alternate.trim()) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
     try {
       await apiRequest.updateProfile({
         identifier,
         name,
-        ...(isEmail ? { phone: alternate } : { email: alternate }),
-      });
+        ...(isEmail ? { phone: alternate } : { email: alternate })
+      }, token);
 
       toast.success("Profile updated");
       router.push("/");
@@ -60,18 +70,12 @@ const CompleteProfileScreen = () => {
       tabIndex="-1"
       aria-labelledby="profileModalLabel"
       aria-hidden="true"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
     >
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content p-4">
           <div className="modal-body account-form-area">
-            <button
-              type="button"
-              className="close-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <i className="las la-times"></i>
-            </button>
             <div className="modal-header">
               <h5 className="modal-title" id="profileModalLabel">
                 Complete Your Profile
@@ -102,7 +106,11 @@ const CompleteProfileScreen = () => {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-primary w-100">
+                  <button
+                    type="submit"
+                    disabled={!name.trim() || !alternate.trim()}
+                    className="btn btn-primary w-100"
+                  >
                     Update Profile
                   </button>
                 </form>

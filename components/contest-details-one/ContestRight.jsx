@@ -5,7 +5,7 @@ const ContestRight = ({ campaignData }) => {
     <div className="contest-cart__right pb-20">
       <h4 className="subtitle">Enter now for a chance to win</h4>
       <h3 className="contest-name">{campaignData?.title}</h3>
-      <p>This competition has a maximum of 29994 entries.</p>
+      {/* <p>This competition has a maximum of 29994 entries.</p> */}
       <h5>Total Sold Quantity</h5>
       <div className="ticket-amount">
         <span className="left">{(campaignData?.progress + '%') || 0}</span>

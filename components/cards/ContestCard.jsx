@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ContestCard = ({ itm }) => {
+  console.log("itm", itm)
   return (
     <div className="contest-card">
       <Link href={`/contest-details-one?id=${itm?.id}`} className="item-link"></Link>
@@ -30,9 +31,28 @@ const ContestCard = ({ itm }) => {
             <span>{itm?.coupons_per_campaign} free coupons</span>
           </li>
           <li style={{ width: "50%" }} className="justify-content-center">
-            <i className="las la-ticket-alt"></i>
-            <span>{itm?.available}</span>
-            <p>Remaining</p>
+            <span>{parseInt(itm?.display_percentage) + '%'}</span>
+            <p>Occupied</p>
+            <div
+              style={{
+                width: "100%",
+                maxWidth: '100px',
+                backgroundColor: "#e0e0e0",
+                borderRadius: "6px",
+                height: "10px",
+                marginTop: "8px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: `${itm?.display_percentage}%`,
+                  backgroundColor: "#28a745",
+                  height: "100%",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            </div>
           </li>
         </ul>
       </div>
