@@ -16,7 +16,8 @@ const CompleteProfileScreen = () => {
   const [alternate, setAlternate] = useState("");
   const token = auth()?.access_token;
 
-  useEffect(() => {
+useEffect(() => {
+  if (typeof window !== "undefined") {
     const modalEl = document.getElementById("profileModal");
 
     if (modalEl) {
@@ -39,7 +40,9 @@ const CompleteProfileScreen = () => {
           .forEach((el) => el.remove());
       };
     }
-  }, []);
+  }
+}, []);
+
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
