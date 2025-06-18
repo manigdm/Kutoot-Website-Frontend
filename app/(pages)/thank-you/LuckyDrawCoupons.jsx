@@ -1,33 +1,8 @@
 "use client";
 
 import "./LuckyDraw.scss";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import apiRequest from "@/utils/apiRequest";
-import auth from "@/utils/auth";
 
-const LuckyDrawCoupons = () => {
-  const token = auth()?.access_token;
-  const searchParams = useSearchParams();
-  const [allcoupons, setAllCoupons] = useState([]);
-  const [campaignData, setCampaignData] = useState(null);
-
-  const id = searchParams.get("id");
-
-  useEffect(() => {
-    if (id && token) {
-      apiRequest
-        .purchaseDetails(id, token)
-        .then((res) => {
-          setCampaignData(res.data.data);
-          setAllCoupons(res.data.data.coupons || []);
-        })
-        .catch((err) => {
-          console.error("Error fetching purchase details:", err);
-        });
-    }
-  }, [id]);
-
+const LuckyDrawCoupons = ({ allcoupons, campaignData }) => {
   return (
     <div className="coupon-section">
       <h1 className="main-title">Your Lucky Draw Coupons</h1>
@@ -51,11 +26,14 @@ const LuckyDrawCoupons = () => {
                 📅 Valid until:{" "}
                 <strong>
                   {coupon?.coupon_expires &&
-                    new Date(coupon.coupon_expires).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "2-digit",
-                    })}
+                    new Date(coupon.coupon_expires).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      }
+                    )}
                 </strong>
               </div>
               <ul className="terms">
