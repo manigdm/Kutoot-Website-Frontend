@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/context/authContext';
 
@@ -21,19 +21,19 @@ function LayoutInner({ children }) {
   const pathname = usePathname();
   const { isLoggedIn, authChecked } = useAuth();
 
-  const authPages = ['/login', '/verify-otp', '/update-profile'];
+  // const authPages = ['/login', '/verify-otp', '/update-profile'];
 
-  useEffect(() => {
-    if (!authChecked) return;
+  // useEffect(() => {
+  //   if (!authChecked) return;
 
-    if (!isLoggedIn && !authPages.includes(pathname)) {
-      router.push('/login');
-    } else if (isLoggedIn && authPages.includes(pathname)) {
-      router.push('/');
-    }
-  }, [isLoggedIn, authChecked, pathname, router]);
+  //   if (!isLoggedIn && !authPages.includes(pathname)) {
+  //     router.push('/login');
+  //   } else if (isLoggedIn && authPages.includes(pathname)) {
+  //     router.push('/');
+  //   }
+  // }, [isLoggedIn, authChecked, pathname, router]);
 
-  if (!authChecked) return null;
+  // if (!authChecked) return null;
 
   return (
     <>

@@ -21,7 +21,7 @@ const OtpVerifyScreen = () => {
         identifier: identifier,
         otp: parseInt(otp),
       });
-      const { is_completed } = res.data;
+      const { is_completed } = res?.data?.user;
       localStorage.setItem("auth", JSON.stringify(res.data));
       if (is_completed === 1) {
         router.push("/");

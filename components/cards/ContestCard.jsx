@@ -46,7 +46,7 @@ const ContestCard = ({ itm }) => {
             >
               <div
                 style={{
-                  width: `${itm?.display_percentage}%`,
+                  width: `${parseInt(itm?.display_percentage)}%`,
                   backgroundColor: "#28a745",
                   height: "100%",
                   transition: "width 0.3s ease",
