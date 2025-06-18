@@ -42,7 +42,7 @@ const ContestDetailsClient = () => {
                   </h5>
                   <p className="contest-date">
                     <strong>
-                      Order Id: <span>#{campaignData?.razor_order_id}</span>
+                      Order Id: <span>#{campaignData?.razor_order_id?.replace("order_", "")}</span>
                     </strong>{" "}
                     <p>
                       {campaignData?.created_at &&
