@@ -11,21 +11,21 @@ import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
 export default function Layout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoggedIn, authChecked } = useAuth();
+  // const { isLoggedIn, authChecked } = useAuth();
 
-  useEffect(() => {
-    if (!authChecked) return;
-    if (!isLoggedIn && pathname !== '/login' && pathname !== '/verify-otp') {
-      router.push('/login');
-    } else if (
-      isLoggedIn &&
-      (pathname === '/login' || pathname === '/verify-otp')
-    ) {
-      router.push('/');
-    }
-  }, [isLoggedIn, authChecked, pathname, router]);
+  // useEffect(() => {
+  //   if (!authChecked) return;
+  //   if (!isLoggedIn && pathname !== '/login' && pathname !== '/verify-otp') {
+  //     router.push('/login');
+  //   } else if (
+  //     isLoggedIn &&
+  //     (pathname === '/login' || pathname === '/verify-otp')
+  //   ) {
+  //     router.push('/');
+  //   }
+  // }, [isLoggedIn, authChecked, pathname, router]);
 
-  if (!authChecked) return null;
+  // if (!authChecked) return null;
 
   return (
     <>

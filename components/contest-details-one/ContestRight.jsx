@@ -8,10 +8,10 @@ const ContestRight = ({ campaignData }) => {
       {/* <p>This competition has a maximum of 29994 entries.</p> */}
       <h5>Total Sold Quantity</h5>
       <div className="ticket-amount">
-        <span className="left">{(campaignData?.progress + '%') || 0}</span>
+        <span className="left">{(parseInt(campaignData?.progress) + '%') || 0}</span>
         <span className="right">100%</span>
-        <div className="progressbar" data-perc={campaignData?.progress + '%'}>
-          <div className="bar" style={{ width: campaignData?.progress + '%'}}></div>
+        <div className="progressbar" data-perc={parseInt(campaignData?.progress) + '%'}>
+          <div className="bar" style={{ width: parseInt(campaignData?.progress) + '%'}}></div>
         </div>
         <p>{campaignData?.marketing_message}</p>
       </div>

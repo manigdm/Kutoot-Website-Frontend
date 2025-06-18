@@ -68,7 +68,7 @@ const ContestSlider = ({campaignData}) => {
           className="contest-cart__thumb-slider max-h-400"
         >
           <div style={{ minWidth: '700px' }}>
-            <Image src={campaignData?.img} alt={campaignData.title} width={700} height={400} />
+            <Image src={campaignData?.img} alt={campaignData.title} width={700} height={380} style={{maxHeight: '380px'}} />
           </div>
         </Slider>
 
