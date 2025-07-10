@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/authContext';
 
 import Header from '@/components/header/Header';
-import Footer from '@/components/footer/Footer';
+// import Footer from '@/components/footer/Footer';
 import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
 
 export default function Layout({ children }) {
@@ -29,7 +29,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {children}
       <ScrollToTop />
       {/* <Footer /> */}

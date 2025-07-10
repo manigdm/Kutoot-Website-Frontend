@@ -1,4 +1,4 @@
-import Footer from "./footer/Footer";
+// import Footer from "./footer/Footer";
 import Header from "./header/Header";
 // import Login from "./modal/Login";
 import Login from "./login/login";
@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       {children}
 
       {/* Footer section */}
-      <Footer />
+      {/* <Footer /> */}
 
       {/* scroll-to-top start */}
       <ScrollToTop />

@@ -1,0 +1,153 @@
+$footer-bg: #3a312c;
+$text-color: #cfcfcf;
+$title-color: #ffffff;
+$link-hover-color: #f9fafb;
+$divider-color: #574f49;
+$icon-bg: #544e59;
+$primary-font: 'Poppins', sans-serif;
+
+.footer-container {
+  background-color: $footer-bg;
+  color: $text-color;
+  font-family: $primary-font;
+  padding: 60px 40px 30px;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.logo-section {
+  flex-basis: 25%;
+
+  .footer-logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+
+  .app-badges {
+    display: flex;
+    gap: 12px;
+
+    img {
+      height: 42px;
+      border-radius: 10px;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.links-section,
+.connect-section {
+  h3 {
+    color: $title-color;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 12px;
+
+      a {
+        color: $text-color;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $link-hover-color;
+        }
+      }
+    }
+  }
+}
+
+.connect-section {
+  p {
+    margin: 0 0 4px;
+  }
+
+  .email-link {
+    color: $text-color;
+    display: inline-block;
+    margin-bottom: 12px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+
+    a {
+      width: 36px;
+      height: 36px;
+      background-color: $icon-bg;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: lighten($icon-bg, 10%);
+      }
+    }
+  }
+}
+
+.footer-divider {
+  border: none;
+  height: 1px;
+  background-color: $divider-color;
+  margin: 20px 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.85rem;
+  color: darken($text-color, 20%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .footer-column {
+    width: 100%;
+  }
+
+  .app-badges {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

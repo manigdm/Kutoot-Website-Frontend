@@ -3,8 +3,6 @@
 // import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/context/authContext';
-
-import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
 import SignUp from '@/components/modal/SignUp';
@@ -40,7 +38,7 @@ function LayoutInner({ children }) {
       <SignUp />
       <Header />
       {children}
-      <Footer />
+      {/* <Footer /> */}
       <ScrollToTop />
     </>
   );

@@ -1,0 +1,47 @@
+/* --- Variables for easy customization --- */
+$button-bg-color: #d97d3b; // The orange from your previous designs
+$button-text-color: #ffffff;
+$primary-font: 'Arial', sans-serif;
+
+.fixed-enter-button {
+  /* --- Positioning --- */
+  position: fixed; // Fixes the button relative to the browser window
+  top: 50%;        // Positions the top of the button at the vertical midpoint
+  right: 0;        // Aligns the button to the right edge of the screen
+  transform: translateY(-50%); // Pulls the button up by half its own height to be perfectly centered
+  z-index: 1000;   // Ensures the button stays on top of all other content
+
+  /* --- Layout & Styling --- */
+  display: flex;
+  flex-direction: column; // Stacks the icon and text vertically
+  align-items: center;    // Centers items horizontally within the button
+  gap: 12px;              // Adds space between the icon and the text
+  
+  /* --- Appearance --- */
+  background-color: $button-bg-color;
+  color: $button-text-color;
+  border: none;
+  padding: 20px 12px;
+  border-radius: 15px 0 0 15px; // Rounds the top-left and bottom-left corners
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: darken($button-bg-color, 8%);
+    // Optional: make the button slide out slightly on hover
+    // transform: translateY(-50%) translateX(-3px); 
+  }
+
+  .enter-icon {
+    font-size: 2rem; // Adjust icon size as needed
+  }
+
+  .enter-text {
+    font-family: $primary-font;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transform: rotate(180deg);
+    // This property makes the text display vertically
+    writing-mode: vertical-rl;
+  }
+}

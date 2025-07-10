@@ -17,13 +17,13 @@ const page = () => {
         <Hero />
 
         {/* How To Play section */}
-        <HowToPlay />
+        {/* <HowToPlay /> */}
 
         {/* Contest section */}
-        <Contest />
+        {/* <Contest /> */}
 
         {/* Winner section */}
-        <Winner />
+        {/* <Winner /> */}
 
         {/*Latest Winner section */}
         {/* <LatestWinner /> */}
@@ -38,7 +38,7 @@ const page = () => {
         {/*<Testimonial />*/}
 
         {/*Support section */}
-        <Support />
+        {/* <Support /> */}
       </HomePageProvider>
     </>
   );
