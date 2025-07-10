@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/context/authContext';
+// import { useEffect } from 'react';
+// import { useRouter, usePathname } from 'next/navigation';
+// import { useAuth } from '@/context/authContext';
 
-import Header from '@/components/header/Header';
+// import Header from '@/components/header/Header';
 // import Footer from '@/components/footer/Footer';
 import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
 
 export default function Layout({ children }) {
-  const router = useRouter();
-  const pathname = usePathname();
+  // const router = useRouter();
+  // const pathname = usePathname();
   // const { isLoggedIn, authChecked } = useAuth();
 
   // useEffect(() => {
