@@ -1,0 +1,53 @@
+.common-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 9999px;
+  color: #fff;
+  background-color: #f26a1b;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+
+  .hover-arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .label,
+  .dot {
+    transition: all 0.3s ease;
+  }
+
+  .dot {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  &:hover {
+    background: linear-gradient(to right, #f26a1b, #8e0038);
+
+    .hover-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .label,
+    .dot {
+      animation: push-right-return 0.4s ease-in-out;
+    }
+  }
+}
+
+// ▶️ Slide-right-then-back animation
+@keyframes push-right-return {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}

@@ -1,0 +1,164 @@
+// === Variables ===
+$primary-font: 'Arial', sans-serif;
+$background-color: #fffdf2;
+$card-background-color: #f5f5f5;
+$text-color: #333;
+$title-color: #2d2d2d;
+$button-color: #e57e31;
+
+// === Main container ===
+.how-it-works-container {
+  background-color: $background-color;
+  padding: 80px 40px;
+  text-align: center;
+  font-family: $primary-font;
+  position: relative;
+
+  .section-title {
+    font-size: 2.8rem;
+    color: $title-color;
+    font-weight: 700;
+    margin-bottom: 60px;
+  }
+
+  .steps-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    position: relative;
+    margin-bottom: 60px;
+
+    .step-card {
+      position: relative;
+      background: #f5f2ec;
+      border-radius: 20px;
+      padding: 40px 24px;
+      width: 240px;
+      min-height: 280px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      z-index: 1;
+
+      .step-header {
+        margin-bottom: 16px;
+      }
+
+      .step-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: #2b2119;
+      }
+
+      .step-description {
+        color: #42372e;
+        font-size: 1rem;
+      }
+
+      .step-number-img {
+        width: 70px;
+        height: auto;
+      }
+
+      // Arrow between cards
+      .step-arrow {
+        position: absolute;
+        right: -40px;
+        top: 10%;
+        transform: translateY(-50%);
+        width: 90px;
+        height: auto;
+        z-index: 0;
+      }
+
+      // Adjust each arrow slightly (optional fine-tuning)
+      &.arrow-0 .step-arrow { right: -50px; }
+      &.arrow-1 .step-arrow { right: -50px; }
+      &.arrow-2 .step-arrow { right: -50px; }
+    }
+  }
+
+  .step-card {
+    background-color: $card-background-color;
+    border-radius: 16px;
+    padding: 32px 20px;
+    width: 240px;
+    min-height: 320px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-8px);
+    }
+
+    .step-header {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .step-number-img {
+      width: 100px;
+      height: auto;
+    }
+
+    .step-icon {
+      position: absolute;
+      width: 60px;
+    }
+
+    .step-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $title-color;
+      margin-bottom: 12px;
+    }
+
+    .step-description {
+      font-size: 1rem;
+      color: $text-color;
+      line-height: 1.5;
+    }
+  }
+
+  .step-arrow {
+    align-self: center;
+    margin-top: 70px;
+    width: 50px;
+    height: auto;
+  }
+
+  .enter-now-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) rotate(270deg);
+    transform-origin: bottom right;
+    background-color: $button-color;
+    color: white;
+    border: none;
+    padding: 18px 36px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($button-color, 10%);
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}

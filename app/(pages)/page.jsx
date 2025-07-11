@@ -1,12 +1,12 @@
-import Contest from "@/components/common/Contest";
-import Features from "@/components/common/Features";
-import HowToPlay from "@/components/common/HowToPlay";
-import LatestWinner from "@/components/common/LatestWinner";
-import Overview from "@/components/common/Overview";
-import Support from "@/components/common/Support";
-import Testimonial from "@/components/common/Testimonial";
+// import Contest from "@/components/common/Contest";
+// import Features from "@/components/common/Features";
+// import HowToPlay from "@/components/common/HowToPlay";
+// import LatestWinner from "@/components/common/LatestWinner";
+// import Overview from "@/components/common/Overview";
+// import Support from "@/components/common/Support";
+// import Testimonial from "@/components/common/Testimonial";
 import Hero from "@/components/home/Hero";
-import Winner from "@/components/home/Winner";
+// import Winner from "@/components/home/Winner";
 import {HomePageProvider} from "@/context/HomePageContext";
 
 const page = () => {
@@ -17,13 +17,13 @@ const page = () => {
         <Hero />
 
         {/* How To Play section */}
-        <HowToPlay />
+        {/* <HowToPlay /> */}
 
         {/* Contest section */}
-        <Contest />
+        {/* <Contest /> */}
 
         {/* Winner section */}
-        <Winner />
+        {/* <Winner /> */}
 
         {/*Latest Winner section */}
         {/* <LatestWinner /> */}
@@ -38,7 +38,7 @@ const page = () => {
         {/*<Testimonial />*/}
 
         {/*Support section */}
-        <Support />
+        {/* <Support /> */}
       </HomePageProvider>
     </>
   );

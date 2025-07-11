@@ -1,10 +1,8 @@
 'use client';
 
 // import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+// import { useRouter, usePathname } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/context/authContext';
-
-import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import ScrollToTop from '@/components/scrollToTop/ScrollToTop';
 import SignUp from '@/components/modal/SignUp';
@@ -17,9 +15,9 @@ import '@/public/css/modal-video.scss';
 import '@/styles/main.sass';
 
 function LayoutInner({ children }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { isLoggedIn, authChecked } = useAuth();
+  // const router = useRouter();
+  // const pathname = usePathname();
+  // const { isLoggedIn, authChecked } = useAuth();
 
   // const authPages = ['/login', '/verify-otp', '/update-profile'];
 
@@ -40,7 +38,7 @@ function LayoutInner({ children }) {
       <SignUp />
       <Header />
       {children}
-      <Footer />
+      {/* <Footer /> */}
       <ScrollToTop />
     </>
   );

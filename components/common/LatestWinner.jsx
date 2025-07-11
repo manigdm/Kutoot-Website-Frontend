@@ -8,18 +8,17 @@ import WinnerCard from "../cards/WinnerCard";
 import w_el_1 from "/public/images/elements/w-el-1.png";
 import w_el_2 from "/public/images/elements/w-el-2.png";
 import w_el_3 from "/public/images/elements/w-el-3.png";
-import winner_tab_1 from "/public/images/icon/winner-tab/1.png";
-import winner_tab_2 from "/public/images/icon/winner-tab/2.png";
-import winner_tab_3 from "/public/images/icon/winner-tab/3.png";
-import winner_tab_4 from "/public/images/icon/winner-tab/4.png";
-import winner_tab_5 from "/public/images/icon/winner-tab/5.png";
+// import winner_tab_1 from "/public/images/icon/winner-tab/1.png";
+// import winner_tab_2 from "/public/images/icon/winner-tab/2.png";
+// import winner_tab_3 from "/public/images/icon/winner-tab/3.png";
+// import winner_tab_4 from "/public/images/icon/winner-tab/4.png";
+// import winner_tab_5 from "/public/images/icon/winner-tab/5.png";
 import { useWinnerPage } from "@/context/WinnerPageContext";
-import { format } from "date-fns";
 
 const LatestWinner = (props) => {
   const [winners, setWinners] = useState(winnerData);
   const winnerpageData = useWinnerPage();
-  console.log('winnerpageData', winnerpageData?.data)
+  console.log("winnerpageData", winnerpageData?.data);
 
   return (
     <section className="latest-winner-section position-relative pt-120 pb-120">
@@ -35,7 +34,10 @@ const LatestWinner = (props) => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            <div className="section-header text-center" style={{paddingTop: "45px"}}>
+            <div
+              className="section-header text-center"
+              style={{ paddingTop: "45px" }}
+            >
               {/*<span className="section-sub-title">
                 Meet the latest winners from your favorite contest
               </span>*/}
@@ -177,7 +179,7 @@ const LatestWinner = (props) => {
                   <div className="col-lg-8 mb-30">
                     {/* winner card */}
 
-                    {winners.map((winner) => (
+                    {winners?.map((winner) => (
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 
@@ -204,7 +206,7 @@ const LatestWinner = (props) => {
                   <div className="col-lg-8 mb-30">
                     {/* winner card */}
 
-                    {winners.map((winner) => (
+                    {winners?.map((winner) => (
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 
@@ -231,7 +233,7 @@ const LatestWinner = (props) => {
                   <div className="col-lg-8 mb-30">
                     {/* winner card */}
 
-                    {winners.map((winner) => (
+                    {winners?.map((winner) => (
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 
@@ -257,7 +259,7 @@ const LatestWinner = (props) => {
                   </div>
                   <div className="col-lg-8 mb-30">
                     {/* winner card */}
-                    {winners.map((winner) => (
+                    {winners?.map((winner) => (
                       <WinnerCard key={winner.id} winner={winner} />
                     ))}
 

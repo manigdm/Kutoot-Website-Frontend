@@ -1,0 +1,166 @@
+/* Testimonials.scss */
+$card-width: 16rem;
+$card-height: 20rem;
+$animation-speed: 10s;
+
+.text-black {
+  color: #000;
+}
+
+.testimonials {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  // background-color: #f7fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  width: 100%;
+  height: 100vh;
+
+  &__carousel {
+    position: relative;
+    width: 100%;
+    // max-width: 80rem;
+    padding: 3rem 0;
+    overflow: hidden;
+    // mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  }
+
+  &__track {
+    display: flex;
+    animation: scroll $animation-speed linear infinite;
+
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+
+  &__slide {
+    margin: 0 1rem;
+    max-width: 250px;
+  }
+}
+
+.testimonials__slide:nth-child(even) {
+  margin-top: -50px;
+}
+
+.testimonial-card {
+  position: relative;
+  width: $card-width;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  &__image {
+    width: 100%;
+    height: $card-height;
+    border-radius: 1rem;
+    object-fit: cover;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &__initial-state {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &__initial-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1.25rem;
+    color: #fff;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #d1d5db;
+      margin: 0;
+    }
+  }
+
+  &__hover-state {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 1rem;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &__hover-content {
+    position: relative;
+    border-radius: 1rem;
+    background-color: #000;
+    color: #fff;
+    padding: 1.25rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .location {
+      font-size: 0.875rem;
+      color: #d1d5db;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote {
+      font-size: 0.875rem;
+      color: #e5e7eb;
+      line-height: 1.625;
+    }
+  }
+
+  &__notch {
+    position: absolute;
+    left: 50%;
+    top: -0.75rem;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-bottom: 15px solid black;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+  }
+
+  &:hover {
+    .testimonial-card__image {
+      transform: rotate(-9deg);
+    }
+    .testimonial-card__initial-state {
+      opacity: 0;
+    }
+    .testimonial-card__hover-state {
+      opacity: 1;
+      bottom: 0;
+    }
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
