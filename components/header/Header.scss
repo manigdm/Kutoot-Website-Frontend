@@ -112,3 +112,32 @@
     color: white;
   }
 }
+.logo-reveal-container {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background-color: #2b1c13;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #553d2e;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 40px;
+  overflow: hidden;
+
+  &.hovered {
+    width: auto;
+  }
+
+  .logo-symbol {
+    width: 1.5rem; // 24px
+    height: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .logo-text {
+    height: 1rem; // 16px
+    margin-left: 0.5rem;
+    overflow: hidden;
+  }
+}

@@ -117,7 +117,7 @@ export function ExclusiveCampaign() {
           <div className="lottery-footer-badge">
             <div className="lottery-footer-indicator" />
             <span className="lottery-footer-text">
-              All draws are conducted fairly and transparently
+              {/* All draws are conducted fairly and transparently */}
             </span>
           </div>
         </div>

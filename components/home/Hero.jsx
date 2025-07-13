@@ -13,7 +13,7 @@ import LuckyDrawSlider from "./components/LuckyDrawSlider/LuckyDrawSlider";
 import PromoSection from "./components/PromoSection/PromoSection";
 import { ExclusiveCampaign } from "./components/ExclusiveCampaign/ExclusiveCampaign";
 import Testimonials from "./components/Testimonials/Testimonials";
-import YouTubeCarousel from "./components/Youtube-testimonials/YoutubeTestimonials";
+import {YoutubeTestimonials} from "./components/Youtube-testimonials/YoutubeTestimonials";
 import { EcommerceLayout } from "./components/EcommerceLayout/EcommerceLayout";
 import PartnersSection from "./components/PartnersSection/PartnersSection";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
@@ -55,8 +55,8 @@ const Hero = () => {
       />
       <FixedEnterButton />
       <section className="hero">
-        <div className="hero__shape">
-          <Image src={header_bg} style={{ width: width }} alt="image" />
+        <div className="hero__shape" style={{ width: '100%'}}>
+          <Image src={header_bg} style={{ width: width, minWidth: '-webkit-fill-available' }} alt="image" />
         </div>
         <div className="">
           <div className="row justify-content-center align-items-center">
@@ -127,7 +127,7 @@ const Hero = () => {
         <ExclusiveCampaign />
       </div>
       <div className="exclusive-campaign-container">
-        <YouTubeCarousel />
+        <YoutubeTestimonials />
       </div>
       <div className="exclusive-campaign-container">
         <Testimonials />

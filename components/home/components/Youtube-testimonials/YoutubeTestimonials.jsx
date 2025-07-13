@@ -1,151 +1,147 @@
-import React, { useEffect, useState } from "react";
-import { AiFillYoutube } from "react-icons/ai";
-import "./YouTubeCarousel.scss";
+import React, { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+import './YouTubeCarousel.scss';
 
-const carouselItems = [
-  {
-    id: 1,
-    image: "https://placehold.co/300x400/007a7e/ffffff?text=Video+1",
-    name: "Ritika S.",
-    location: "Pune",
-    youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
-  {
-    id: 2,
-    image: "https://placehold.co/300x400/004d4f/ffffff?text=Video+2",
-    name: "Rahul V.",
-    location: "Mumbai",
-    youtubeUrl: "https://www.youtube.com/watch?v=M7lc1UVf-VE",
-  },
-  {
-    id: 3,
-    image: "https://placehold.co/300x400/007a7e/ffffff?text=Video+3",
-    name: "Sneha P.",
-    location: "Delhi",
-    youtubeUrl: "https://www.youtube.com/watch?v=oHg5SJYRHA0",
-  },
-  {
-    id: 4,
-    image: "https://placehold.co/300x400/004d4f/ffffff?text=Video+4",
-    name: "Amit K.",
-    location: "Bangalore",
-    youtubeUrl: "https://www.youtube.com/watch?v=21X5lGlDOfg",
-  },
-  {
-    id: 5,
-    image: "https://placehold.co/300x400/007a7e/ffffff?text=Video+5",
-    name: "Pooja R.",
-    location: "Chennai",
-    youtubeUrl: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-  },
-];
-
-const YouTubeCarousel = () => {
-  const [animated, setAnimated] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [currentYouTubeUrl, setCurrentYouTubeUrl] = useState("");
-
-  useEffect(() => {
-    const timer = setTimeout(() => setAnimated(true), 200);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const openModal = (url) => {
-    setCurrentYouTubeUrl(url);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setCurrentYouTubeUrl("");
-  };
-
-  const redirectToYouTube = () => {
-    if (currentYouTubeUrl) {
-      window.open(currentYouTubeUrl, "_blank");
-      closeModal();
-    }
-  };
-
-  const duplicatedItems = [...carouselItems, ...carouselItems];
+const VideoModal = ({ youtubeId, onClose }) => {
+  if (!youtubeId) return null;
 
   return (
-    <div className="yt-carousel">
-      {/* Decorative Shapes */}
-      <div className="yt-carousel__shape yt-carousel__shape--top"></div>
-      <div className="yt-carousel__shape yt-carousel__shape--bottom"></div>
-
-      <div className="yt-carousel__container">
-        <h2 className="yt-carousel__heading">
-          Watch Our <span>Stories</span>
-        </h2>
-
-        <div className="yt-carousel__viewport">
-          <div
-            className={`yt-carousel__track ${
-              animated ? "yt-carousel__track--animated" : ""
-            }`}
-          >
-            {duplicatedItems.map((item, i) => (
-              <div
-                key={i}
-                className={`yt-carousel__card ${
-                  hoveredCard === item.id ? "yt-carousel__card--hovered" : ""
-                }`}
-                onMouseEnter={() => setHoveredCard(item.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className="yt-carousel__image-wrapper">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    onError={(e) => {
-                      e.target.src =
-                        "https://placehold.co/300x250/CCCCCC/666666?text=Video+Thumbnail";
-                    }}
-                  />
-                  <button
-                    className="yt-carousel__play-button"
-                    onClick={() => openModal(item.youtubeUrl)}
-                  >
-                    <AiFillYoutube size={30} fill="currentColor" />
-                  </button>
-                </div>
-                <div className="yt-carousel__info">
-                  <h5>{item.name}</h5>
-                  <p>{item.location}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="video-modal">
+      <div className="video-modal__overlay" onClick={onClose} />
+      <div className="video-modal__content">
+        <button className="video-modal__close" onClick={onClose}>×</button>
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+          title="YouTube Video"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
       </div>
-
-      {/* Modal */}
-      {showModal && (
-        <div className="yt-carousel__modal-backdrop" onClick={closeModal}>
-          <div
-            className="yt-carousel__modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="yt-carousel__modal-close" onClick={closeModal}>
-              &times;
-            </button>
-            <h3>Watch on YouTube</h3>
-            <p>Click the button below to open the video on YouTube.</p>
-            <button
-              className="yt-carousel__modal-button"
-              onClick={redirectToYouTube}
-            >
-              <AiFillYoutube size={24} style={{ marginRight: "10px" }} /> Go to
-              YouTube
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default YouTubeCarousel;
+const PlayCircleIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/80 drop-shadow-lg">
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="10 8 16 12 10 16 10 8" />
+  </svg>
+);
+
+const WinnerCard = ({ winner, isActive, onClick }) => (
+  <div className="winner-card group cursor-pointer" onClick={onClick}>
+    <img
+      src={`https://img.youtube.com/vi/${winner.youtubeId}/maxresdefault.jpg`}
+      alt={winner.prize}
+      className="winner-card__bg group-hover:scale-110"
+      onError={(e) => (e.target.src = 'https://placehold.co/800x600/333/FFF?text=Image+Error')}
+    />
+    <div className="winner-card__overlay" />
+    <div className="winner-card__play group-hover:opacity-100">
+      <PlayCircleIcon />
+    </div>
+    <div className="winner-card__footer">
+      <div className="winner-card__info">
+        <span className="winner-card__badge">GRAND PRIZE</span>
+        <h3 className="winner-card__title">{winner.prize}</h3>
+        <p className="winner-card__value">TOP DRAW: {winner.value}</p>
+      </div>
+      <div className="winner-card__user">
+        <img
+          src={winner.winnerImage}
+          alt={winner.winnerName}
+          onError={(e) => (e.target.src = 'https://placehold.co/100x100/ccc/FFF?text=User')}
+        />
+        <div>
+          <p className="winner-card__user-label">WINNER</p>
+          <p className="winner-card__user-name">{winner.winnerName}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const winnersData = [
+  {
+    prize: 'Buildiko Springwoods Designer Villa',
+    value: '₹5 CRORE',
+    winnerName: 'Ritika S.',
+    youtubeId: 'dQw4w9WgXcQ',
+    winnerImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956',
+  },
+  {
+    prize: 'Buildiko Springwoods Designer Villa',
+    value: '₹5 CRORE',
+    winnerName: 'Ritika S.',
+    youtubeId: 'dQw4w9WgXcQ',
+    winnerImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956',
+  },
+  {
+    prize: 'Buildiko Springwoods Designer Villa',
+    value: '₹5 CRORE',
+    winnerName: 'Ritika S.',
+    youtubeId: 'dQw4w9WgXcQ',
+    winnerImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956',
+  },
+  {
+    prize: 'Buildiko Springwoods Designer Villa',
+    value: '₹5 CRORE',
+    winnerName: 'Ritika S.',
+    youtubeId: 'dQw4w9WgXcQ',
+    winnerImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956',
+  },
+  {
+    prize: 'Buildiko Springwoods Designer Villa',
+    value: '₹5 CRORE',
+    winnerName: 'Ritika S.',
+    youtubeId: 'dQw4w9WgXcQ',
+    winnerImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956',
+  },
+];
+
+export const YoutubeTestimonials = () => {
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [selectedYoutubeId, setSelectedYoutubeId] = useState(null);
+
+  return (
+    <div className="winners-carousel">
+       <header className="winners-carousel__header">
+        <h1>
+          Winners of the Month - <span className="text-yellow-400">Congratulations!</span>
+        </h1>
+        <p>Meet the lucky winners who made it big with Kutoot!</p>
+      </header>
+      <Swiper
+        modules={[EffectCoverflow, Autoplay, Pagination]}
+        effect="coverflow"
+        grabCursor
+        centeredSlides
+        slidesPerView="auto"
+        loop
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
+        pagination={{ clickable: true, dynamicBullets: true }}
+        coverflowEffect={{ rotate:0, stretch:80, depth:200, modifier:1, slideShadows:false }}
+        onSlideChange={(swiper) => setActiveSlideIndex(swiper.realIndex)}
+        className="winners-carousel__swiper"
+      >
+        {winnersData.map((winner, idx) => (
+          <SwiperSlide key={idx}>
+            <WinnerCard
+              winner={winner}
+              isActive={idx === activeSlideIndex}
+              onClick={() => setSelectedYoutubeId(winner.youtubeId)}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* CTA button */}
+      <VideoModal youtubeId={selectedYoutubeId} onClose={() => setSelectedYoutubeId(null)} />
+    </div>
+  );
+};
