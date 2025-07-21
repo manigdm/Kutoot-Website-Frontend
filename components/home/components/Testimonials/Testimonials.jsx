@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Testimonials.scss"; // Import the SCSS file
+import CommonTitle from "@/components/common/CommonTitle";
 
 // --- Mock Data ---
 const testimonials = [
@@ -90,7 +91,7 @@ function Testimonials() {
   return (
     <>
       <div className="text-center mt-4">
-        <h2 className="section-title text-black">Winning Moments Shared by Our Users</h2>
+        <CommonTitle title="Winning Moments Shared by Our Users" />
         <p className="text-black">See what our lucky winners have to say</p>
       </div>
       <div className="testimonials">

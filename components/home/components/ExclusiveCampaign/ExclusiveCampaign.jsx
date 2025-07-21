@@ -1,5 +1,6 @@
 import { LotteryCard } from "./LotteryCard";
 import "./ExclusiveCampaign.scss";
+import CommonTitle from "@/components/common/CommonTitle";
 
 const lotteryData = [
   {
@@ -58,9 +59,10 @@ export function ExclusiveCampaign() {
       <div className="lottery-cards-wrapper">
         {/* Header */}
         <div className="lottery-cards-header">
-          <h1 className="lottery-cards-title">Premium Lottery</h1>
-          <p className="lottery-cards-subtitle">
-            Win luxury prizes with your coins - Limited time offers!
+          {/* <h1 className="lottery-cards-title">Premium Lottery</h1> */}
+          <CommonTitle title="Exclusive Campaigns. Real Rewards." />
+          <p className="lottery-cards-subtitle mt-2">
+             Deals You Want. Rewards You Deserve. Coins Make It Happen.
           </p>
         </div>
 

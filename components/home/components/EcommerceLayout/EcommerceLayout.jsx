@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./EcommerceLayout.scss";
+import CommonTitle from "@/components/common/CommonTitle.jsx";
 
 const PRODUCTS = [
   {
@@ -110,13 +111,13 @@ export const EcommerceLayout = () => {
 
         <section className="news-section">
           <div className="news-header">
-            <h2 className="news-title">Kutoot Newsroom</h2>
+            <CommonTitle title="Kutoot Newsroom" />
             <p className="news-subtitle">
               Catch the latest buzz, breakthroughs, and big wins
             </p>
           </div>
 
-          <div className="news-carousel">
+          <div className="news-carousel-main">
             <section className="news-section">
               <div className="news-carousel">
                 <div className="custom-swiper-button-prev news-nav">‹</div>

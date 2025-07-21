@@ -1,43 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Header.scss";
 import { FaShareAlt } from "react-icons/fa";
-
-import { motion } from "framer-motion";
 import { useState } from "react";
-
-export function LogoReveal() {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      className={`logo-reveal-container ${isHovered ? "hovered" : ""}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <img
-        src="/images/landingpage/header-frame.png"
-        alt="K Logo"
-        className="logo-symbol"
-      />
-
-      <motion.img
-        src="/images/landingpage/kutoot-logo.png"
-        alt="Kutoot"
-        initial={{ opacity: 0, width: 0 }}
-        animate={
-          isHovered ? { opacity: 1, width: "auto" } : { opacity: 0, width: 0 }
-        }
-        transition={{ duration: 0.4 }}
-        className="logo-text"
-      />
-    </div>
-  );
-}
+import CommonButton from "@/components/common/CommonButton";
 
 const Header = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      setIsHovered(scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="header">
+      <header
+        className={`header ${isHovered ? "hovered" : ""}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="header__center-logo" />
         <div className="header__left">
           <div className="header__progress-container">
             <p className="header__label">Lucky Draw Countdown</p>
@@ -53,15 +40,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <button className="header__button orange">Enter Now</button>
-        </div>
-
-        <div className="header__center">
-          <img
-            src="/images/landingpage/kutoot-logo.png"
-            alt="Kutoot Logo"
-            className="header__logo"
-          />
+          <CommonButton label="Enter Now" />
         </div>
 
         <div className="header__right">
@@ -70,14 +49,13 @@ const Header = () => {
             <a href="#">Campaigns</a>
             <a href="#">Winners</a>
           </nav>
-          <button className="header__button orange">Shop Now</button>
+          <CommonButton label="Shop Now" />
           <button className="header__button outline">Log in</button>
           <div className="header__icon">
             <FaShareAlt />
           </div>
         </div>
       </header>
-      {/* <LogoReveal /> */}
     </>
   );
 };

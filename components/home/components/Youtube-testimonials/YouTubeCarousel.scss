@@ -2,6 +2,7 @@
   font-family: 'Inter', sans-serif;
   background-color: #2d2620;
   padding: 3rem 1rem;
+  border-radius: 60px;
 
   &__container {
     max-width: 1280px;
@@ -88,6 +89,22 @@
   }
 }
 
+.background-cream-color {
+  background-color: #FFFCEA;
+}
+
+.next-winner-section {
+  width: max-content;
+  margin: auto;
+  margin-top: 80px;
+  padding: 15px 55px;
+  border-radius: 50px;
+  h3 {
+    color: #3B322B;
+    font-weight: 900;
+  }
+}
+
 .winner-card {
   position: relative;
   width: 100%;
@@ -116,21 +133,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    // opacity: 0;
     transition: opacity 0.3s ease;
     cursor: pointer;
   }
 
   &__footer {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 1.5rem;
-    width: 100%;
+    bottom: -10%;
+    margin: auto;
+    left: 15%;
+    padding: 1rem;
+    width: 75%;
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     gap: 1rem;
+    background-color: white;
+    border-radius: 20px;
   }
 
   &__info {
@@ -139,31 +159,33 @@
     gap: 0.5rem;
 
     & .winner-card__badge {
-      background: #facc15;
-      color: black;
+      background: #EBC500;
+      color: #3B322B;
       font-size: 0.75rem;
       font-weight: 700;
       padding: 0.25rem 0.5rem;
-      border-radius: 0.5rem;
+      border-radius: 16px;
       width: fit-content;
     }
 
     & .winner-card__title {
-      font-size: 1.5rem;
+      font-size: 24px;
       font-weight: 800;
+      color: #3B322B;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     & .winner-card__value {
-      color: #ccc;
+      color: #3B322B;
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 16px;
     }
   }
 
   &__user {
     display: flex;
-    align-items: center;
+    align-items: end;
+    justify-content: center;
     gap: 0.75rem;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(4px);
@@ -171,6 +193,8 @@
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    width: 150px;
+    height: 125px;
 
     img {
       width: 48px;
