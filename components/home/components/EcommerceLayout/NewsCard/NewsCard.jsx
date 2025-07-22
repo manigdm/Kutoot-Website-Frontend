@@ -2,9 +2,9 @@ import "./NewsCard.scss";
 
 export const NewsCard = ({ title, description, image, onReadMore }) => {
   return (
-    <div className="news-card">
+    <div className="news-card" style={{ backgroundImage: `url(${image})` }}>
       <div className="news-image">
-        <img src={image} alt={title} />
+        {/* <img src={image} alt={title} /> */}
         <div className="news-overlay"></div>
       </div>
 

@@ -41,6 +41,11 @@
     flex-direction: column;
     justify-content: space-between;
 
+    &:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+
     .top-label {
       display: flex;
       justify-content: space-between;

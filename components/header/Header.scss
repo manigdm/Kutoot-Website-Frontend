@@ -1,18 +1,67 @@
 .header {
-  background-color: #3a2f23;
-  padding: 0.5rem 1.5rem;
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  color: white;
+  align-items: center;
+  padding: 10px 12px;
+  overflow: hidden;
+  min-height: 50px; // or as needed
 
+  // Background image (default frame)
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/images/landingpage/header-frame.png") no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+    transition: opacity 0.5s ease-in-out;
+    height: 70px;
+  }
+
+  // Expanding dark color background animation
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0%;
+    height: 100%;
+    background-color: #3B322B;
+    z-index: 1;
+    transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
+  }
+
+  &.hovered::before {
+    width: 100%;
+    left: 0;
+  }
+
+  // Center logo that fades in on hover
+  &__center-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 250px;
+    background: url("/images/landingpage/kutoot-logo.png") no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+  }
+
+  &.hovered .header__center-logo {
+    opacity: 1;
+  }
+
+  // Make sure left/right sections stay above backgrounds
   &__left,
-  &__center,
   &__right {
+    position: relative;
+    z-index: 3;
     display: flex;
     align-items: center;
   }
@@ -110,5 +159,36 @@
     justify-content: center;
     margin-left: 0.5rem;
     color: white;
+  }
+}
+
+// Logo Reveal on Hover Container
+.logo-reveal-container {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background-color: #2b1c13;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #553d2e;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 40px;
+  overflow: hidden;
+
+  &.hovered {
+    width: auto;
+  }
+
+  .logo-symbol {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .logo-text {
+    height: 1rem;
+    margin-left: 0.5rem;
+    overflow: hidden;
   }
 }

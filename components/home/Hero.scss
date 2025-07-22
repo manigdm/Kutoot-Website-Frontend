@@ -1,0 +1,98 @@
+// Hero.scss
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  max-height: 1280px;
+}
+
+.hero__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.hero__shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.hero__content {
+  color: white;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 100px;
+//   padding-top: 100px;
+
+  .hero-animation-sentence {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: bold;
+
+    .hero-animation-word {
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+
+  .header__title {
+    font-size: 1.8rem;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+// .blur-overlay {
+//   margin-top: 2rem;
+//   z-index: 2;
+//   position: relative;
+// }
+
+// SCROLL-BASED HEADER LOGO EFFECT
+// .header {
+//   position: fixed;
+//   top: 0;
+//   width: 100%;
+//   height: 64px;
+//   background-color: #1e1e1e;
+//   z-index: 99;
+//   display: flex;
+//   align-items: center;
+//   padding: 0 1.5rem;
+//   transition: background 0.3s ease;
+
+//   &__logo {
+//     width: 180px;
+//     height: 40px;
+//     background: url("/images/landingpage/kutoot-white-logo.png") no-repeat center center;
+//     background-size: contain;
+//     transition: background-image 0.3s ease;
+
+//     &--hovered,
+//     &--scrolled {
+//       background: url("/images/landingpage/kutoot-logo.png") no-repeat center center !important;
+//       background-size: contain;
+//     }
+//   }
+// }
