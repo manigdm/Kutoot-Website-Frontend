@@ -1,5 +1,5 @@
-// Hero.jsx
 "use client";
+
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import header_bg from "/public/images/bg/header-bg.png";
@@ -36,14 +36,14 @@ const Hero = () => {
 
   const sentence = lines[index]?.split(" ");
 
+  const enterNow = () => {};
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % lines.length);
     }, 3000);
     return () => clearInterval(interval);
   }, [lines]);
-
-  const enterNow = () => {};
 
   return (
     <>
