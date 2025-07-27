@@ -154,11 +154,6 @@ export const EcommerceLayout = () => {
             {featuredBannerData.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="featured-banner">
-                  <img
-                    src={item.image}
-                    alt={item.image}
-                    className="banner-image"
-                  />
                   <div className="banner-content">
                     <p>{item.brand}</p>
                     <h2>{item.title}</h2>
@@ -168,6 +163,9 @@ export const EcommerceLayout = () => {
                         className="header-button"
                       />
                     </div>
+                  </div>
+                  <div className="banner-image">
+                    <img src={item.image} alt={item.image} />
                   </div>
                 </div>
                 <div className="banner-arrows">
