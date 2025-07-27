@@ -1,15 +1,16 @@
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { ProductCard } from "./ProductCard/ProductCard.jsx";
-import { FeaturedBanner } from "./FeaturedBanner/FeaturedBanner.jsx";
 import { NewsCard } from "./NewsCard/NewsCard.jsx";
 import CommonButton from "@/components/common/CommonButton.jsx";
-
+import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./EcommerceLayout.scss";
 import CommonTitle from "@/components/common/CommonTitle.jsx";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 const PRODUCTS = [
   {
@@ -39,6 +40,15 @@ const PRODUCTS = [
     buttonVariant: "orange",
     backgroundColor: "bg-gradient-brown",
   },
+  {
+    title: "Fine silver jewellery",
+    subtitle: "Best value",
+    image:
+      "https://plus.unsplash.com/premium_photo-1681276170092-446cd1b5b32d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
+    buttonText: "Buy now",
+    buttonVariant: "orange",
+    backgroundColor: "bg-gradient-navy",
+  },
 ];
 
 const NEWS = [
@@ -63,9 +73,43 @@ const NEWS = [
     image:
       "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
   },
+  {
+    title: "Kutoot Crosses ₹10 Crore in Coin Sales — 5% Donated to Charity",
+    description:
+      "Thanks to our amazing community, we've hit a milestone that matters. We've hit a total of ₹10 crore in verified NGOs across India.",
+    image:
+      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
+  },
+];
+
+const featuredBannerData = [
+  {
+    title: "Best deals for all Headphones!",
+    brand: "boat",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop",
+    buttonText: "Shop Now",
+  },
+  {
+    title: "Massive Discounts on Speakers!",
+    brand: "JBL",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop",
+    buttonText: "Shop Now",
+  },
 ];
 
 export const EcommerceLayout = () => {
+  const swiperRef = useRef(null);
+
+  const handlePrev = () => {
+    swiperRef.current?.slidePrev();
+  };
+
+  const handleNext = () => {
+    swiperRef.current?.slideNext();
+  };
+
   return (
     <div className="ecommerce-layout">
       <div className="container">
@@ -76,20 +120,19 @@ export const EcommerceLayout = () => {
           </div>
           <CommonButton label="Shop Now" className="header-button" />
         </section>
-
         <section className="products-section">
           <section className="products-section">
-            <div className="custom-swiper-button-prev products-nav">‹</div>
-            <div className="custom-swiper-button-next products-nav">›</div>
             <Swiper
-              modules={[Navigation]}
+              className="products-swiper"
+              modules={[Navigation, Autoplay, Pagination]}
               spaceBetween={24}
               slidesPerView={3}
-              navigation={{
-                nextEl: ".products-section .custom-swiper-button-next",
-                prevEl: ".products-section .custom-swiper-button-prev",
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
               }}
-              loop
+              loop={true}
             >
               {PRODUCTS.map((product, index) => (
                 <SwiperSlide key={index}>
@@ -99,16 +142,46 @@ export const EcommerceLayout = () => {
             </Swiper>
           </section>
         </section>
-
         <section className="featured-section">
-          <FeaturedBanner
-            title="Best deals for all Headphones!"
-            brand="boat"
-            image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            buttonText="Shop Now"
-          />
+          <Swiper
+            modules={[Autoplay]}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            className="featured-swiper"
+          >
+            {featuredBannerData.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="featured-banner">
+                  <img
+                    src={item.image}
+                    alt={item.image}
+                    className="banner-image"
+                  />
+                  <div className="banner-content">
+                    <p>{item.brand}</p>
+                    <h2>{item.title}</h2>
+                    <div className="mt-3">
+                      <CommonButton
+                        label={item.buttonText}
+                        className="header-button"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="banner-arrows">
+                  <div className="prev-arrow">
+                    <MdArrowBackIos onClick={handlePrev} className="arrow" />
+                  </div>
+                  <div className="next-arrow">
+                    <MdArrowForwardIos onClick={handleNext} className="arrow" />
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </section>
-
         <section className="news-section">
           <div className="news-header">
             <CommonTitle title="Kutoot Newsroom" />
@@ -120,10 +193,14 @@ export const EcommerceLayout = () => {
           <div className="news-carousel-main">
             <section className="news-section">
               <div className="news-carousel">
-                <div className="custom-swiper-button-prev news-nav">‹</div>
-                <div className="custom-swiper-button-next news-nav">›</div>
+                <div className="custom-swiper-button-prev news-nav">
+                  <MdArrowBackIos className="back-arrow" />
+                </div>
+                <div className="custom-swiper-button-next news-nav">
+                  <MdArrowForwardIos />
+                </div>
                 <Swiper
-                  modules={[Navigation]}
+                  modules={[Navigation, Autoplay]}
                   spaceBetween={24}
                   slidesPerView={3}
                   navigation={{
@@ -131,6 +208,10 @@ export const EcommerceLayout = () => {
                     prevEl: ".news-carousel .custom-swiper-button-prev",
                   }}
                   loop
+                  autoplay={{
+                    delay: 2000,
+                    disableOnInteraction: false,
+                  }}
                 >
                   {NEWS.map((news, index) => (
                     <SwiperSlide key={index}>

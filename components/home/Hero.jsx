@@ -97,13 +97,13 @@ const Hero = () => {
               {/* {banner?.title || " */}
               Enter to win a luxury Buildiko Springwoods Villa!
             </div>
-            <p>
+            <p className="header__description">
               {banner?.short_description || "Win dreams or take cash, tax-free! | Guaranteed wins | 5% for a better world | 100% your moment!"}
             </p>
-            <div className="mt-2">
+            {/* <div className="mt-2">
               <Image src={trusted_by_hindu} alt="trusted by hindu" />
-            </div>
-            <div className="d-flex flex-row gap-1 justify-content-center align-items-center mt-3">
+            </div> */}
+            <div className="d-flex flex-row gap-2 justify-content-center align-items-center mt-6">
               <CommonButton onClick={enterNow} />
               <LockButton tooltipText="Unlocks once the goal is reached" />
             </div>
@@ -114,17 +114,16 @@ const Hero = () => {
           <LuckyDrawSlider />
         </div>
       </section>
-
       <div className="promo-section-container">
         <PromoSection />
       </div>
       <div className="exclusive-campaign-container">
         <ExclusiveCampaign />
       </div>
-      <div className="exclusive-campaign-container">
+      <div className="exclusive-campaign-container d-none">
         <YoutubeTestimonials />
       </div>
-      <div className="exclusive-campaign-container">
+      <div className="exclusive-campaign-container d-none">
         <Testimonials />
       </div>
       <div>

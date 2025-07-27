@@ -5,16 +5,17 @@ import CommonTitle from "@/components/common/CommonTitle";
 const lotteryData = [
   {
     title: "Suzuki Hayabusa",
-    worth: "₹20 Lakhs",
+    worth: "Worth ₹20 Lakhs",
     coinPrice: 400,
     totalCoins: 1600,
     image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80",
     progress: 65,
     gradient: "from-blue-900/20 to-blue-800/40",
+    sponsor: "Sargeetha",
   },
   {
     title: "Buildiko Springwoods Designer Villa",
-    worth: "₹5 Crore",
+    worth: "Worth ₹5 Crore",
     coinPrice: 400,
     totalCoins: 1600,
     image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80",
@@ -25,31 +26,34 @@ const lotteryData = [
   },
   {
     title: "Jaguar F-Pace",
-    worth: "₹1.10 Crores",
+    worth: "Worth ₹1.10 Crores",
     coinPrice: 400,
     totalCoins: 1600,
     image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80",
     progress: 65,
     gradient: "from-slate-900/20 to-gray-800/40",
+    sponsor: "Sargeetha",
   },
   {
     title: "Luxury Maldives Trip",
-    worth: "₹8 Lakhs",
+    worth: "Worth ₹8 Lakhs",
     coinPrice: 400,
     totalCoins: 1600,
     image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80",
     progress: 65,
     gradient: "from-cyan-900/20 to-teal-800/40",
+    sponsor: "Sargeetha",
   },
   {
     title: "Gold Jewelry",
-    worth: "₹12 Lakhs",
+    worth: "Worth ₹12 Lakhs",
     coinPrice: 400,
     totalCoins: 1600,
     image:
       "https://plus.unsplash.com/premium_photo-1709033404514-c3953af680b4?q=80",
     progress: 65,
     gradient: "from-yellow-900/20 to-amber-800/40",
+    sponsor: "Sargeetha",
   },
 ];
 

@@ -94,13 +94,12 @@
   pointer-events: none;
 
   .arrow {
-    background: rgba(0, 0, 0, 0.5);
+    background: #6A609A;
+    opacity:0.7;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: none;
     border-radius: 999px;
-    width: 50px;
-    height: 50px;
     cursor: pointer;
     pointer-events: all;
     transition: background 0.3s ease;
@@ -110,11 +109,11 @@
     }
 
     &--left {
-      margin-left: 1rem;
+      margin-left: 3rem;
     }
 
     &--right {
-      margin-right: 1rem;
+      margin-right: 3rem;
     }
   }
 }

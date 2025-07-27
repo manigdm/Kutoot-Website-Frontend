@@ -2,8 +2,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "./UpcomingCampaigns.scss";
 import CommonButton from "@/components/common/CommonButton";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import { useRef } from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const campaigns = [
   {
@@ -27,7 +28,6 @@ const campaigns = [
     cta: "Enter Now",
     image: "/images/villa-bg.jpg",
   },
-  // Add more campaigns here...
 ];
 
 export default function UpcomingCampaigns() {
@@ -44,7 +44,7 @@ export default function UpcomingCampaigns() {
       </p>
       <Swiper
         className="campaign-carousel__swiper"
-        modules={[Navigation]}
+        modules={[Navigation, Autoplay]}
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
@@ -55,15 +55,16 @@ export default function UpcomingCampaigns() {
         }}
         slidesPerView={1}
         loop
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
         centeredSlides
         spaceBetween={30}
       >
         <div className="campaign-carousel__arrows">
           <button ref={prevRef} className="arrow arrow--left">
-            ‹
+            <IoIosArrowBack />
           </button>
           <button ref={nextRef} className="arrow arrow--right">
-            ›
+            <IoIosArrowForward />
           </button>
         </div>
         {campaigns.map((campaign, index) => (

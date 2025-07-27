@@ -3,23 +3,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 12px;
+  padding: 10px 32px;
   overflow: hidden;
-  min-height: 50px; // or as needed
+  min-height: 50px;
 
-  // Background image (default frame)
   &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: url("/images/landingpage/header-frame.png") no-repeat center center;
+    background: url("/images/landingpage/header-frame.png") no-repeat center
+      center;
     background-size: cover;
     z-index: 0;
     transition: opacity 0.5s ease-in-out;
     height: 70px;
   }
 
-  // Expanding dark color background animation
   &::before {
     content: "";
     position: absolute;
@@ -27,7 +26,7 @@
     left: 50%;
     width: 0%;
     height: 100%;
-    background-color: #3B322B;
+    background-color: #3b322b;
     z-index: 1;
     transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
   }
@@ -37,14 +36,14 @@
     left: 0;
   }
 
-  // Center logo that fades in on hover
   &__center-logo {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 200px;
     height: 250px;
-    background: url("/images/landingpage/kutoot-logo.png") no-repeat center center;
+    background: url("/images/landingpage/kutoot-logo.png") no-repeat center
+      center;
     background-size: contain;
     transform: translate(-50%, -50%);
     opacity: 0;
@@ -57,13 +56,13 @@
     opacity: 1;
   }
 
-  // Make sure left/right sections stay above backgrounds
   &__left,
   &__right {
     position: relative;
     z-index: 3;
     display: flex;
     align-items: center;
+    padding-top: 0.5rem;
   }
 
   &__left {
@@ -72,7 +71,8 @@
 
   &__label {
     font-size: 0.8rem;
-    margin: 0;
+    font-weight: 600;
+    color: #ffffff;
   }
 
   &__progress-container {
@@ -90,6 +90,7 @@
   &__percentage {
     font-weight: bold;
     font-size: 1rem;
+    color: #ffffff;
   }
 
   &__bar {
@@ -98,10 +99,10 @@
     border-radius: 4px;
     overflow: hidden;
     padding: 0.1rem;
-    border: 1px solid #555;
+    border: 1px solid #ffb347;
 
     .bar-segment {
-      width: 10px;
+      width: 6px;
       height: 16px;
       background-color: #222;
       margin: 0 1px;
@@ -129,7 +130,7 @@
       background-color: transparent;
       border: 1px solid white;
       color: white;
-      margin-left: 0.5rem;
+      margin-left: 1rem;
     }
   }
 
@@ -139,7 +140,7 @@
 
   &__nav {
     display: flex;
-    gap: 1.2rem;
+    gap: 1rem;
     margin-right: 1rem;
 
     a {
@@ -157,12 +158,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0.5rem;
+    margin-left: 1rem;
     color: white;
   }
 }
 
-// Logo Reveal on Hover Container
 .logo-reveal-container {
   display: flex;
   align-items: center;

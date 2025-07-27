@@ -1,6 +1,6 @@
 .ecommerce-layout {
   min-height: 100vh;
-  background: #FFFDF2;
+  background: #fffdf2;
   padding: 32px 16px;
 
   .container {
@@ -18,7 +18,7 @@
     .main-title {
       font-size: 34px;
       font-weight: bold;
-      color: #3B322B;
+      color: #3b322b;
       margin: 0;
     }
 
@@ -39,6 +39,13 @@
     position: relative;
 
     .products-swiper {
+      .swiper-pagination {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-top: 36px;
+      }
+
       .swiper-pagination-bullet {
         background: #fb923c;
         width: 8px;
@@ -58,8 +65,53 @@
     }
   }
 
+  .featured-slide-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .banner-arrows {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 8px;
+
+    .prev-arrow,
+    .next-arrow {
+      background: #a1a1a1;
+      border-radius: 50%;
+      padding: 8px;
+    }
+
+    .prev-arrow {
+      .arrow {
+        position: relative;
+        left: 4px;
+      }
+    }
+
+    .arrow {
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: #fffdf2 0.3s;
+    }
+  }
+
   .featured-section {
-    margin: 48px 0;
+    margin: 16px 0;
+
+    .featured-banner {
+      border-radius: 48px;
+    }
+
+    .banner-content {
+      max-width: 80%;
+    }
   }
 
   .news-section {
@@ -120,16 +172,9 @@
 
 .products-nav,
 .news-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
-  width: 32px;
-  height: 32px;
+  background: #a1a1a1;
+  color: #ffffff;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,10 +185,16 @@
 
 .products-nav.custom-swiper-button-prev,
 .news-nav.custom-swiper-button-prev {
-  left: -16px;
+  left: -48px;
+  padding: 6px;
+  .back-arrow {
+    position: relative;
+    left: 4px;
+  }
 }
 
 .products-nav.custom-swiper-button-next,
 .news-nav.custom-swiper-button-next {
-  right: -16px;
+  right: -48px;
+  padding: 6px;
 }

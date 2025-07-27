@@ -1,4 +1,3 @@
-// PromoSection.jsx
 import React, { useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -70,11 +69,7 @@ const PromoSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const homepageData = useHomePage();
 
-  console.log("homepageData", homepageData);
-
-  const enterNow = () => {
-    //
-  };
+  const enterNow = () => {};
 
   const slides = homepageData?.data?.banner
     ? [homepageData.data.banner.image1, homepageData.data.banner.image2].filter(
@@ -99,7 +94,7 @@ const PromoSection = () => {
   return (
     <div className="promo-section">
       <header className="promo-header">
-        <CommonTitle title="Win the 5 Crore Buildiko Springwoods Designer Villa" />
+        <CommonTitle title="Win the ₹5 Crore Buildiko Springwoods Designer Villa" />
         <div className="featured-in">
           <span>As featured in</span>
           <div className="publications">
@@ -163,18 +158,18 @@ const PromoSection = () => {
                         fill
                         style={{ objectFit: "cover" }}
                       />
-                      <div className="property-details-overlay">
-                        <div className="d-flex justify-content-between align-items-center gap-4">
+                      <div className="property-details-overlay d-flex gap-4">
+                        <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/bed-room.png" alt="" />
-                          <span>{propertyDetails?.bedrooms} bedrooms</span>
+                          <span className="text-white">{propertyDetails?.bedrooms} bedrooms</span>
                         </div>
-                        <div className="d-flex justify-content-between align-items-center gap-4">
+                        <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/bath-room.png" alt="" />
-                          <span>{propertyDetails?.bathrooms} bathrooms</span>
+                          <span className="text-white">{propertyDetails?.bathrooms} bathrooms</span>
                         </div>
-                        <div className="d-flex justify-content-between align-items-center gap-4">
+                        <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/sqft.png" alt="" />
-                          <span>{propertyDetails?.sqft} sqft</span>
+                          <span className="text-white">{propertyDetails?.sqft} sqft</span>
                         </div>
                       </div>
                     </div>

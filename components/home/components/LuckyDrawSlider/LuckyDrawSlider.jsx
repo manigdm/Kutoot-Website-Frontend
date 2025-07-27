@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "./LuckyDrawSlider.scss";
 import CommonButton from "@/components/common/CommonButton";
+import { IoLockClosedOutline } from "react-icons/io5";
 
 const data = [
   {
@@ -13,7 +14,7 @@ const data = [
     image:
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 65,
-    locked: false,
+    locked: true,
   },
   {
     title: "Jaguar F-Pace",
@@ -21,7 +22,7 @@ const data = [
     image:
       "https://images.unsplash.com/photo-1713462714591-28a35a529b99?q=80&w=652&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 65,
-    locked: false,
+    locked: true,
   },
   {
     title: "Mahindra Thar ROXX",
@@ -37,7 +38,7 @@ const data = [
     image:
       "https://images.unsplash.com/photo-1713462714591-28a35a529b99?q=80&w=652&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 65,
-    locked: false,
+    locked: true,
   },
   {
     title: "Buildiko Springwoods Villa",
@@ -45,7 +46,7 @@ const data = [
     image:
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 65,
-    locked: false,
+    locked: true,
   },
   {
     title: "Mahindra Thar ROXX",
@@ -79,10 +80,11 @@ const LuckyDrawSlider = () => {
             <div
               className="draw-card"
               style={{ backgroundImage: `url(${item.image})` }}
-            >
+            ></div>
+            <div className="draw-card-content">
               <div className="top-label">
                 <span>LUCKY DRAW COUNTDOWN</span>
-                <div className="progress">
+                {/* <div className="progress">
                   <span>{item.progress}%</span>
                   <div className="bar">
                     <div
@@ -90,19 +92,33 @@ const LuckyDrawSlider = () => {
                       style={{ width: `${item.progress}%` }}
                     />
                   </div>
+                </div> */}
+                <div className="progress-bar">
+                  <span>{item.progress}%</span>
+                  <div className="header__bar">
+                    {[...Array(10)].map((_, i) => (
+                      <div
+                        key={i}
+                        className={`bar-segment ${i < 6 ? "filled" : ""}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-
               <div className="details">
                 <h3>{item.title}</h3>
-                <p>worth {item.worth}</p>
+                <p className="text-white">worth {item.worth}</p>
               </div>
-
               <div className="actions">
                 <button
                   className={`draw-button ${item.locked ? "locked" : ""}`}
                 >
-                  {item.locked ? "🔒" : ""} Draw Date
+                  {item.locked ? (
+                    <IoLockClosedOutline className="lock-icon" />
+                  ) : (
+                    ""
+                  )}{" "}
+                  Draw Date
                 </button>
                 <CommonButton label="Buy Now" onClick={enterNow} />
               </div>

@@ -1,47 +1,56 @@
-/* --- Variables for easy customization --- */
-$button-bg-color: #d97d3b; // The orange from your previous designs
+$button-bg-color: #d97d3b;
 $button-text-color: #ffffff;
-$primary-font: 'Arial', sans-serif;
+$primary-font: "Arial", sans-serif;
 
 .fixed-enter-button {
-  /* --- Positioning --- */
-  position: fixed; // Fixes the button relative to the browser window
-  top: 50%;        // Positions the top of the button at the vertical midpoint
-  right: 0;        // Aligns the button to the right edge of the screen
-  transform: translateY(-50%); // Pulls the button up by half its own height to be perfectly centered
-  z-index: 1000;   // Ensures the button stays on top of all other content
-
-  /* --- Layout & Styling --- */
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
   display: flex;
-  flex-direction: column; // Stacks the icon and text vertically
-  align-items: center;    // Centers items horizontally within the button
-  gap: 12px;              // Adds space between the icon and the text
-  
-  /* --- Appearance --- */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   background-color: $button-bg-color;
   color: $button-text-color;
   border: none;
   padding: 20px 12px;
-  border-radius: 15px 0 0 15px; // Rounds the top-left and bottom-left corners
+  border-radius: 15px 0 0 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
     background-color: darken($button-bg-color, 8%);
-    // Optional: make the button slide out slightly on hover
-    // transform: translateY(-50%) translateX(-3px); 
   }
 
   .enter-icon {
-    font-size: 2rem; // Adjust icon size as needed
+    font-size: 1.5rem;
   }
 
   .enter-text {
     font-family: $primary-font;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     transform: rotate(180deg);
-    // This property makes the text display vertically
+    color: #ffffff;
     writing-mode: vertical-rl;
   }
+}
+
+.question-mark {
+  position: fixed;
+  right: 0;
+  top: 68%;
+  z-index: 10006;
+  color: white;
+  border: 1px solid $button-text-color;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

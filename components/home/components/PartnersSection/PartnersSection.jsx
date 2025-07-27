@@ -16,6 +16,7 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
         <h2 className="partners-heading">{title}</h2>
         <div className="carousel-container">
           <Swiper
+          dir="rtl"
             slidesPerView={4.2}
             spaceBetween={32}
             loop={true}
@@ -31,7 +32,7 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
           >
             {partnerLogos.map((logo, index) => (
               <SwiperSlide key={index}>
-                <div className="partner-logo">
+                <div className="partner-logo" style={{ direction: "ltr" }}>
                   <Image
                     src={logo}
                     alt={`partner-logo-${index}`}
@@ -49,7 +50,6 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
   );
 };
 
-// ✅ Use public path references (DON'T use imports for next/image here)
 const partners = [
   "/images/landingpage/thaagam_foundation.png",
   "/images/landingpage/narayana_health.png",

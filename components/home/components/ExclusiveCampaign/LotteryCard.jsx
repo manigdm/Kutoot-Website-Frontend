@@ -1,8 +1,7 @@
-// LotteryCard.jsx
 import { useState } from "react";
-import { CalendarDays, Coins } from "lucide-react";
 import "./ExclusiveCampaign.scss";
 import Image from "next/image";
+import LockButton from "../../../common/LockButton";
 
 export function LotteryCard({
   title,
@@ -66,8 +65,6 @@ export function LotteryCard({
         </div>
 
         <div className="lottery-card-title-section">
-          <h3 className="lottery-card-title">{title}</h3>
-          <p className="lottery-card-worth">{worth}</p>
           {sponsor && (
             <div className="lottery-card-sponsor">
               <span className="lottery-card-sponsor-badge">
@@ -75,9 +72,11 @@ export function LotteryCard({
               </span>
             </div>
           )}
+          <h3 className="lottery-card-title mt-2">{title}</h3>
+          <p className="lottery-card-worth">{worth}</p>
         </div>
 
-        <div className="lottery-card-bottom">
+        {/* <div className="lottery-card-bottom">
           <div className="lottery-card-progress">
             <div className="lottery-card-progress-header">
               <span className="lottery-card-progress-label">
@@ -112,6 +111,29 @@ export function LotteryCard({
               </button>
             </div>
           </div>
+        </div> */}
+        <div className="lottery-card-bottom">
+          <div>
+            <div className="d-flex gap-2 align-items-center">
+              <span className="text-white">{progress}%</span>
+              <div className="header__bar">
+                {[...Array(10)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`bar-segment ${i < 6 ? "filled" : ""}`}
+                  />
+                ))}
+              </div>
+            </div>
+            <p className="lucky-draw-countdown text-white">
+              Lucky Draw Countdown
+            </p>
+          </div>
+          <div className="lottery-coin">
+            <Image src="/coin.png" width={80} height={80} />
+            <p>{totalCoins}</p>
+          </div>
+          <LockButton tooltipText="Unlocks once the goal is reached" />
         </div>
       </div>
 
