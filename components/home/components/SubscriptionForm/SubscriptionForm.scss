@@ -64,6 +64,7 @@ $primary-font: "Arial", sans-serif;
 
   button[type="submit"] {
     position: absolute;
+    right: 0;
     background-color: $button-bg;
     color: $button-text-color;
     border: none;
