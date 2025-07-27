@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import header_bg from "/public/images/bg/header-bg.png";
-import trusted_by_hindu from "/public/images/landingpage/trusted_by_hindu.png";
 import { useHomePage } from "@/context/HomePageContext";
 import { useWindowWidth } from "@/context/WindowWidth";
 import { motion, AnimatePresence } from "framer-motion";
