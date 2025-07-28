@@ -16,6 +16,16 @@
   z-index: -1;
 }
 
+.video-control-button {
+  position: absolute;
+  right: 32px;
+  top: 10%;
+  background: #131313;
+  border-radius: 50%;
+  z-index: 999;
+  padding: 8px;
+}
+
 .hero__shape {
   position: absolute;
   top: 0;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./PromoSection.scss";
@@ -10,8 +10,7 @@ import theHindu from "/public/images/landingpage/the-hindu.png";
 import indiaToday from "/public/images/landingpage/india-today.png";
 import CommonButton from "@/components/common/CommonButton";
 import CommonTitle from "@/components/common/CommonTitle";
-import left_arrow from "/public/images/landingpage/left-arrow.png";
-import right_arrow from "/public/images/landingpage/right-arrow.png";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const FEATURE_POINTS = [
   "4500+ sq. ft. | 4 Beds | 5 Baths",
@@ -110,33 +109,26 @@ const PromoSection = () => {
       <section className="promo-content">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-8 relative">
-              <div
-                className={`custom-swiper-button-prev ${
-                  isBeginning ? "disabled-cursor" : ""
-                }`}
-              >
-                <Image src={left_arrow} alt="Left" />
+            <div className="col-lg-8 promo-slider-arrow">
+              <div className="promo-prev-arrow custom-swiper-button-prev">
+                <IoIosArrowBack />
               </div>
-              <div
-                className={`custom-swiper-button-next ${
-                  isEnd ? "disabled-cursor" : ""
-                }`}
-              >
-                <Image src={right_arrow} alt="Right" />
+              <div className="promo-next-arrow custom-swiper-button-next">
+                <IoIosArrowForward />
               </div>
               <Swiper
-                // navigation
-                modules={[Navigation]}
+                modules={[Navigation, Autoplay]}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
                   setIsBeginning(swiper.isBeginning);
                   setIsEnd(swiper.isEnd);
                 }}
+                autoplay={{ delay: 2000, disableOnInteraction: false }}
                 onSlideChange={(swiper) => {
                   setIsBeginning(swiper.isBeginning);
                   setIsEnd(swiper.isEnd);
                 }}
+                loop={true}
                 className="mySwiper rounded-20"
                 navigation={{
                   nextEl: ".custom-swiper-button-next",
@@ -158,18 +150,29 @@ const PromoSection = () => {
                         fill
                         style={{ objectFit: "cover" }}
                       />
+                      <div className="property-plan">
+                        <button className="active">Gallery</button>
+                        <button>Floor plan</button>
+                        <button>Info</button>
+                      </div>
                       <div className="property-details-overlay d-flex gap-4">
                         <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/bed-room.png" alt="" />
-                          <span className="text-white">{propertyDetails?.bedrooms} bedrooms</span>
+                          <span className="text-white">
+                            {propertyDetails?.bedrooms} bedrooms
+                          </span>
                         </div>
                         <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/bath-room.png" alt="" />
-                          <span className="text-white">{propertyDetails?.bathrooms} bathrooms</span>
+                          <span className="text-white">
+                            {propertyDetails?.bathrooms} bathrooms
+                          </span>
                         </div>
                         <div className="d-flex justify-content-between align-items-center gap-2">
                           <img src="/images/landingpage/sqft.png" alt="" />
-                          <span className="text-white">{propertyDetails?.sqft} sqft</span>
+                          <span className="text-white">
+                            {propertyDetails?.sqft} sqft
+                          </span>
                         </div>
                       </div>
                     </div>

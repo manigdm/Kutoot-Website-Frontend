@@ -7,26 +7,26 @@ const stepsData = [
   {
     number: "1",
     numberImage: "/images/landingpage/number-1.png",
-    title: "Buy Kutoot Coins",
-    description: "Use Kutoot Coins to shop exclusive deals on our platform.",
+    title: "Buy Coins",
+    description: "Get coins via one-time or monthly plans.",
   },
   {
     number: "2",
     numberImage: "/images/landingpage/number-2.png",
     title: "Win Big",
-    description: "Each coin gives Lucky Draw Coupons to win luxury prizes.",
+    description: "Use Lucky Draw Coupons to win villas, cars & more.",
   },
   {
     number: "3",
     numberImage: "/images/landingpage/number-3.png",
-    title: "Shop with Power",
-    description: "Just shop to your heart's content, win and smile!",
+    title: "Shop & Sav",
+    description: "Redeem coins for exclusive shopping discounts.",
   },
   {
     number: "4",
     numberImage: "/images/landingpage/number-4.png",
     title: "Give Back",
-    description: "5% goes to charity. Shop. Win. Make a difference.",
+    description: "5% of proceeds go to verified charities.",
   },
 ];
 

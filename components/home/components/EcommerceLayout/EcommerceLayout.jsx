@@ -124,14 +124,14 @@ export const EcommerceLayout = () => {
           <section className="products-section">
             <Swiper
               className="products-swiper"
-              modules={[Navigation, Autoplay, Pagination]}
+              modules={[Navigation, Pagination]}
               spaceBetween={24}
               slidesPerView={3}
               pagination={{ clickable: true }}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-              }}
+              // autoplay={{
+              //   delay: 2000,
+              //   disableOnInteraction: false,
+              // }}
               loop={true}
             >
               {PRODUCTS.map((product, index) => (

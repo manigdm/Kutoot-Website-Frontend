@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -12,6 +13,22 @@ const Footer = () => {
             alt="Kutoot Logo"
             className="footer-logo"
           />
+          <div className="d-flex gap-3">
+            <div className="d-flex align-items-center gap-2 apple-store">
+              <img src="/apple-icon.png" width={32} height={32} />
+              <div className="d-flex flex-column gap-1">
+                <p className="text-white">Download on the</p>
+                <p className="text-white">App Store</p>
+              </div>
+            </div>
+            <div className="d-flex align-items-center gap-2 play-store">
+              <img src="/Playstore.png" width={32} height={32} />
+              <div className="d-flex flex-column gap-1">
+                <p className="text-white">Android app on</p>
+                <p className="text-white">Google Play</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="footer-column links-section">
@@ -60,9 +77,9 @@ const Footer = () => {
             <a href="#">
               <FaWhatsapp />
             </a>
-            {/* <a href="#">
+            <a href="#">
               <FaXTwitter />
-            </a> */}
+            </a>
             <a href="#">
               <FaInstagram />
             </a>

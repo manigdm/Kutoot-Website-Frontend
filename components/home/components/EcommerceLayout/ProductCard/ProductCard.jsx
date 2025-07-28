@@ -13,7 +13,10 @@ export const ProductCard = ({
   return (
     <div className={`product-card ${backgroundColor}`}>
       <div className="product-content">
-        <div className="product-subtitle">{subtitle}</div>
+        <div className="product-subtitle">
+          <img src="/star.png" height={12} width={12} className="product-star" />
+          PRICE DROP
+        </div>
         <h3 className="product-title">{title}</h3>
         <CommonButton
           label={buttonText}

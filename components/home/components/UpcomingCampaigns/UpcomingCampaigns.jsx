@@ -61,10 +61,10 @@ export default function UpcomingCampaigns() {
       >
         <div className="campaign-carousel__arrows">
           <button ref={prevRef} className="arrow arrow--left">
-            <IoIosArrowBack />
+            <IoIosArrowBack className="left-arrow" />
           </button>
           <button ref={nextRef} className="arrow arrow--right">
-            <IoIosArrowForward />
+            <IoIosArrowForward className="right-arrow" />
           </button>
         </div>
         {campaigns.map((campaign, index) => (
@@ -72,7 +72,7 @@ export default function UpcomingCampaigns() {
             <div className="campaign-card">
               <div className="campaign-card__content">
                 <h3>{campaign.title}</h3>
-                <p>{campaign.description}</p>
+                <p className="campaign-card__description">{campaign.description}</p>
               </div>
               <CommonButton label="Enter Now" />
             </div>

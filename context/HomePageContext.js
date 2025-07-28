@@ -17,6 +17,7 @@ export const HomePageProvider = ({ children }) => {
           const res = await apiRequest.getHomepageDetails(token);
           if (res.status === 200) {
             setHomepageData(res.data);
+            console.log(res.data, 'homepage');
           } else {
             console.error("API error:", res);
           }

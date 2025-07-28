@@ -4,7 +4,7 @@ $title-color: #ffffff;
 $link-hover-color: #f9fafb;
 $divider-color: #574f49;
 $icon-bg: #544e59;
-$primary-font: 'Poppins', sans-serif;
+$primary-font: "Poppins", sans-serif;
 
 .footer-container {
   background-color: $footer-bg;
@@ -13,6 +13,19 @@ $primary-font: 'Poppins', sans-serif;
   padding: 60px 40px 30px;
   border-top-left-radius: 48px;
   border-top-right-radius: 48px;
+}
+
+.apple-store,
+.play-store {
+  background: #5f5d5c;
+  width: fit-content;
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  p {
+    opacity: 0.7;
+    line-height: 100%;
+  }
 }
 
 .footer-main {

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import header_bg from "/public/images/bg/header-bg.png";
 import { useHomePage } from "@/context/HomePageContext";
 import { useWindowWidth } from "@/context/WindowWidth";
@@ -21,17 +21,32 @@ import Footer from "./components/Footer/Footer";
 import FixedEnterButton from "./components/FixedEnterButton/FixedEnterButton";
 import UpcomingCampaigns from "./components/UpcomingCampaigns/UpcomingCampaigns";
 import "./Hero.scss";
+import { IoPlayOutline, IoPauseCircleOutline } from "react-icons/io5";
 
 const Hero = () => {
   const homepageData = useHomePage();
   const width = useWindowWidth();
   const [index, setIndex] = useState(0);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const banner = homepageData?.data?.banner;
   const lines = [
     banner?.title1 || "Your ₹5 Crore Villa — Only on Kutoot!",
-    banner?.title2 || "Luxury living at Rs. 99 Lakh on Kutoot Now!"
+    banner?.title2 || "Luxury living at Rs. 99 Lakh on Kutoot Now!",
   ];
+
+  const handleVideoToggle = () => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   const sentence = lines[index]?.split(" ");
 
@@ -49,14 +64,27 @@ const Hero = () => {
       <FixedEnterButton />
       <section className="hero">
         {homepageData?.data?.banner?.video ? (
-          <video
-            className="hero__video"
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}` + homepageData.data.banner.video}
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
+          <>
+            <video
+              ref={videoRef}
+              className="hero__video"
+              src={
+                `${process.env.NEXT_PUBLIC_BASE_URL}` +
+                homepageData.data.banner.video
+              }
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+            <button className="video-control-button" onClick={handleVideoToggle}>
+              {isPlaying ? (
+                <IoPauseCircleOutline size={24} color="white" />
+              ) : (
+                <IoPlayOutline size={24} color="white" />
+              )}
+            </button>
+          </>
         ) : (
           <div className="hero__shape">
             <Image
@@ -97,7 +125,8 @@ const Hero = () => {
               Enter to win a luxury Buildiko Springwoods Villa!
             </div>
             <p className="header__description">
-              {banner?.short_description || "Win dreams or take cash, tax-free! | Guaranteed wins | 5% for a better world | 100% your moment!"}
+              {banner?.short_description ||
+                "Win dreams or take cash, tax-free! | Guaranteed wins | 5% for a better world | 100% your moment!"}
             </p>
             {/* <div className="mt-2">
               <Image src={trusted_by_hindu} alt="trusted by hindu" />

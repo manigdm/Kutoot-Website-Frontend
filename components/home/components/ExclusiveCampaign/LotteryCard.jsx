@@ -14,7 +14,8 @@ export function LotteryCard({
   hoverDirection = "static",
   cardIndex = 0,
   isFeatured = false,
-  sponsor,
+  sponsorImage,
+  minimumPurchaseImage,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -58,18 +59,16 @@ export function LotteryCard({
         <div className="lottery-card-overlay" />
 
         <div className="lottery-card-price-badge">
-          <div>
-            <div className="lottery-card-price-top">COIN PRICE</div>
-            <div className="lottery-card-price-bottom">₹{coinPrice}</div>
-          </div>
+          <img src={minimumPurchaseImage} width={100} height={100} />
         </div>
 
         <div className="lottery-card-title-section">
-          {sponsor && (
-            <div className="lottery-card-sponsor">
-              <span className="lottery-card-sponsor-badge">
-                SPONSORED BY {sponsor}
-              </span>
+          {{sponsorImage} && (
+            <div className="lottery-card-sponsor d-flex">
+              <p className="lottery-card-sponsor-badge d-flex align-items-center">
+                SPONSORED BY
+              </p>
+              <img src={sponsorImage} height={32} width={100} className="lottery-card-sponsor-image" />
             </div>
           )}
           <h3 className="lottery-card-title mt-2">{title}</h3>

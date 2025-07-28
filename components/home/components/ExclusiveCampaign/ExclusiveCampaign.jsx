@@ -1,6 +1,7 @@
 import { LotteryCard } from "./LotteryCard";
 import "./ExclusiveCampaign.scss";
 import CommonTitle from "@/components/common/CommonTitle";
+import CommonButton from "@/components/common/CommonButton";
 
 const lotteryData = [
   {
@@ -11,7 +12,8 @@ const lotteryData = [
     image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80",
     progress: 65,
     gradient: "from-blue-900/20 to-blue-800/40",
-    sponsor: "Sargeetha",
+    sponsorImage: "/sponsorImage.png",
+    minimumPurchaseImage: "/minimum_purchase.png",
   },
   {
     title: "Buildiko Springwoods Designer Villa",
@@ -22,7 +24,8 @@ const lotteryData = [
     progress: 65,
     gradient: "from-green-900/20 to-emerald-800/40",
     isFeatured: true,
-    sponsor: "Sargeetha",
+    sponsorImage: "/sponsorImage.png",
+    minimumPurchaseImage: "/minimum_purchase.png",
   },
   {
     title: "Jaguar F-Pace",
@@ -32,7 +35,8 @@ const lotteryData = [
     image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80",
     progress: 65,
     gradient: "from-slate-900/20 to-gray-800/40",
-    sponsor: "Sargeetha",
+    sponsorImage: "/sponsorImage.png",
+    minimumPurchaseImage: "/minimum_purchase.png",
   },
   {
     title: "Luxury Maldives Trip",
@@ -42,7 +46,8 @@ const lotteryData = [
     image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80",
     progress: 65,
     gradient: "from-cyan-900/20 to-teal-800/40",
-    sponsor: "Sargeetha",
+    sponsorImage: "/sponsorImage.png",
+    minimumPurchaseImage: "/minimum_purchase.png",
   },
   {
     title: "Gold Jewelry",
@@ -53,7 +58,8 @@ const lotteryData = [
       "https://plus.unsplash.com/premium_photo-1709033404514-c3953af680b4?q=80",
     progress: 65,
     gradient: "from-yellow-900/20 to-amber-800/40",
-    sponsor: "Sargeetha",
+    sponsorImage: "/sponsorImage.png",
+    minimumPurchaseImage: "/minimum_purchase.png",
   },
 ];
 
@@ -66,7 +72,7 @@ export function ExclusiveCampaign() {
           {/* <h1 className="lottery-cards-title">Premium Lottery</h1> */}
           <CommonTitle title="Exclusive Campaigns. Real Rewards." />
           <p className="lottery-cards-subtitle mt-2">
-             Deals You Want. Rewards You Deserve. Coins Make It Happen.
+            Deals You Want. Rewards You Deserve. Coins Make It Happen.
           </p>
         </div>
 
@@ -116,6 +122,10 @@ export function ExclusiveCampaign() {
               />
             </div>
           </div>
+        </div>
+
+        <div className="lottery-view-more-button">
+          <CommonButton label="View more" />
         </div>
 
         {/* Footer Info */}
