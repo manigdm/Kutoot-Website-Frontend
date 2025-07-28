@@ -45,9 +45,9 @@ const Header = () => {
 
         <div className="header__right">
           <nav className="header__nav">
-            <a href="#">Blog</a>
             <a href="#">Campaigns</a>
             <a href="#">Winners</a>
+            <a href="#">My Coupons</a>
           </nav>
           <CommonButton label="Shop Now" />
           <button className="header__button outline">Log in</button>

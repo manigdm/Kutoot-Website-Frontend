@@ -43,9 +43,21 @@
   margin: 0 auto;
   color: #333;
 
+  .deadline-notice p div{
+    font-family: 'Zurich Extra Black', sans-serif
+  }
+
   .promo-header {
     text-align: center;
     margin-bottom: 2rem;
+
+    .promo-header__title {
+      font-size: 44px;
+      color: #3B322B;
+      margin-top: 40px;
+      font-weight: 900;
+      font-family: 'Zurich Extra Black', sans-serif
+    }
 
     .promo-heading {
       color: #3b322b;
@@ -62,15 +74,16 @@
     }
 
     .featured-in {
-      font-style: italic;
       margin-bottom: 1.5rem;
       margin-top: 1.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 1rem;
+
       span {
         color: #3b322b;
+        font-size: 14px;
       }
       .publications {
         display: flex;

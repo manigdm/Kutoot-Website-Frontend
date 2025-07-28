@@ -12,11 +12,11 @@ $primary-font: "Arial", sans-serif;
   align-items: center;
   background-color: $container-bg;
   padding: 24px 36px;
-  border-radius: 60px;
+  border-radius: 40px;
   font-family: $primary-font;
   box-shadow: 0 0 12px 4px rgba(250, 232, 213, 0.4);
   max-width: 900px;
-  margin: 60px auto;
+  margin: 160px auto;
   margin-top: 0;
   flex-wrap: wrap;
   gap: 20px;
@@ -35,10 +35,10 @@ $primary-font: "Arial", sans-serif;
   }
 
   p {
-    margin-top: 8px;
     font-size: 28px;
     color: #ffffff;
     font-weight: 700;
+    font-family: 'Zurich Extra Black', sans-serif
   }
 }
 

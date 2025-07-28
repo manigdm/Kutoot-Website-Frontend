@@ -8,25 +8,26 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 40px;
   }
 
   .header-component {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .main-title {
-      font-size: 34px;
+      font-size: 44px;
       font-weight: bold;
       color: #3b322b;
       margin: 0;
     }
 
     p.main-subtitle {
-      color: #64748b;
+      color: #3B322B;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      font-size: 14px;
+      font-size: 20px;
       margin: 0;
     }
 
@@ -137,6 +138,11 @@
 
     .banner-content {
       max-width: 80%;
+
+      h2 {
+        font-size: 32px;
+      font-family: 'Zurich Extra Black', sans-serif
+      }
     }
   }
 
@@ -146,20 +152,29 @@
     gap: 32px;
     width: 90%;
     margin: 0 auto;
+    margin-bottom: 40px;
+
+    .news-carousel-main {
+      .news-section {
+        margin-bottom: 0;
+      }
+    }
 
     & .news-header {
       text-align: center;
 
       .news-title {
-        font-size: 30px;
+        font-size: 44px;
         font-weight: bold;
-        color: #0f172a;
+        color: #3B322B;
         margin-bottom: 8px;
+        font-family: 'Zurich Extra Black', sans-serif
       }
 
       .news-subtitle {
-        color: #64748b;
+        color: #3B322B;
         margin: 0;
+        font-size: 20px;
       }
     }
 

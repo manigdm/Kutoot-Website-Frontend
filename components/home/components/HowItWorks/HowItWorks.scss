@@ -10,16 +10,18 @@ $button-color: #e57e31;
 .how-it-works-container {
   background-color: $background-color;
   padding: 80px 40px;
+  padding-bottom: 40px;
   text-align: center;
   font-family: $primary-font;
   position: relative;
 
   .section-title {
-    font-size: 2.8rem;
+    font-size: 44px;
     color: $title-color;
-    font-weight: 700;
+    font-weight: 900;
     margin-bottom: 60px;
     text-transform: capitalize;
+    font-family: 'Zurich Extra Black', sans-serif;
   }
 
   .steps-wrapper {
@@ -28,7 +30,7 @@ $button-color: #e57e31;
     align-items: flex-start;
     gap: 30px;
     position: relative;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 
     .step-card {
       position: relative;
@@ -47,7 +49,7 @@ $button-color: #e57e31;
 
       .step-title {
         font-weight: 700;
-        font-size: 1.2rem;
+        font-size: 22px;
         margin-bottom: 10px;
         color: #2b2119;
       }

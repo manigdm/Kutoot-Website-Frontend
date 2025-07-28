@@ -124,14 +124,14 @@ export const EcommerceLayout = () => {
           <section className="products-section">
             <Swiper
               className="products-swiper"
-              modules={[Navigation, Pagination]}
+              modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={24}
               slidesPerView={3}
               pagination={{ clickable: true }}
-              // autoplay={{
-              //   delay: 2000,
-              //   disableOnInteraction: false,
-              // }}
+              autoplay={{
+                delay: 1000,
+                disableOnInteraction: false,
+              }}
               loop={true}
             >
               {PRODUCTS.map((product, index) => (
@@ -182,7 +182,7 @@ export const EcommerceLayout = () => {
         </section>
         <section className="news-section">
           <div className="news-header">
-            <CommonTitle title="Kutoot Newsroom" />
+            <h2 className="news-title">Kutoot Newsroom</h2>
             <p className="news-subtitle">
               Catch the latest buzz, breakthroughs, and big wins
             </p>

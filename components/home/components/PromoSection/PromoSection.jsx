@@ -93,7 +93,9 @@ const PromoSection = () => {
   return (
     <div className="promo-section">
       <header className="promo-header">
-        <CommonTitle title="Win the ₹5 Crore Buildiko Springwoods Designer Villa" />
+        <h2 className="promo-header__title">
+          Win the ₹5 Crore Buildiko Springwoods Designer Villa
+        </h2>
         <div className="featured-in">
           <span>As featured in</span>
           <div className="publications">

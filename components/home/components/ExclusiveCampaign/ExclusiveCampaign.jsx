@@ -69,8 +69,7 @@ export function ExclusiveCampaign() {
       <div className="lottery-cards-wrapper">
         {/* Header */}
         <div className="lottery-cards-header">
-          {/* <h1 className="lottery-cards-title">Premium Lottery</h1> */}
-          <CommonTitle title="Exclusive Campaigns. Real Rewards." />
+          <h2 className="lottery-cards-title">Exclusive Campaigns. Real Rewards.</h2>
           <p className="lottery-cards-subtitle mt-2">
             Deals You Want. Rewards You Deserve. Coins Make It Happen.
           </p>

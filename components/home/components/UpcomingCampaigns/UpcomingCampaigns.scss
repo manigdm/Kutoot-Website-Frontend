@@ -21,7 +21,7 @@
   &__title {
     position: relative;
     z-index: 1;
-    font-size: 2.5rem;
+    font-size: 52px;
     font-weight: bold;
     color: #fff;
     margin-bottom: 0.5rem;
@@ -30,22 +30,22 @@
   &__subtitle {
     position: relative;
     z-index: 1;
-    font-size: 1.25rem;
+    font-size: 22px;
     color: #fff;
-    margin-bottom: 2rem;
   }
 
   &__swiper {
     position: relative;
     z-index: 1;
     padding: 2rem 0;
+    padding-bottom: 0;
   }
 }
 
 .campaign-card {
   background: linear-gradient(to right, #2e2b31, #474044);
-  border-radius: 2rem;
-  padding: 2rem;
+  border-radius: 80px;
+  padding: 2rem 48px;
   color: #fff;
   display: flex;
   align-items: center;
@@ -58,14 +58,16 @@
     text-align: left;
 
     h3 {
-      font-size: 1.75rem;
+      font-size: 24px;
       font-weight: bold;
-      margin-bottom: 1rem;
+      margin-bottom: 8px;
+      font-family: 'Zurich Extra Black', sans-serif
     }
 
     p {
       font-size: 1rem;
-      line-height: 1.4;
+      line-height: 1.2;
+      opacity: 1;
     }
   }
 

@@ -49,8 +49,9 @@
 
   .hero-animation-sentence {
     display: inline-block;
-    font-size: 2rem;
+    font-size: 40px;
     font-weight: bold;
+    font-family: 'Zurich Extra Black', sans-serif;
 
     .hero-animation-word {
       display: inline-block;
@@ -59,9 +60,9 @@
   }
 
   .header__title {
-    font-size: 1.8rem;
-    margin-top: 1rem;
+    font-size: 66px;
     font-weight: 600;
+    font-family: 'Zurich Extra Black', sans-serif
   }
 
   p {
@@ -70,7 +71,8 @@
   }
 
   .header__description {
-    font-size: 1.5rem;
+    font-size: 22px;
+    margin-top: 0;
   }
 }
 
