@@ -69,7 +69,7 @@ const Footer = () => {
 
         <div className="footer-column connect-section">
           <h3>Connect</h3>
-          <p>Contact us</p>
+          <p className="text-white">Contact us</p>
           <a href="mailto:info@xyz.com" className="email-link">
             info@xyz.com
           </a>
@@ -92,7 +92,7 @@ const Footer = () => {
 
       <hr className="footer-divider" />
       <div className="footer-bottom">
-        <p>Copyright © 2025. All Rights Reserved by Kutoot</p>
+        <p className="text-white">Copyright © 2025. All Rights Reserved by Kutoot</p>
       </div>
     </footer>
   );

@@ -137,8 +137,9 @@ $primary-font: "Poppins", sans-serif;
 .footer-divider {
   border: none;
   height: 1px;
-  background-color: $divider-color;
+  background-color: #f8f8f8;
   margin: 20px 0;
+  opacity: 0.6;
 }
 
 .footer-bottom {

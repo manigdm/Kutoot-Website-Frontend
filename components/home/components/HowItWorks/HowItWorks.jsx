@@ -33,7 +33,7 @@ const stepsData = [
 const HowItWorks = () => {
   return (
     <div className="how-it-works-container">
-      <h2 className="section-title">How Kutoot works</h2>
+      <h2 className="section-title capitalize">How Kutoot Works</h2>
       <div className="steps-wrapper">
         {stepsData.map((step, index) => (
           <div className="step-card" key={step.number}>
