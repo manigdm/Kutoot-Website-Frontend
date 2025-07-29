@@ -43,8 +43,9 @@
   margin: 0 auto;
   color: #333;
 
-  .deadline-notice p div{
-    font-family: 'Zurich Extra Black', sans-serif
+  .deadline-notice p div {
+    font-family: "Zurich Extra Black", sans-serif;
+    line-height: 100%;
   }
 
   .promo-header {
@@ -53,10 +54,10 @@
 
     .promo-header__title {
       font-size: 44px;
-      color: #3B322B;
+      color: #3b322b;
       margin-top: 40px;
       font-weight: 900;
-      font-family: 'Zurich Extra Black', sans-serif
+      font-family: "Zurich Extra Black", sans-serif;
     }
 
     .promo-heading {
@@ -129,6 +130,32 @@
 
     .features {
       margin-bottom: 2rem;
+
+      &__button {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
+        background-color: #ea6b1e;
+        padding: 16px;
+        border-radius: 32px;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          background: linear-gradient(to right, #f26a1b, #8e0038);
+        }
+
+        &-icon {
+          margin-right: 4px;
+          font-size: 16px;
+          transform: rotate(-45deg);
+          transition: transform 0.3s ease;
+        }
+
+        &:hover .features__button-icon {
+          transform: rotate(0deg);
+        }
+      }
 
       &-title {
         font-weight: bold;

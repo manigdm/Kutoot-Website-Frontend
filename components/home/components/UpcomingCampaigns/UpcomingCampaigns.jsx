@@ -5,6 +5,7 @@ import CommonButton from "@/components/common/CommonButton";
 import { Autoplay, Navigation } from "swiper/modules";
 import { useRef } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
 
 const campaigns = [
   {
@@ -72,9 +73,14 @@ export default function UpcomingCampaigns() {
             <div className="campaign-card">
               <div className="campaign-card__content">
                 <h3>{campaign.title}</h3>
-                <p className="campaign-card__description">{campaign.description}</p>
+                <p className="campaign-card__description">
+                  {campaign.description}
+                </p>
               </div>
-              <CommonButton label="Enter Now" />
+              <button className="campaign-card__button">
+                <FaArrowRight className="campaign-card__button-icon" />
+                Enter Now
+              </button>
             </div>
           </SwiperSlide>
         ))}

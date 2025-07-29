@@ -9,8 +9,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./EcommerceLayout.scss";
-import CommonTitle from "@/components/common/CommonTitle.jsx";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { FaArrowRight } from "react-icons/fa";
 
 const PRODUCTS = [
   {
@@ -118,7 +118,10 @@ export const EcommerceLayout = () => {
             <h1 className="main-title">Best Products</h1>
             <p className="main-subtitle">ECOMMERCE</p>
           </div>
-          <CommonButton label="Shop Now" className="header-button" />
+          <button className="ecommerce-layout__button">
+            <FaArrowRight className="ecommerce-layout__button-icon" />
+            Shop Now
+          </button>
         </section>
         <section className="products-section">
           <section className="products-section">
@@ -158,10 +161,10 @@ export const EcommerceLayout = () => {
                     <p>{item.brand}</p>
                     <h2>{item.title}</h2>
                     <div className="mt-3">
-                      <CommonButton
-                        label={item.buttonText}
-                        className="header-button"
-                      />
+                      <button className="featured__button">
+                        <FaArrowRight className="featured__button-icon" />
+                        {item.buttonText}
+                      </button>
                     </div>
                   </div>
                   <div className="banner-image">
@@ -222,7 +225,10 @@ export const EcommerceLayout = () => {
           </div>
 
           <div className="news-footer">
-            <CommonButton className="view-more-button" label="View more" />
+            <button className="news-footer__button">
+              <FaArrowRight className="news-footer__button-icon" />
+              View more
+            </button>
           </div>
         </section>
       </div>

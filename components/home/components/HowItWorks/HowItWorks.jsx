@@ -1,7 +1,7 @@
 import "./HowItWorks.scss";
 import React from "react";
 import Image from "next/image";
-import CommonButton from "@/components/common/CommonButton";
+import { FaArrowRight } from "react-icons/fa";
 
 const stepsData = [
   {
@@ -19,7 +19,7 @@ const stepsData = [
   {
     number: "3",
     numberImage: "/images/landingpage/number-3.png",
-    title: "Shop & Sav",
+    title: "Shop & Save",
     description: "Redeem coins for exclusive shopping discounts.",
   },
   {
@@ -60,7 +60,12 @@ const HowItWorks = () => {
           </div>
         ))}
       </div>
-      <CommonButton label="Enter Now" />
+      <div className="how-it-works__button-wrapper">
+        <button className="how-it-works__button">
+          <FaArrowRight className="how-it-works__button-icon" />
+          Enter Now
+        </button>
+      </div>
     </div>
   );
 };

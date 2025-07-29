@@ -21,10 +21,11 @@
       font-weight: bold;
       color: #3b322b;
       margin: 0;
+      font-family: "Zurich Extra Black", sans-serif;
     }
 
     p.main-subtitle {
-      color: #3B322B;
+      color: #3b322b;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-size: 20px;
@@ -33,6 +34,32 @@
 
     &-button {
       border-radius: 9999px;
+    }
+  }
+
+  &__button {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #ea6b1e;
+    padding: 16px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: linear-gradient(to right, #f26a1b, #8e0038);
+    }
+
+    &-icon {
+      margin-right: 4px;
+      font-size: 16px;
+      transform: rotate(-45deg);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .ecommerce-layout__button-icon {
+      transform: rotate(0deg);
     }
   }
 
@@ -141,7 +168,7 @@
 
       h2 {
         font-size: 32px;
-      font-family: 'Zurich Extra Black', sans-serif
+        font-family: "Zurich Extra Black", sans-serif;
       }
     }
   }
@@ -166,13 +193,13 @@
       .news-title {
         font-size: 44px;
         font-weight: bold;
-        color: #3B322B;
+        color: #3b322b;
         margin-bottom: 8px;
-        font-family: 'Zurich Extra Black', sans-serif
+        font-family: "Zurich Extra Black", sans-serif;
       }
 
       .news-subtitle {
-        color: #3B322B;
+        color: #3b322b;
         margin: 0;
         font-size: 20px;
       }
@@ -202,12 +229,35 @@
     }
 
     & .news-footer {
-      text-align: center;
-
-      .view-more-button {
-        border-radius: 9999px;
-      }
+      display: flex;
+      justify-content: center;
     }
+  }
+}
+
+.featured__button {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ea6b1e;
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: linear-gradient(to right, #f26a1b, #8e0038);
+  }
+
+  &-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover .featured__button-icon {
+    transform: rotate(0deg);
   }
 }
 
@@ -238,4 +288,30 @@
 .news-nav.custom-swiper-button-next {
   right: -48px;
   padding: 6px;
+}
+
+.news-footer__button {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ea6b1e;
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: linear-gradient(to right, #f26a1b, #8e0038);
+  }
+
+  &-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover .news-footer__button-icon {
+    transform: rotate(0deg);
+  }
 }

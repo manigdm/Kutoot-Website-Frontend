@@ -69,7 +69,6 @@
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;
-      
     }
   }
 
@@ -77,10 +76,10 @@
     background: rgba(0, 0, 0, 0.5);
     margin: 80px 40px 0 40px;
     border-radius: 8px;
-   text-align: center;
+    text-align: center;
 
     h3 {
-      font-size: 1rem; 
+      font-size: 1rem;
     }
     p {
       font-size: 0.85rem;
@@ -122,6 +121,35 @@
       border: none;
       font-weight: bold;
       cursor: pointer;
+    }
+  }
+}
+
+.lucky-draw {
+  &__button {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #ea6b1e;
+    padding: 16px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    line-height: 100%;
+
+    &:hover {
+      background: linear-gradient(to right, #f26a1b, #8e0038);
+    }
+
+    &-icon {
+      margin-right: 4px;
+      font-size: 12px;
+      transform: rotate(-45deg);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .lucky-draw__button-icon {
+      transform: rotate(0deg);
     }
   }
 }

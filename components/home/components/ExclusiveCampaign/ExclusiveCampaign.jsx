@@ -1,7 +1,6 @@
 import { LotteryCard } from "./LotteryCard";
 import "./ExclusiveCampaign.scss";
-import CommonTitle from "@/components/common/CommonTitle";
-import CommonButton from "@/components/common/CommonButton";
+import { FaArrowRight } from "react-icons/fa";
 
 const lotteryData = [
   {
@@ -69,7 +68,9 @@ export function ExclusiveCampaign() {
       <div className="lottery-cards-wrapper">
         {/* Header */}
         <div className="lottery-cards-header">
-          <h2 className="lottery-cards-title">Exclusive Campaigns. Real Rewards.</h2>
+          <h2 className="lottery-cards-title">
+            Exclusive Campaigns. Real Rewards.
+          </h2>
           <p className="lottery-cards-subtitle mt-2">
             Deals You Want. Rewards You Deserve. Coins Make It Happen.
           </p>
@@ -124,7 +125,10 @@ export function ExclusiveCampaign() {
         </div>
 
         <div className="lottery-view-more-button">
-          <CommonButton label="View more" />
+          <button className="lottery-cards__button">
+            <FaArrowRight className="lottery-cards__button-icon" />
+            View more
+          </button>
         </div>
 
         {/* Footer Info */}

@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import "./LuckyDrawSlider.scss";
 import CommonButton from "@/components/common/CommonButton";
 import { IoLockClosedOutline } from "react-icons/io5";
+import { FaArrowRight } from "react-icons/fa";
 
 const data = [
   {
@@ -120,7 +121,10 @@ const LuckyDrawSlider = () => {
                   )}{" "}
                   Draw Date
                 </button>
-                <CommonButton label="Buy Now" onClick={enterNow} />
+                <button className="lucky-draw__button">
+                  <FaArrowRight className="lucky-draw__button-icon" />
+                  Buy Now
+                </button>
               </div>
             </div>
           </SwiperSlide>

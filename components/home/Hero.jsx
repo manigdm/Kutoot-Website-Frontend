@@ -6,7 +6,6 @@ import header_bg from "/public/images/bg/header-bg.png";
 import { useHomePage } from "@/context/HomePageContext";
 import { useWindowWidth } from "@/context/WindowWidth";
 import { motion, AnimatePresence } from "framer-motion";
-import CommonButton from "../common/CommonButton";
 import LockButton from "../common/LockButton";
 import LuckyDrawSlider from "./components/LuckyDrawSlider/LuckyDrawSlider";
 import PromoSection from "./components/PromoSection/PromoSection";
@@ -22,6 +21,7 @@ import FixedEnterButton from "./components/FixedEnterButton/FixedEnterButton";
 import UpcomingCampaigns from "./components/UpcomingCampaigns/UpcomingCampaigns";
 import "./Hero.scss";
 import { IoPlayOutline, IoPauseCircleOutline } from "react-icons/io5";
+import { FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {
   const homepageData = useHomePage();
@@ -132,7 +132,10 @@ const Hero = () => {
               <Image src={trusted_by_hindu} alt="trusted by hindu" />
             </div> */}
             <div className="d-flex flex-row gap-2 justify-content-center align-items-center mt-6">
-              <CommonButton onClick={enterNow} />
+              <button className="hero__button">
+                <FaArrowRight className="hero__button-icon" />
+                Enter Now
+              </button>
               <LockButton tooltipText="Unlocks once the goal is reached" />
             </div>
           </div>

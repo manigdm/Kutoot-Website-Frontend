@@ -8,9 +8,8 @@ import "./PromoSection.scss";
 import { useHomePage } from "@/context/HomePageContext";
 import theHindu from "/public/images/landingpage/the-hindu.png";
 import indiaToday from "/public/images/landingpage/india-today.png";
-import CommonButton from "@/components/common/CommonButton";
-import CommonTitle from "@/components/common/CommonTitle";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
 
 const FEATURE_POINTS = [
   "4500+ sq. ft. | 4 Beds | 5 Baths",
@@ -203,7 +202,10 @@ const PromoSection = () => {
                   Buy coins, enter the lucky draw, and this dream villa could be
                   yours.
                 </p>
-                <CommonButton label="Enter Now" onClick={enterNow} />
+                <button className="features__button">
+                  <FaArrowRight className="features__button-icon" />
+                  Enter Now
+                </button>
               </div>
             </div>
           </div>

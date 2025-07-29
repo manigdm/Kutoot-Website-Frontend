@@ -14,8 +14,8 @@
 
 .lottery-cards-title {
   font-size: 44px !important;
-  font-family: 'Zurich Extra Black', sans-serif;
-  color: #3B322B;
+  font-family: "Zurich Extra Black", sans-serif;
+  color: #3b322b;
   margin-top: 40px;
 }
 
@@ -38,6 +38,32 @@
   .lottery-cards-subtitle {
     font-size: 20px;
     color: black;
+  }
+}
+
+.lottery-cards__button {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ea6b1e;
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: linear-gradient(to right, #f26a1b, #8e0038);
+  }
+
+  &-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover .lottery-cards__button-icon {
+    transform: rotate(0deg);
   }
 }
 

@@ -3,6 +3,7 @@ import "./Header.scss";
 import { FaShareAlt } from "react-icons/fa";
 import { useState } from "react";
 import CommonButton from "@/components/common/CommonButton";
+import { FaArrowRight } from "react-icons/fa";
 
 const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -40,7 +41,10 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <CommonButton label="Enter Now" />
+          <button className="kutoot--header__button">
+            <FaArrowRight className="kutoot--header__button-icon" />
+            Enter Now
+          </button>
         </div>
 
         <div className="header__right">
@@ -49,7 +53,10 @@ const Header = () => {
             <a href="#">Winners</a>
             <a href="#">My Coupons</a>
           </nav>
-          <CommonButton label="Shop Now" />
+          <button className="kutoot--header__button">
+            <FaArrowRight className="kutoot--header__button-icon" />
+            Shop Now
+          </button>
           <button className="header__button outline">Log in</button>
           <div className="header__icon">
             <FaShareAlt />
