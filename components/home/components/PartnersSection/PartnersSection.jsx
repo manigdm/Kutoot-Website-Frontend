@@ -61,16 +61,17 @@ const partners = [
 const PartnersSection = () => {
   return (
     <div className="partners-container">
+         <PartnerCarousel
+        title="Our Partners"
+        backgroundColor="#b5233e"
+        partnerLogos={partners}
+      />
       <PartnerCarousel
         title="Our Charity Partners"
         backgroundColor="#362f2a"
         partnerLogos={partners}
       />
-      <PartnerCarousel
-        title="Our Partners"
-        backgroundColor="#b5233e"
-        partnerLogos={partners}
-      />
+   
     </div>
   );
 };

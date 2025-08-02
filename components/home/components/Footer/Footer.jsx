@@ -92,7 +92,7 @@ const Footer = () => {
 
       <hr className="footer-divider" />
       <div className="footer-bottom">
-        <p className="text-white">Copyright © 2025. All Rights Reserved by Kutoot</p>
+        <p className="footer-bottom">Copyright © 2025. All Rights Reserved by Kutoot</p>
       </div>
     </footer>
   );

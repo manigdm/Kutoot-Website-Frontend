@@ -1,10 +1,10 @@
 // === Variables ===
-$primary-font: "Arial", sans-serif;
+$primary-font: "poppins";
 $background-color: #fffdf2;
 $card-background-color: #f5f5f5;
-$text-color: #333;
-$title-color: #2d2d2d;
-$button-color: #e57e31;
+$text-color: #3B322B;
+$title-color: #3B322B;
+$button-color: #EA6B1E;
 
 // === Main container ===
 .how-it-works-container {
@@ -21,7 +21,7 @@ $button-color: #e57e31;
     font-weight: 900;
     margin-bottom: 60px;
     text-transform: capitalize;
-    font-family: "Zurich Extra Black", sans-serif;
+    font-family: "Zurich Extra Black";
   }
 
   .steps-wrapper {
@@ -36,20 +36,21 @@ $button-color: #e57e31;
       position: relative;
       background: #f5f2ec;
       border-radius: 20px;
-      padding: 40px 24px;
-      width: 240px;
-      max-height: 300px;
+      // padding: 16px 8px;
+      width: 249px;
+      max-height: 257px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       text-align: center;
       z-index: 1;
 
       .step-header {
-        margin-bottom: 16px;
+        // margin-bottom: 10px;
       }
 
       .step-title {
         font-weight: 700;
         font-size: 22px;
+        font-family: poppins;
         margin-bottom: 10px;
         color: #2b2119;
       }
@@ -57,7 +58,9 @@ $button-color: #e57e31;
       .step-description {
         width: 132px;
         color: #42372e;
-        font-size: 1rem;
+        font-size: 15.4px;
+        font-weight: 400;
+        line-height: 17.6px;
       }
 
       .step-number-img {
@@ -92,9 +95,9 @@ $button-color: #e57e31;
   .step-card {
     background-color: $card-background-color;
     border-radius: 16px;
-    padding: 32px 20px;
+    // padding: 32px 20px;
     width: 240px;
-    min-height: 320px;
+    min-height: 257px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
     display: flex;
@@ -110,7 +113,7 @@ $button-color: #e57e31;
       position: relative;
       width: 120px;
       height: 120px;
-      margin-bottom: 24px;
+      // margin-bottom: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -177,7 +180,7 @@ $button-color: #e57e31;
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
-  background-color: #ea6b1e;
+  background-color: #EA6B1E;
   padding: 16px;
   border-radius: 32px;
   display: flex;

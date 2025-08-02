@@ -22,13 +22,17 @@
     position: relative;
     z-index: 1;
     font-size: 52px;
-    font-weight: bold;
+    font-weight: 900;
+    font-family: zurich extra black;
     color: #fff;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: -2%;
   }
 
   &__subtitle {
     position: relative;
+    font-family: Neue Haas Unica Pro;
+    font-weight: 700;
     z-index: 1;
     font-size: 22px;
     color: #fff;
@@ -46,6 +50,7 @@
   background: linear-gradient(to right, #2e2b31, #474044);
   border-radius: 80px;
   padding: 2rem 48px;
+  font-family: poppins;
   color: #fff;
   display: flex;
   align-items: center;
@@ -58,7 +63,8 @@
     font-size: 18px;
     font-weight: 700;
     color: #ffffff;
-    background-color: #ea6b1e;
+    background-color: #EA6B1E;
+     font-family: poppins;
     padding: 16px;
     border-radius: 32px;
     display: flex;
@@ -73,6 +79,7 @@
       font-size: 16px;
       transform: rotate(-45deg);
       transition: transform 0.3s ease;
+       font-family: poppins;
     }
 
     &:hover .campaign-card__button-icon {
@@ -88,7 +95,7 @@
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 8px;
-      font-family: "Zurich Extra Black", sans-serif;
+      font-family: "Zurich Extra Black" ;
     }
 
     p {
