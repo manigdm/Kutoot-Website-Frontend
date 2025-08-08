@@ -31,9 +31,25 @@ const campaigns = [
   },
 ];
 
-export default function UpcomingCampaigns() {
+export default function UpcomingCampaigns({campaigns}) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+
+  const today = new Date();
+// today.setHours(0, 0, 0, 0);
+
+// Filter only upcoming campaigns
+const upcomingCampaigns = campaigns.filter(campaign => {
+  if (!campaign.start_date) return false; // skip if no date
+
+  // Make sure to parse the backend date into a Date object
+  const startDate = new Date(campaign.start_date);
+
+  // Ensure both dates are in the same timezone/day context
+  return startDate > today;
+});
+
+// console.log('exclusive',upcomingCampaigns);
 
   return (
     <section className="campaign-carousel">
@@ -68,7 +84,19 @@ export default function UpcomingCampaigns() {
             <IoIosArrowForward className="right-arrow" />
           </button>
         </div>
-        {campaigns.map((campaign, index) => (
+       {campaigns
+  ?.filter(campaign => {
+    if (!campaign.start_date) return false; // skip if no date
+
+    const campaignDate = new Date(campaign.start_date);
+    const today = new Date();
+
+    // remove time for comparison
+    today.setHours(0, 0, 0, 0);
+    campaignDate.setHours(0, 0, 0, 0);
+
+    return campaignDate > today; // only future dates
+  }).map((campaign, index) => (
           <SwiperSlide key={index}>
             <div className="campaign-card">
               <div className="campaign-card__content">

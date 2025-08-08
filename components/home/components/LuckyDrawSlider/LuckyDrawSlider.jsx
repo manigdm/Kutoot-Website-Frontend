@@ -59,9 +59,10 @@ const data = [
   },
 ];
 
-const LuckyDrawSlider = () => {
+const LuckyDrawSlider = ({campaigns}) => {
   const enterNow = () => {};
-
+const item= campaigns || {};
+// console.log('Item Data:', item);
   return (
     <div className="lucky-draw-slider">
       <div className="custom-swiper-button-prev">‹</div>
@@ -76,11 +77,11 @@ const LuckyDrawSlider = () => {
         }}
         loop
       >
-        {data.map((item, index) => (
+        {item.map((item, index) => (
           <SwiperSlide key={index}>
             <div
               className="draw-card"
-              style={{ backgroundImage: `url(${item.image})` }}
+              style={{ backgroundImage: `url(${item.img})` }}
             ></div>
             <div className="draw-card-content">
               <div className="top-label">
@@ -108,7 +109,7 @@ const LuckyDrawSlider = () => {
               </div>
               <div className="details">
                 <h3>{item.title}</h3>
-                <p className="text-white">worth {item.worth}</p>
+                <p className="text-white">worth {item.tag1}</p>
               </div>
               <div className="actions">
                 <button

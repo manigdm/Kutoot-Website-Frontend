@@ -62,7 +62,7 @@ const lotteryData = [
   },
 ];
 
-export function ExclusiveCampaign() {
+export function ExclusiveCampaign({campaigns}) {
   return (
     <div className="lottery-cards-container">
       <div className="lottery-cards-wrapper">
@@ -82,14 +82,32 @@ export function ExclusiveCampaign() {
           <div className="lottery-column">
             <div className="card-wrapper">
               <LotteryCard
-                {...lotteryData[0]}
+                // {...lotteryData[0]}
+                title={campaigns[0]?.title}
+                worth={campaigns[0]?.tag1}
+                coinPrice={campaigns[0]?.ticket_price}
+                totalCoins={campaigns[0]?.coins_per_campaign}
+                image={campaigns[0]?.img ?? "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80"}
+                progress={campaigns[0]?.progress}
+                gradient='from-cyan-900/20 to-teal-800/40'
+                sponsorImage="/sponsorImage.png"
+                minimumPurchaseImage="/minimum_purchase.png"
                 hoverDirection="down"
                 cardIndex={1}
               />
             </div>
             <div className="card-wrapper">
               <LotteryCard
-                {...lotteryData[1]}
+                // {...lotteryData[1]}
+                    title={campaigns[1]?.title}
+                worth={campaigns[1]?.tag1}
+                coinPrice={campaigns[1]?.ticket_price}
+                totalCoins={campaigns[1]?.coins_per_campaign}
+                image={campaigns[1]?.img ?? "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80"}
+                progress={campaigns[1]?.progress}
+                gradient='from-cyan-900/20 to-teal-800/40'
+                sponsorImage="/sponsorImage.png"
+                minimumPurchaseImage="/minimum_purchase.png"
                 hoverDirection="up"
                 cardIndex={2}
               />
@@ -99,7 +117,16 @@ export function ExclusiveCampaign() {
           {/* Center Column: Featured */}
           <div className="lottery-column middle-column">
             <LotteryCard
-              {...lotteryData[2]}
+              // {...lotteryData[2]}
+                  title={campaigns[2]?.title}
+                worth={campaigns[2]?.tag1}
+                coinPrice={campaigns[2]?.ticket_price}
+                totalCoins={campaigns[2]?.coins_per_campaign}
+                image={campaigns[2]?.img ?? "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80"}
+                progress={campaigns[2]?.progress}
+                gradient='from-cyan-900/20 to-teal-800/40'
+                sponsorImage="/sponsorImage.png"
+                minimumPurchaseImage="/minimum_purchase.png"
               hoverDirection="static"
               cardIndex={3}
             />
@@ -109,14 +136,32 @@ export function ExclusiveCampaign() {
           <div className="lottery-column">
             <div className="card-wrapper">
               <LotteryCard
-                {...lotteryData[3]}
+                // {...lotteryData[3]}
+                title={campaigns[3]?.title}
+                worth={campaigns[3]?.tag1}
+                coinPrice={campaigns[3]?.ticket_price}
+                totalCoins={campaigns[3]?.coins_per_campaign}
+                image={campaigns[3]?.img ?? "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80"}
+                progress={campaigns[3]?.progress}
+                gradient='from-cyan-900/20 to-teal-800/40'
+                sponsorImage="/sponsorImage.png"
+                minimumPurchaseImage="/minimum_purchase.png"
                 hoverDirection="down"
                 cardIndex={4}
               />
             </div>
             <div className="card-wrapper">
               <LotteryCard
-                {...lotteryData[4]}
+                // {...lotteryData[4]}
+                title={campaigns[12]?.title}
+                worth={campaigns[12]?.tag1}
+                coinPrice={campaigns[12]?.ticket_price}
+                totalCoins={campaigns[12]?.coins_per_campaign}
+                image={campaigns[12]?.img ?? "https://plus.unsplash.com/premium_photo-1709033404514-c3953af680b4?q=80"}
+                progress={campaigns[12]?.progress}
+                gradient='from-cyan-900/20 to-teal-800/40'
+                sponsorImage="/sponsorImage.png"
+                minimumPurchaseImage="/minimum_purchase.png"
                 hoverDirection="up"
                 cardIndex={5}
               />

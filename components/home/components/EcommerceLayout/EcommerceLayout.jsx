@@ -99,7 +99,7 @@ const featuredBannerData = [
   },
 ];
 
-export const EcommerceLayout = () => {
+export const EcommerceLayout = ({products,banners}) => {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
@@ -137,9 +137,17 @@ export const EcommerceLayout = () => {
               }}
               loop={true}
             >
-              {PRODUCTS.map((product, index) => (
+              {products?.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <ProductCard {...product} />
+                  <ProductCard 
+                  // {...product}
+                    title= {product.name}
+                    subtitle={product.short_name}
+                    image ={`${process.env.NEXT_PUBLIC_BASE_URL}${product.thumb_image}`}
+                    buttonText="Shop Now"  
+                    buttonVariant="orange"
+                    backgroundColor="bg-gradient-cyan"
+                   />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -154,21 +162,21 @@ export const EcommerceLayout = () => {
             autoplay={{ delay: 2000, disableOnInteraction: false }}
             className="featured-swiper"
           >
-            {featuredBannerData.map((item, index) => (
+            {banners.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="featured-banner">
                   <div className="banner-content">
-                    <p>{item.brand}</p>
+                    <p>{item.title}</p>
                     <h2>{item.title}</h2>
                     <div className="mt-3">
                       <button className="featured__button">
                         <FaArrowRight className="featured__button-icon" />
-                        {item.buttonText}
+                        Shop Now
                       </button>
                     </div>
                   </div>
                   <div className="banner-image">
-                    <img src={item.image} alt={item.image} />
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`} alt={item.image} />
                   </div>
                 </div>
                 <div className="banner-arrows">
