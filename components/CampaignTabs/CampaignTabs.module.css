@@ -58,9 +58,13 @@
   .campaign_card {
     margin-bottom: 20px;
     background-color: #ffffff;
-    border: 3px solid #D90156;
+    border: 1px solid #3B322B;
     border-radius: 14px;
   }
+  .campaign_card:hover {
+    border: 3px solid #D90156;
+  }
+
   .left_img_top_txt {
     font-weight: 600;
     font-style: SemiBold;
@@ -111,10 +115,20 @@
     color: #ffffff;
     background-color: #EA6B1E;
   }
+  .kutoot__campaign_button:hover {
+    color: #ffffff;
+    background-color: #EA6B1E;
+  }
   .arrow_icon {
     padding-bottom: 10px;
   }
   .border_fix {
     border-bottom: 0.5px solid #3B322B66
+  }
+  .title_fix {
+    color: #FFD48E;
+  }
+  .badge_fix {
+    background: linear-gradient(267.5deg, #EA6B1E -4.5%, #D90156 100%);
   }
   
