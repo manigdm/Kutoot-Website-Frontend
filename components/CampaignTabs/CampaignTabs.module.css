@@ -56,6 +56,7 @@
     color: #3B322B;
   }
   .campaign_card {
+    margin-bottom: 20px;
     background-color: #ffffff;
     border: 3px solid #D90156;
     border-radius: 14px;
@@ -67,8 +68,9 @@
     color: #ffffff !important;
     background-color: #D90156;
     padding: 4px;
-    left: 26%;
+    left: 6%;
     top: 3%;
+    border-radius: 6px;
   }
   .left_img_btm_txt {
     color: #ffffff;
