@@ -1,0 +1,118 @@
+.win_big_text {
+    color: #3B322B;
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 70px;
+}
+
+.join_our_text {
+    color: #3B322B;
+    font-weight: 900;
+    font-size: 44px;
+}
+.win_exclusive {
+    color: #3B322B;
+    font-size: 20px;
+    font-weight: 400;
+}
+.customButton {
+    font-weight: bold;
+    border-width: 2px;
+    padding: 6px 24px;
+    pointer-events: auto;
+  }
+  
+  .active_tab_btn {
+    position: relative;
+    background-color: #EA6B1E;
+    color: #FFFFFF;
+    transition: none;
+    cursor: default;
+  }
+  .active_tab_btn:hover{
+    background-color: #EA6B1E;
+    color: #FFFFFF;
+  }
+    .active_tab_btn::after {
+    content: '✓'; 
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    font-size: 1rem;
+    pointer-events: none;
+    color: white;
+  }
+  
+  .inactive_tab_btn {
+    background-color: #F1EDE9;
+    color: #3B322B;
+    cursor: pointer;
+    transition: none;
+  }
+  .inactive_tab_btn:hover {
+    background-color: #F1EDE9;
+    color: #3B322B;
+  }
+  .campaign_card {
+    background-color: #ffffff;
+    border: 3px solid #D90156;
+    border-radius: 14px;
+  }
+  .left_img_top_txt {
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 12px;
+    color: #ffffff !important;
+    background-color: #D90156;
+    padding: 4px;
+    left: 26%;
+    top: 3%;
+  }
+  .left_img_btm_txt {
+    color: #ffffff;
+    font-weight: 900;
+    font-style: Regular;
+    font-size: 28px;
+    bottom: 3%;
+    left: 3%;
+  }
+  .scrollbar_fix {
+    scrollbar-width: none;
+  }
+  .kutoot__button {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #EA6B1E;
+  }
+  .kutoot__button:hover {
+    background: #EA6B1E;
+    color: #ffffff;
+  }
+
+  .kutoot__arrow_button {
+    background-color: #3B322B80;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease;
+  }
+  .kutoot__campaign_button {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #EA6B1E;
+  }
+  .arrow_icon {
+    padding-bottom: 10px;
+  }
+  .border_fix {
+    border-bottom: 0.5px solid #3B322B66
+  }
+  
