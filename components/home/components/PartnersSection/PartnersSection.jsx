@@ -34,7 +34,7 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
             {partnerLogos.map((logo, index) => (
               <SwiperSlide key={index}>
                 <div className="partner-logo" style={{ direction: "rtl" }}>
-                  <Image
+                  <img
                     src={logo}
                     alt={`partner-logo-${index}`}
                     width={150}

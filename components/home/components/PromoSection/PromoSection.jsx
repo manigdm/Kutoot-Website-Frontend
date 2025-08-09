@@ -103,7 +103,7 @@ const propertyDescription = slides[0]?.description;
           <div className="publications">
             {[theHindu, indiaToday].map((src, i) => (
               <div className="mt-2" key={i}>
-                <Image src={src} alt="publication-logo" />
+                <img src={src.src} alt="publication-logo" />
               </div>
             ))}
           </div>
@@ -154,7 +154,7 @@ const propertyDescription = slides[0]?.description;
                         fill
                         style={{ objectFit: "cover" }}
                       /> */}
-                        <Image
+                        <img
         src={slide.img
               ? slide.img 
               : `${process.env.NEXT_PUBLIC_BASE_URL}${slide.img}`}

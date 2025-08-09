@@ -35,19 +35,21 @@ export default function UpcomingCampaigns({campaigns}) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  const today = new Date();
-// today.setHours(0, 0, 0, 0);
+//   const today = new Date();
+//  today.setHours(0, 0, 0, 0);
 
-// Filter only upcoming campaigns
-const upcomingCampaigns = campaigns.filter(campaign => {
-  if (!campaign.start_date) return false; // skip if no date
+// // Filter only upcoming campaigns
+// const upcomingCampaigns = campaigns.filter(campaign => {
+//   if (!campaign.start_date) return false;
 
-  // Make sure to parse the backend date into a Date object
-  const startDate = new Date(campaign.start_date);
+//   // Parse safely
+//   const [year, month, day] = campaign.start_date.split('-').map(Number);
+//   const startDate = new Date(year, month - 1, day);
+//   startDate.setHours(0, 0, 0, 0);
 
-  // Ensure both dates are in the same timezone/day context
-  return startDate > today;
-});
+//   // Ensure both dates are in the same timezone/day context
+//   //  console.log('upcoming', startDate > today);
+// });
 
 // console.log('exclusive',upcomingCampaigns);
 
