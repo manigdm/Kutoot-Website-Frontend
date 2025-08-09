@@ -4,7 +4,7 @@ $title-color: #ffffff;
 $link-hover-color: #f9fafb;
 $divider-color: #574f49;
 $icon-bg: #544e59;
-$primary-font: "Poppins", sans-serif;
+$primary-font: "Poppins";
 
 .footer-container {
   background-color: $footer-bg;
@@ -75,22 +75,30 @@ $primary-font: "Poppins", sans-serif;
 .links-section,
 .connect-section {
   h3 {
-    color: $title-color;
+    color: #FFFFFF;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 16px;
+    font-family: poppins;
   }
 
   ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    
 
     li {
       margin-bottom: 12px;
+          font-size: 18px;
+          line-height: 18px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    font-family: poppins;
 
       a {
-        color: $text-color;
+        color: #ABABAB;
+      
         text-decoration: none;
         transition: color 0.3s ease;
 
@@ -143,16 +151,20 @@ $primary-font: "Poppins", sans-serif;
 
 .footer-divider {
   border: none;
-  height: 1px;
-  background-color: #f8f8f8;
+  height: 40px; /* or match the image height */
+  background: url('/images/line-footer.png') center center no-repeat;
+  background-size: contain; /* or 'cover' depending on use */
   margin: 20px 0;
-  opacity: 0.6;
+  opacity: 1; /* full visibility for the image */
 }
+
 
 .footer-bottom {
   text-align: center;
-  font-size: 0.85rem;
-  color: darken($text-color, 20%);
+  font-size: 14px;
+  font-weight: 400;
+  color: #ABABAB;
+  font-family: poppins;;
 }
 
 /* Responsive */

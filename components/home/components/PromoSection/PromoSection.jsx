@@ -93,7 +93,7 @@ const PromoSection = () => {
     <div className="promo-section">
       <header className="promo-header">
         <h2 className="promo-header__title">
-          Win the ₹5 Crore Buildiko Springwoods Designer Villa
+          Win the ₹5 Crore Buildiko Springwoods<br/> Designer Villa
         </h2>
         <div className="featured-in">
           <span>As featured in</span>
@@ -182,29 +182,30 @@ const PromoSection = () => {
               </Swiper>
             </div>
             <div className="col-lg-4 text-left">
-              <p className="tagline">
-                {/* Live like royalty in Sarjapur Road's most luxurious estate. */}
+              {/* <p className="tagline">
+             
                 {homepageData?.data?.banner?.short_description}
-              </p>
+              </p> */}
 
               <div className="features">
-                <p className="features-title">Live in style with:</p>
-                {/* <ul>
+                <p className="features-title">Live like royalty in Sarjapur Road’s most<br/> luxurious estate.<br/>
+Buy coins, enter the lucky draw, and this<br/> dream villa could be yours.</p>
+
+                <ul>
                   {FEATURE_POINTS.map((point, i) => (
                     <li key={i}>{point}</li>
                   ))}
-                </ul> */}
-                <div
+                </ul>
+                {/* <div
                   style={{ color: "#3B322B" }}
                   dangerouslySetInnerHTML={propertyDescriptionMemoized}
-                />
+                /> */}
                 <p className="call-to-action">
-                  Buy coins, enter the lucky draw, and this dream villa could be
-                  yours.
+                Buy coins. Enter the draw. No extra cost.
                 </p>
                 <button className="features__button">
                   <FaArrowRight className="features__button-icon" />
-                  Enter Now
+                  Enter Now.
                 </button>
               </div>
             </div>
