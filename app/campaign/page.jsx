@@ -181,8 +181,8 @@ const App = () => {
                                             >
                                                 <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
                                                     <div>
-                                                        <h4 className="fw-bold mb-1 mt-4">{offer?.title1}</h4>
-                                                        <span className="badge bg-danger px-3 py-1">{offer?.title2}</span>
+                                                        <h4 className={`fw-bold mb-1 mt-4 ${styles.text_fix}`}>{offer?.title1}</h4>
+                                                        <span className={`badge bg-danger px-3 py-1 ${styles.sub_text_fix}`}>{offer?.title2}</span>
                                                     </div>
                                                     <div>
                                                         <div className="d-flex justify-content-between flex-column text-black">
