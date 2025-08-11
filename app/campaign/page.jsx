@@ -141,7 +141,7 @@ const App = () => {
                                         style={{
                                             backgroundImage: `url(${offer?.img})`,
                                             backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover',
+                                            backgroundSize: 'contain',
                                             backgroundPosition: 'center',
                                             height: '320px !important',
                                             borderRadius: '8px',
@@ -240,9 +240,9 @@ const App = () => {
 
                                     {/* "View Campaign" button */}
                                     <div className="d-flex justify-content-end">
-                                        <Button variant="warning" size="lg" className={`rounded-pill ${styles.kutoot__campaign_button}`}>
+                                        <button className={`btn btn-sm rounded-pill ${styles.kutoot__campaign_button}`}>
                                             View Campaign
-                                        </Button>
+                                        </button>
                                     </div>
                                 </Col>
                             </Row>
