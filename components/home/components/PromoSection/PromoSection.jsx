@@ -60,7 +60,7 @@ const extractPropertyDetails = (str) => {
     : null;
 };
 
-const PromoSection = () => {
+const PromoSection = ({baseplans}) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef(null);
@@ -69,21 +69,24 @@ const PromoSection = () => {
 
   const enterNow = () => {};
 
-  const slides = homepageData?.data?.banner
-    ? [homepageData.data.banner.image1, homepageData.data.banner.image2].filter(
-        Boolean
-      )
-    : [];
+  // const slides = homepageData?.data?.banner
+  //   ? [homepageData.data.banner.image1, homepageData.data.banner.image2].filter(
+  //       Boolean
+  //     )
+  //   : [];
 
-  console.log("slides", slides);
+  const slides = baseplans ? baseplans : [];
+  //  console.log("slides", slides);
 
   const propertyDescriptionMemoized = useMemo(() => {
     return {
-      __html: homepageData?.data?.banner?.description || "",
+      // __html: homepageData?.data?.banner?.description || "",
+      __html:slides[0]?.description || "",
     };
-  }, [homepageData?.data?.banner?.description]);
+  }, [slides]);
 
-  const propertyDescription = homepageData?.data?.banner?.description;
+  // const propertyDescription = homepageData?.data?.banner?.description;
+const propertyDescription = slides[0]?.description;
 
   const propertyDetails = useMemo(() => {
     return extractPropertyDetails(propertyDescription);
@@ -100,7 +103,7 @@ const PromoSection = () => {
           <div className="publications">
             {[theHindu, indiaToday].map((src, i) => (
               <div className="mt-2" key={i}>
-                <Image src={src} alt="publication-logo" />
+                <img src={src.src} alt="publication-logo" />
               </div>
             ))}
           </div>
@@ -136,7 +139,7 @@ const PromoSection = () => {
                   prevEl: ".custom-swiper-button-prev",
                 }}
               >
-                {slides?.map((url, i) => (
+                {slides?.map((slide, i) => (
                   <SwiperSlide key={i}>
                     <div
                       style={{
@@ -145,12 +148,20 @@ const PromoSection = () => {
                         height: "450px",
                       }}
                     >
-                      <Image
+                      {/* <Image
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}` + url}
                         alt="slide"
                         fill
                         style={{ objectFit: "cover" }}
-                      />
+                      /> */}
+                        <img
+        src={slide.img
+              ? slide.img 
+              : `${process.env.NEXT_PUBLIC_BASE_URL}${slide.img}`}
+        alt="slide"
+        fill
+        style={{ objectFit: "cover" }}
+      />
                       <div className="property-plan">
                         <button className="active">Gallery</button>
                         <button>Floor plan</button>
