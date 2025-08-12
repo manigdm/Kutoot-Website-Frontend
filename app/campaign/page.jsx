@@ -10,6 +10,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import SubscriptionForm from '@/components/home/components/SubscriptionForm/SubscriptionForm';
 import Footer from "@/components/home/components/Footer/Footer";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const App = () => {
     const [activeTab, setActiveTab] = useState('All');
@@ -20,6 +21,7 @@ const App = () => {
     const left_section_img = '/images/campaign/campaign_villa.svg';
     const kutoot_slide_top = '/images/campaign/campaigncard.svg'
     const scrollRef = useRef(null);
+    const router = useRouter();
 
     const [showArrows, setShowArrows] = useState({ left: false, right: true });
 
@@ -91,35 +93,40 @@ const App = () => {
 
     function filterCampaigns(campaigns, activeTab) {
         if (!campaigns || campaigns.length === 0) return [];
-      
+
         switch (activeTab) {
-          case "All":
-            return campaigns;
-      
-          case "Latest":
-            // Sort by creation date descending
-            return [...campaigns].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      
-          case "Fast filling":
-            // Sort by progress or display_percentage descending
-            return [...campaigns].sort((a, b) => (b.progress || b.display_percentage) - (a.progress || a.display_percentage));
-      
-          case "Highest Prize":
-            // Sort by ticket price descending
-            return [...campaigns].sort((a, b) => (b.ticket_price || 0) - (a.ticket_price || 0));
-      
-          case "Value for Money":
-            // Sort by ticket price ascending
-            return [...campaigns].sort((a, b) => (a.ticket_price || 0) - (b.ticket_price || 0));
-      
-          case "Best Deals":
-            // Filter to only "Featured" promotion campaigns
-            return campaigns.filter(campaign => campaign.promotion === "Featured");
-      
-          default:
-            return campaigns;
+            case "All":
+                return campaigns;
+
+            case "Latest":
+                // Sort by creation date descending
+                return [...campaigns].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            case "Fast filling":
+                // Sort by progress or display_percentage descending
+                return [...campaigns].sort((a, b) => (b.progress || b.display_percentage) - (a.progress || a.display_percentage));
+
+            case "Highest Prize":
+                // Sort by ticket price descending
+                return [...campaigns].sort((a, b) => (b.ticket_price || 0) - (a.ticket_price || 0));
+
+            case "Value for Money":
+                // Sort by ticket price ascending
+                return [...campaigns].sort((a, b) => (a.ticket_price || 0) - (b.ticket_price || 0));
+
+            case "Best Deals":
+                // Filter to only "Featured" promotion campaigns
+                return campaigns.filter(campaign => campaign.promotion === "Featured");
+
+            default:
+                return campaigns;
         }
-      }
+    }
+
+    const viewCampaign = (selectedCampaign) => {
+  sessionStorage.setItem('selectedCampaign', JSON.stringify(selectedCampaign));
+  router.push('/campaignpage');
+};
 
     return (
         <>
@@ -160,61 +167,61 @@ const App = () => {
                                 <Col md={8}>
                                     <div ref={scrollRef} className={`d-flex overflow-auto gap-4 ${styles.scrollbar_fix}`}>
                                         {offer?.baseplans?.map((plan, index) =>
-                                        <div
-                                            key={index}
-                                            className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"
-                                            style={{
-                                                width: '300px',
-                                                position: 'relative',
-                                                flex: '0 0 auto'
-                                            }}
-                                        >
                                             <div
-                                                className="position-relative text-white rounded-2xl"
+                                                key={index}
+                                                className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"
                                                 style={{
-                                                    backgroundImage: `url(${kutoot_slide_top})`,
-                                                    backgroundSize: "cover",
-                                                    backgroundRepeat: "no-repeat",
-                                                    backgroundPosition: "center",
-                                                    width: "100%",
-                                                    height: "300px",
+                                                    width: '300px',
+                                                    position: 'relative',
+                                                    flex: '0 0 auto'
                                                 }}
                                             >
-                                                <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
-                                                    <div>
-                                                        <h4 className={`fw-bold mb-1 mt-4 ${styles.text_fix}`}>{plan?.title}</h4>
-                                                        <span className={`badge bg-danger px-3 py-1 ${styles.sub_text_fix}`}>{stripHtml(plan?.description)}</span>
-                                                    </div>
-                                                    <div>
-                                                        <div className="d-flex justify-content-between flex-column text-black">
-                                                            <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
-                                                                <div className="fs-1 fw-bold">₹{plan?.ticket_price}</div>
-                                                                <div>{plan?.coins_per_campaign} Coins</div>
-                                                            </div>
-                                                            <div className="d-flex justify-content-between align-items-center flex-row">
-                                                                <div className="fs-2 fw-bold">{plan?.coupons_per_campaign}</div>
-                                                                <div>Lucky draw coupons</div>
-                                                            </div>
+                                                <div
+                                                    className="position-relative text-white rounded-2xl"
+                                                    style={{
+                                                        backgroundImage: `url(${kutoot_slide_top})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundRepeat: "no-repeat",
+                                                        backgroundPosition: "center",
+                                                        width: "100%",
+                                                        height: "300px",
+                                                    }}
+                                                >
+                                                    <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
+                                                        <div>
+                                                            <h4 className={`fw-bold mb-1 mt-4 ${styles.text_fix}`}>{plan?.title}</h4>
+                                                            <span className={`badge bg-danger px-3 py-1 ${styles.sub_text_fix}`}>{stripHtml(plan?.description)}</span>
                                                         </div>
-
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <div className="w-50">
-                                                                <p className="text-muted small m-0">*Validity up to {formatDate(offer?.start_date)}</p>
+                                                        <div>
+                                                            <div className="d-flex justify-content-between flex-column text-black">
+                                                                <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
+                                                                    <div className="fs-1 fw-bold">₹{plan?.ticket_price}</div>
+                                                                    <div>{plan?.coins_per_campaign} Coins</div>
+                                                                </div>
+                                                                <div className="d-flex justify-content-between align-items-center flex-row">
+                                                                    <div className="fs-2 fw-bold">{plan?.coupons_per_campaign}</div>
+                                                                    <div>Lucky draw coupons</div>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <button
-                                                                    className={`btn w-100 fw-bold rounded-pill ${styles.kutoot__button}`}
-                                                                >
-                                                                    Enter Now .
-                                                                </button>
+
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                <div className="w-50">
+                                                                    <p className="text-muted small m-0">*Validity up to {formatDate(offer?.start_date)}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <button
+                                                                        className={`btn w-100 fw-bold rounded-pill ${styles.kutoot__button}`} onClick={() => viewCampaign(offer)}
+                                                                    >
+                                                                        Enter Now .
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
-
-
-                                        </div>
                                         )}
                                     </div>
 
@@ -242,7 +249,7 @@ const App = () => {
 
                                     {/* "View Campaign" button */}
                                     <div className="d-flex justify-content-end">
-                                        <button className={`btn btn-sm rounded-pill ${styles.kutoot__campaign_button}`}>
+                                        <button className={`btn btn-sm rounded-pill ${styles.kutoot__campaign_button}`} onClick={() => viewCampaign(offer)}>
                                             View Campaign
                                         </button>
                                     </div>

@@ -1,9 +1,11 @@
-import React from "react";
+'use client';
+
 import Footer from "@/components/home/components/Footer/Footer";
 import { FaArrowRight } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
 
 const Campaign = () => {
-
+  const [campaignData, setCampaignData] = useState(null);
   const prizeHighlights = [
     {
       title: "1340cc inline-four engine",
@@ -32,69 +34,22 @@ const Campaign = () => {
     },
   ];
 
-  // Data for the new pricing cards
-  const pricingTiers = [
-    {
-      label: null,
-      title: "Ignition Pack",
-      subtitle: "Begin Your Ride",
-      spend: "20",
-      coins: "80",
-      coupons: "2",
-      costPerCoupon: "10.00",
-      isHighlighted: false,
-      highlightColor: null,
-      icon: "images/campaignpage/pic1.png",
-    },
-    {
-      label: null,
-      title: "Quick Shift",
-      subtitle: "Boost Start",
-      spend: "50",
-      coins: "200",
-      coupons: "12",
-      costPerCoupon: "4.17",
-      isHighlighted: false,
-      highlightColor: null,
-      icon: "images/campaignpage/pic2.png",
-    },
-    {
-      label: "Fan Favorite",
-      title: "Most Popular",
-      subtitle: "Top Pick by Riders",
-      spend: "100",
-      coins: "400",
-      coupons: "28",
-      costPerCoupon: "3.57",
-      isHighlighted: true,
-      highlightColor: "#EBC500",
-      icon: "images/campaignpage/pic3.png",
-    },
-    {
-      label: "Smart Rider Choice",
-      title: "Super Saver",
-      subtitle: "Maximum Mileage Tier",
-      spend: "250",
-      coins: "1000",
-      coupons: "100",
-      costPerCoupon: "2.50",
-      isHighlighted: true,
-      highlightColor: "#EBC500",
-      icon: "images/campaignpage/pic4.png",
-    },
-    {
-      label: "Smartest Spend",
-      title: "Best Value",
-      subtitle: "Top Speed & Power Tier",
-      spend: "500",
-      coins: "2000",
-      coupons: "250",
-      costPerCoupon: "2.00",
-      isHighlighted: true,
-      highlightColor: "#EBC500",
-      icon: "images/campaignpage/pic5.png",
-    },
-  ];
+  useEffect(() => {
+    const storedData = sessionStorage.getItem('selectedCampaign');
+
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setCampaignData(parsedData);
+    }
+  }, []);
+
+  console.log('Current state of campaignData:', campaignData);
+
+  function stripHtml(html) {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+}
 
   const getLabelIcon = () => {
     return (
@@ -129,7 +84,7 @@ const Campaign = () => {
           marginBottom: "20px",
         }}
       >
-        Suzuki Hayabusa – Worth ₹20 Lakhs
+        {campaignData?.title}
       </h1>
 
       {/* Subtitle */}
@@ -145,7 +100,7 @@ const Campaign = () => {
           marginBottom: "16px",
         }}
       >
-        Unleash the beast. More speed, more chances, more roar.
+        {campaignData?.title1}
       </h2>
 
       {/* Description */}
@@ -162,8 +117,7 @@ const Campaign = () => {
           marginBottom: "40px",
         }}
       >
-        Minimum Purchase: ₹20 | Bundles include Shopping Coins + Free Lucky Draw
-        Coupons
+       {campaignData?.title2}
       </p>
 
       {/* Main content with image and text */}
@@ -217,7 +171,7 @@ const Campaign = () => {
               marginBottom: "16px",
             }}
           >
-            Feel the power of a legend
+            {stripHtml(campaignData?.short_description)}
           </h3>
           <p
             style={{
@@ -229,12 +183,7 @@ const Campaign = () => {
               lineHeight: "18px",
               marginBottom: "24px",
             }}
-          >
-            Start with just ₹20 and unlock your shot at owning the legendary
-            beast on two wheels. The more you throttle up, the better your
-            chances — more coins, more coupons, more speed! Climb the ranks,
-            collect badges, and feel the rush — because this isn't just a draw,
-            it's your race to win the Hayabusa.
+          >{stripHtml(campaignData?.description)}
           </p>
 
           <button className="kutoot--header__button">
@@ -388,7 +337,7 @@ const Campaign = () => {
               margin: "0 auto",
             }}
           >
-            {pricingTiers.map((tier, index) => (
+            {campaignData?.baseplans.map((tier, index) => (
               <div
                 key={index}
                 style={{
@@ -426,7 +375,7 @@ const Campaign = () => {
                 >
                   {/* Icon */}
                   <img
-                    src={tier.icon}
+                    src={tier.img}
                     alt={`Pricing tier icon ${index + 1}`}
                     style={{
                       width: "48px",
@@ -456,7 +405,7 @@ const Campaign = () => {
                         margin: 0,
                       }}
                     >
-                      {tier.title}
+                      {tier?.title}
                     </p>
                     <p
                       style={{
@@ -468,9 +417,13 @@ const Campaign = () => {
                         fontWeight: 500,
                         lineHeight: "14px",
                         margin: 0,
+                        maxWidth: '170px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
                       }}
                     >
-                      {tier.subtitle}
+                      {stripHtml(tier?.description)}
                     </p>
                   </div>
 
@@ -517,7 +470,7 @@ const Campaign = () => {
                         margin: 0,
                       }}
                     >
-                      ₹{tier.spend}
+                      ₹{tier?.ticket_price}
                     </p>
                   </div>
 
@@ -564,7 +517,7 @@ const Campaign = () => {
                         margin: 0,
                       }}
                     >
-                      {tier.coins}
+                      {tier?.coins_per_campaign}
                     </p>
                   </div>
 
@@ -611,7 +564,7 @@ const Campaign = () => {
                         margin: 0,
                       }}
                     >
-                      {tier.coupons}
+                      {tier?.coupons_per_campaign}
                     </p>
                   </div>
 
