@@ -130,5 +130,11 @@
   }
   .sub_text_fix {
     background: linear-gradient(267.5deg, #EA6B1E -4.5%, #D90156 100%);
+    display: inline-block;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
   }
   
