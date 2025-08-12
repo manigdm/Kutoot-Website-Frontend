@@ -48,13 +48,74 @@ const Myprofile = () => {
   // State for deactivate modal
   const [showDeactivateModal, setShowDeactivateModal] = useState(false);
 
+  // State for active tab
+  const [activeTab, setActiveTab] = useState("dashboard");
+
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  // Tab components
+  const DashboardTab = () => (
+    <div>
+      <h2
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        My Dashboard
+      </h2>
+        <p style={{ marginBottom: "15px" }}>my dashboard</p>
+      
+    </div>
+  );
+
+  const CouponsTab = () => (
+    <div>
+      <h2
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        My Coupons
+      </h2>
+
+      <p>my coupons.</p>
+    </div>
+  );
+
+  const CampaignsTab = () => (
+    <div>
+      <h2
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        My Campaigns
+      </h2>
+     <p>my campaigns</p>
+    </div>
+  );
+
+  const OrdersTab = () => (
+    <div>
+      <h2
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        My Orders
+      </h2>
+    <p>my orders</p>
+    </div>
+  );
+
+  const InvoicesTab = () => (
+    <div>
+      <h2
+        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        My Invoices
+      </h2>
+     <p>my invoices</p>
+    </div>
+  );
+
   const styles = {
     container: {
       backgroundColor: "#FFFDF2",
-      width: "1100px",
       minHeight: "800px",
       position: "absolute",
       top: "129px",
@@ -67,6 +128,7 @@ const Myprofile = () => {
       boxSizing: "border-box",
       padding: "20px",
       fontFamily: "Poppins",
+      marginTop: "270px",
     },
     header: {
       display: "flex",
@@ -97,7 +159,7 @@ const Myprofile = () => {
       height: "336px",
       display: "flex",
       flexDirection: "column",
-      gap: "20px",
+      gap: "10px", // Decreased gap from 20px to 10px
       alignItems: "flex-start",
     },
     myAccountHeader: {
@@ -112,9 +174,23 @@ const Myprofile = () => {
       display: "flex",
       alignItems: "center",
       gap: "6px",
-   
       fontSize: "16px",
       color: "#333333",
+      cursor: "pointer",
+      padding: "8px 0",
+      width: "100%",
+    },
+    activeMenuItem: {
+      display: "flex",
+      alignItems: "center",
+      gap: "6px",
+      fontSize: "16px",
+      color: "#000000", // Changed from orange to black
+      fontWeight: "bold",
+      paddingLeft: "13px",
+      cursor: "pointer",
+      padding: "8px 0",
+      width: "100%",
     },
     menuItemIcon: {
       width: "16px",
@@ -263,12 +339,12 @@ const Myprofile = () => {
       width: "100%",
       padding: "0 20px",
       boxSizing: "border-box",
-      gap: "20px", // Added gap between image and buttons
+      gap: "20px",
     },
     uploadedImage: {
       width: "60px",
       height: "60px",
-      borderRadius: "50%", // Changed to circular
+      borderRadius: "50%",
       objectFit: "cover",
       border: "2px solid #E6E6E6",
       pointerEvents: "none",
@@ -456,7 +532,7 @@ const Myprofile = () => {
     orangeButton: {
       padding: "12px 24px",
       borderRadius: "20px",
-      background: "#FF7F50", // Orange color
+      background: "#FF7F50",
       color: "#FFFFFF",
       border: "none",
       cursor: "pointer",
@@ -598,7 +674,7 @@ const Myprofile = () => {
     editButton: {
       padding: "12px 24px",
       borderRadius: "20px",
-      background: "#FF7F50", // Orange color
+      background: "#FF7F50",
       color: "#FFFFFF",
       cursor: "pointer",
       fontSize: "14px",
@@ -626,7 +702,6 @@ const Myprofile = () => {
       cursor: "pointer",
       marginLeft: "auto",
       marginTop: "20px",
-      
     },
     arrow: {
       fontSize: "14px",
@@ -777,7 +852,6 @@ const Myprofile = () => {
     },
     deactivateModalImageSection: {
       flex: 1,
-
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -789,28 +863,26 @@ const Myprofile = () => {
       fontSize: "44px",
       fontStyle: "normal",
       fontWeight: 900,
-      lineHeight: "48px", // 109.091%
+      lineHeight: "48px",
       letterSpacing: "-0.88px",
       marginBottom: "16px",
     },
-
     deactivateModalSubtitleRef: {
       color: "#3B322B",
       fontFamily: "Poppins",
       fontSize: "24px",
       fontStyle: "normal",
       fontWeight: 500,
-      lineHeight: "28px", // 116.667%
+      lineHeight: "28px",
       marginBottom: "24px",
     },
-
     deactivateModalQuestionRef: {
       color: "#8E8E8E",
       fontFamily: "Poppins",
       fontSize: "20px",
       fontStyle: "normal",
       fontWeight: 400,
-      lineHeight: "24px", // 120%
+      lineHeight: "24px",
       marginBottom: "32px",
     },
     deactivateModalButtonsRef: {
@@ -828,8 +900,6 @@ const Myprofile = () => {
       lineHeight: "14px",
       background: "transparent",
       cursor: "pointer",
-
-      // Unified layout
       width: "194px",
       height: "40px",
       padding: "12px 20px",
@@ -838,7 +908,6 @@ const Myprofile = () => {
       display: "flex",
       gap: "8px",
     },
-
     deactivateModalButtonNevermind: {
       background: "linear-gradient(90deg, #EA6B1E 0%, #901934 100%)",
       color: "white",
@@ -849,8 +918,6 @@ const Myprofile = () => {
       fontSize: "13px",
       lineHeight: "16px",
       cursor: "pointer",
-
-      // Unified layout
       width: "194px",
       height: "40px",
       padding: "12px 20px",
@@ -859,16 +926,6 @@ const Myprofile = () => {
       display: "flex",
       gap: "8px",
     },
-    arrow: {
-      color: "#FFFFFF",
-      fontSize: "14px", // optional
-    },
-
-    dot: {
-      color: "#FFFFFF",
-      fontSize: "20px", // optional
-    },
-
     deactivateModalCloseButtonRef: {
       position: "absolute",
       top: "20px",
@@ -876,7 +933,7 @@ const Myprofile = () => {
       width: "32px",
       height: "32px",
       border: "none",
-      backgroundColor: "transparent", // remove background
+      backgroundColor: "transparent",
       borderRadius: "50%",
       color: "#333333",
       fontSize: "18px",
@@ -893,6 +950,7 @@ const Myprofile = () => {
       objectFit: "contain",
     },
   };
+
   const globalStyles = `
     * {
       color: #333333;
@@ -934,6 +992,7 @@ const Myprofile = () => {
       user-select: none !important;
     }
   `;
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.startsWith("image/")) {
@@ -946,17 +1005,20 @@ const Myprofile = () => {
       reader.readAsDataURL(selectedFile);
     }
   };
+
   const handleUploadAreaClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
+
   const handleCropMouseDown = useCallback(
     (e) => {
       if (e.target.classList.contains("crop-handle")) {
@@ -978,6 +1040,7 @@ const Myprofile = () => {
     },
     [cropData]
   );
+
   const handleMouseMove = useCallback(
     (e) => {
       if (isDragging) {
@@ -1020,10 +1083,12 @@ const Myprofile = () => {
     },
     [isDragging, isResizing, dragStart, resizeStart, cropData]
   );
+
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     setIsResizing(false);
   }, []);
+
   React.useEffect(() => {
     if (showCropModal) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -1034,6 +1099,7 @@ const Myprofile = () => {
       };
     }
   }, [showCropModal, handleMouseMove, handleMouseUp]);
+
   const cropImage = () => {
     const canvas = canvasRef.current;
     const img = imageRef.current;
@@ -1061,94 +1127,108 @@ const Myprofile = () => {
       setShowCropModal(false);
     }
   };
+
   const handleSaveChanges = () => {
     console.log("Profile saved:", { ...formData, profileImage: croppedImage });
-    setViewMode("saved"); // Switch to saved view (second frame)
+    setViewMode("saved");
   };
+
   const handleRemoveImage = () => {
     console.log("Removing profile image");
     setCroppedImage(null);
     setFile(null);
     setPreviewImage(null);
   };
+
   const handleChangeImage = () => {
     console.log("Changing profile image");
     handleUploadAreaClick();
   };
+
   const handleDeactivateAccount = () => {
     setShowDeactivateModal(true);
   };
+
   const handleCloseDeactivateModal = () => {
     setShowDeactivateModal(false);
   };
+
   // First frame: Edit form
   const renderEditView = () => (
     <>
       <h3 style={styles.profilePictureText}>Profile picture</h3>
-     <div
-  className="upload-area"
-  style={{
-    ...styles.uploadArea,
-    cursor: "pointer", // Ensures pointer cursor over entire area
-  }}
-  onClick={handleUploadAreaClick} // Full area is clickable
-  title="Click to upload file"
->
-  <input
-    type="file"
-    id="profile-picture-upload"
-    ref={fileInputRef}
-    accept="image/*"
-    style={{ display: "none" }}
-    onChange={handleFileChange}
-  />
-
-  {croppedImage ? (
-    <div style={styles.uploadedImageContainer}>
-      <img src={croppedImage} alt="Profile" style={styles.uploadedImage} />
-      <div style={styles.profilePicActions}>
-        <button style={styles.actionButton} onClick={(e) => {
-          e.stopPropagation(); // Prevent triggering upload when clicking Remove
-          handleRemoveImage();
-        }}>
-          Remove
-        </button>
-        <button style={styles.actionButton} onClick={(e) => {
-          e.stopPropagation(); // Prevent triggering upload when clicking Change
-          handleChangeImage();
-        }}>
-          Change
-        </button>
-      </div>
-    </div>
-  ) : (
-    <>
-      {/* Hidden input trigger overlay */}
       <div
+        className="upload-area"
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 10,
+          ...styles.uploadArea,
+          cursor: "pointer",
         }}
-      />
-      {/* Upload Content */}
-      <div className="upload-content" style={styles.uploadContent}>
-        <img
-          src="/images/myprofile/upload-icon.png"
-          alt="Upload"
-          style={styles.uploadIcon}
+        onClick={handleUploadAreaClick}
+        title="Click to upload file"
+      >
+        <input
+          type="file"
+          id="profile-picture-upload"
+          ref={fileInputRef}
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
         />
-        <div style={styles.uploadTextContainer}>
-          <span style={styles.uploadTextBold}>Click to upload</span> or drag and drop
-        </div>
-        <div style={styles.uploadCaption}>Max. file size: 10MB</div>
+        {croppedImage ? (
+          <div style={styles.uploadedImageContainer}>
+            <img
+              src={croppedImage}
+              alt="Profile"
+              style={styles.uploadedImage}
+            />
+            <div style={styles.profilePicActions}>
+              <button
+                style={styles.actionButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveImage();
+                }}
+              >
+                Remove
+              </button>
+              <button
+                style={styles.actionButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleChangeImage();
+                }}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: 10,
+              }}
+            />
+            <div className="upload-content" style={styles.uploadContent}>
+              <img
+                src="/images/myprofile/upload-icon.png"
+                alt="Upload"
+                style={styles.uploadIcon}
+              />
+              <div style={styles.uploadTextContainer}>
+                <span style={styles.uploadTextBold}>Click to upload</span> or
+                drag and drop
+              </div>
+              <div style={styles.uploadCaption}>Max. file size: 10MB</div>
+            </div>
+          </>
+        )}
       </div>
-    </>
-  )}
-</div>
       <div style={styles.uploadLine}></div>
       <h3 style={styles.personalInfoText}>Personal information</h3>
       <div style={styles.inputContainer}>
@@ -1295,6 +1375,7 @@ const Myprofile = () => {
       </button>
     </>
   );
+
   // Second frame: Saved data view
   const renderSavedView = () => (
     <>
@@ -1315,7 +1396,7 @@ const Myprofile = () => {
                 ...styles.uploadedImage,
                 width: "80px",
                 height: "80px",
-                borderRadius: "50%", // Circular profile image
+                borderRadius: "50%",
               }}
             />
             <div style={styles.profilePicActions}>
@@ -1425,8 +1506,6 @@ const Myprofile = () => {
           </div>
         </div>
       </div>
-
-      {/* Button to go to the profile view (third frame) */}
       <button
         style={styles.viewProfileButton}
         onClick={() => setViewMode("profile")}
@@ -1436,10 +1515,10 @@ const Myprofile = () => {
       </button>
     </>
   );
+
   // Third frame: Profile view that matches the screenshot
   const renderProfileView = () => (
     <>
-      {/* Profile header with image and name */}
       <div style={styles.profileHeader}>
         <img
           src={croppedImage || "/images/myprofile/default-avatar.png"}
@@ -1452,7 +1531,6 @@ const Myprofile = () => {
         </div>
       </div>
       <div style={styles.additionalLine}></div>
-      {/* Personal Information Section */}
       <h3 style={styles.sectionHeader}>Personal Information</h3>
       <div style={styles.infoGrid}>
         <div style={styles.infoItem}>
@@ -1479,7 +1557,6 @@ const Myprofile = () => {
         </div>
       </div>
       <div style={styles.additionalLine}></div>
-      {/* Address Section */}
       <h3 style={styles.sectionHeader}>Address</h3>
       <div style={styles.infoGrid}>
         <div style={{ ...styles.infoItem, ...styles.fullwidthItem }}>
@@ -1520,7 +1597,6 @@ const Myprofile = () => {
         </div>
       </div>
       <div style={styles.additionalLine}></div>
-      {/* Deactivate Account Button */}
       <button style={styles.deactivateButton} onClick={handleDeactivateAccount}>
         Deactivate account
       </button>
@@ -1554,7 +1630,6 @@ const Myprofile = () => {
             >
               No thanks, I want to cancel
             </button>
-
             <button
               style={styles.deactivateModalButtonNevermind}
               onClick={() => setViewMode("profile")}
@@ -1581,76 +1656,174 @@ const Myprofile = () => {
   return (
     <>
       <style>{globalStyles}</style>
-      <div style={styles.container}>
-        <div style={styles.header}>
-          <img
-            src="/images/myprofile/goback.png"
-            alt="Go Back"
-            style={styles.goBackImage}
-          />
-        </div>
-        <div style={styles.line}></div>
-        <div style={styles.contentWrapper}>
-          <div style={styles.leftSidebar}>
-            <div style={styles.myAccountHeader}>My Account</div>
-            <div style={styles.menuItem}>
+      <div className="container">
+        <div style={styles.container}>
+          <div style={styles.header}>
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+              }}
+              onClick={() => window.history.back()}
+            >
               <img
-                src="/images/myprofile/pic1.png"
-                alt="Dashboard Icon"
-                style={styles.menuItemIcon}
+                src="/images/myprofile/gobackk.png"
+                alt="Go Back"
+                style={{
+                  width: "16px",
+                  height: "16px",
+                }}
               />
-              My Dashboard
-            </div>
-            <div style={styles.menuItem}>
-              <img
-                src="/images/myprofile/pic1.png"
-                alt="Coupons Icon"
-                style={styles.menuItemIcon}
-              />
-              My Coupons
-            </div>
-            <div style={styles.menuItem}>
-              <img
-                src="/images/myprofile/pic2.png"
-                alt="Profile Icon"
-                style={styles.menuItemIcon}
-              />
-              My Profile
-            </div>
-            <div style={styles.menuItem}>
-              <img
-                src="/images/myprofile/pic3.png"
-                alt="Campaigns Icon"
-                style={styles.menuItemIcon}
-              />
-              My Campaigns
-            </div>
-            <div style={styles.menuItem}>
-              <img
-                src="/images/myprofile/pic4.png"
-                alt="Orders Icon"
-                style={styles.menuItemIcon}
-              />
-              My Orders
-            </div>
-            <div style={styles.menuItem}>
-              <img
-                src="/images/myprofile/pic5.png"
-                alt="Invoices Icon"
-                style={styles.menuItemIcon}
-              />
-              My Invoices
-            </div>
-            <div style={styles.smallLine}></div>
-            <button style={styles.logoutButton}>Log out</button>
+              <p
+                style={{
+                  margin: 0,
+                  color: "#3B322B",
+                  fontFamily: "Poppins",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  lineHeight: "18px",
+                }}
+              >
+                Go back
+              </p>
+            </button>
           </div>
-          <div style={styles.rightContent}>
-            {viewMode === "edit" && renderEditView()}
-            {viewMode === "saved" && renderSavedView()}
-            {viewMode === "profile" && renderProfileView()}
+          <div style={styles.line}></div>
+          <div style={styles.contentWrapper}>
+            <div style={styles.leftSidebar}>
+              <div style={styles.myAccountHeader}>My Account</div>
+
+              {/* Dashboard Tab */}
+              <div
+                style={
+                  activeTab === "dashboard"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("dashboard")}
+              >
+                <img
+                  src="/images/myprofile/pic1.png"
+                  alt="Dashboard Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Dashboard
+              </div>
+
+              {/* Coupons Tab */}
+              <div
+                style={
+                  activeTab === "coupons"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("coupons")}
+              >
+                <img
+                  src="/images/myprofile/pic1.png"
+                  alt="Coupons Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Coupons
+              </div>
+
+              {/* Profile Tab */}
+              <div
+                style={
+                  activeTab === "profile"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("profile")}
+              >
+                <img
+                  src="/images/myprofile/pic2.png"
+                  alt="Profile Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Profile
+              </div>
+
+              {/* Campaigns Tab */}
+              <div
+                style={
+                  activeTab === "campaigns"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("campaigns")}
+              >
+                <img
+                  src="/images/myprofile/pic3.png"
+                  alt="Campaigns Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Campaigns
+              </div>
+
+              {/* Orders Tab */}
+              <div
+                style={
+                  activeTab === "orders"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("orders")}
+              >
+                <img
+                  src="/images/myprofile/pic4.png"
+                  alt="Orders Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Orders
+              </div>
+
+              {/* Invoices Tab */}
+              <div
+                style={
+                  activeTab === "invoices"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("invoices")}
+              >
+                <img
+                  src="/images/myprofile/pic5.png"
+                  alt="Invoices Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Invoices
+              </div>
+
+              <div style={styles.smallLine}></div>
+              <button style={styles.logoutButton}>Log out</button>
+            </div>
+
+            <div style={styles.rightContent}>
+              {/* Render content based on active tab */}
+              {activeTab === "dashboard" && <DashboardTab />}
+              {activeTab === "coupons" && <CouponsTab />}
+              {activeTab === "profile" && (
+                <>
+                  {viewMode === "edit" && renderEditView()}
+                  {viewMode === "saved" && renderSavedView()}
+                  {viewMode === "profile" && renderProfileView()}
+                </>
+              )}
+              {activeTab === "campaigns" && <CampaignsTab />}
+              {activeTab === "orders" && <OrdersTab />}
+              {activeTab === "invoices" && <InvoicesTab />}
+            </div>
           </div>
         </div>
       </div>
+
       {/* Image Cropping Modal */}
       {showCropModal && (
         <div style={styles.modalOverlay}>
@@ -1699,6 +1872,7 @@ const Myprofile = () => {
           <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
       )}
+
       {/* Deactivate Account Modal */}
       {showDeactivateModal && renderDeactivateModal()}
     </>
