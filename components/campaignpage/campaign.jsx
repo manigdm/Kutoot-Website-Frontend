@@ -86,7 +86,6 @@ const Campaign = () => {
       >
         {campaignData?.title}
       </h1>
-
       {/* Subtitle */}
       <h2
         style={{
@@ -102,7 +101,6 @@ const Campaign = () => {
       >
         {campaignData?.title1}
       </h2>
-
       {/* Description */}
       <p
         style={{
@@ -119,7 +117,6 @@ const Campaign = () => {
       >
        {campaignData?.title2}
       </p>
-
       {/* Main content with image and text */}
       <div
         style={{
@@ -131,7 +128,7 @@ const Campaign = () => {
           margin: "0 auto",
         }}
       >
-        {/* Left side image */}
+        {/* Left side image - Now with Swiper */}
         <div
           style={{
             display: "flex",
@@ -141,15 +138,100 @@ const Campaign = () => {
             gap: "-92px",
             borderRadius: "12px",
             overflow: "hidden",
+            position: "relative",
           }}
         >
-          <img
-            src="/images/campaignpage/bikee.png"
-            alt="Suzuki Hayabusa"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
+          {/* Left arrow */}
+          <div 
+            className="custom-swiper-button-prev"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "10px",
+              transform: "translateY(-50%)",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
+              zIndex: 10,
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.9)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.7)"}
+          >
+            <IoIosArrowBack style={{ fontSize: "24px", color: "#3B322B" }} />
+          </div>
+          
+          {/* Right arrow */}
+          <div 
+            className="custom-swiper-button-next"
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "10px",
+              transform: "translateY(-50%)",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
+              zIndex: 10,
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.9)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.7)"}
+          >
+            <IoIosArrowForward style={{ fontSize: "24px", color: "#3B322B" }} />
+          </div>
+          
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            onSlideChange={(swiper) => {
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+            loop={true}
+            className="mySwiper rounded-20"
+            navigation={{
+              nextEl: ".custom-swiper-button-next",
+              prevEl: ".custom-swiper-button-prev",
+            }}
+            style={{ width: "100%", height: "450px" }}
+          >
+            {slides.map((url, i) => (
+              <SwiperSlide key={i}>
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Image
+                    src={url}
+                    alt="Suzuki Hayabusa"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-
+        
         {/* Right side content */}
         <div
           style={{
@@ -187,12 +269,12 @@ const Campaign = () => {
           </p>
 
           <button className="kutoot--header__button">
-                    <FaArrowRight className="kutoot--header__button-icon" />
-                    Enter Now
-                  </button>
+            <FaArrowRight className="kutoot--header__button-icon" />
+            Enter Now
+          </button>
         </div>
       </div>
-
+      
       {/* Prize Highlights Section */}
       <div style={{ marginTop: "80px", marginBottom: "40px" }}>
         <h2
@@ -210,7 +292,6 @@ const Campaign = () => {
         >
           Prize Highlights
         </h2>
-
         <div
           style={{
             display: "flex",
@@ -281,7 +362,7 @@ const Campaign = () => {
           ))}
         </div>
       </div>
-
+      
       {/* New Section with Pricing Cards */}
       <div style={{ background: "#EFEFEF" }}>
         <div
@@ -325,7 +406,7 @@ const Campaign = () => {
           >
             Own the machine that commands the road.
           </p>
-
+          
           {/* Pricing cards section */}
           <div
             style={{
@@ -383,7 +464,7 @@ const Campaign = () => {
                       marginTop: "8px",
                     }}
                   />
-
+                  
                   {/* Title and Subtitle */}
                   <div
                     style={{
@@ -426,7 +507,7 @@ const Campaign = () => {
                       {stripHtml(tier?.description)}
                     </p>
                   </div>
-
+                  
                   <div
                     style={{
                       width: "172px",
@@ -434,7 +515,7 @@ const Campaign = () => {
                       background: "#cfc4bc",
                     }}
                   ></div>
-
+                  
                   {/* Spend details */}
                   <div
                     style={{
@@ -473,7 +554,7 @@ const Campaign = () => {
                       ₹{tier?.ticket_price}
                     </p>
                   </div>
-
+                  
                   <div
                     style={{
                       width: "172px",
@@ -481,7 +562,7 @@ const Campaign = () => {
                       background: "#cfc4bc",
                     }}
                   ></div>
-
+                  
                   {/* Shopping Coins */}
                   <div
                     style={{
@@ -520,7 +601,7 @@ const Campaign = () => {
                       {tier?.coins_per_campaign}
                     </p>
                   </div>
-
+                  
                   <div
                     style={{
                       width: "172px",
@@ -528,7 +609,7 @@ const Campaign = () => {
                       background: "#cfc4bc",
                     }}
                   ></div>
-
+                  
                   {/* Free Coupons */}
                   <div
                     style={{
@@ -567,15 +648,15 @@ const Campaign = () => {
                       {tier?.coupons_per_campaign}
                     </p>
                   </div>
-
-                     <div
+                  
+                  <div
                     style={{
                       width: "172px",
                       height: "0.5px",
                       background: "#cfc4bc",
                     }}
                   ></div>
-
+                  
                   {/* Per Coupon Cost */}
                   <div
                     style={{
@@ -614,8 +695,8 @@ const Campaign = () => {
                       ₹{tier.costPerCoupon}
                     </p>
                   </div>
-
-                    {/* Dotted Line */}
+                  
+                  {/* Dotted Line */}
                   <div
                     style={{
                       width: "120%",
@@ -624,7 +705,7 @@ const Campaign = () => {
                       margin: "12px 0",
                     }}
                   ></div>
-
+                  
                   {/* Buy Now Button */}
                   <button
                     style={{
@@ -649,6 +730,7 @@ const Campaign = () => {
                     Buy now .
                   </button>
                 </div>
+                
                 {tier.label && (
                   <div
                     style={
@@ -696,7 +778,8 @@ const Campaign = () => {
                 )}
               </div>
             ))}
-                <div>
+            
+            <div>
               <p
                 style={{
                   color: "#FFF",
@@ -713,7 +796,6 @@ const Campaign = () => {
               >
                 Rev Up Your Chances to Win the Hayabusa!
               </p>
-
               <img
                 src="/images/campaignpage/slider.png"
                 alt="Campaign Slider"
@@ -726,6 +808,7 @@ const Campaign = () => {
                 }}
               />
             </div>
+            
             <div
               style={{
                 borderRadius: "40px",
@@ -776,6 +859,7 @@ const Campaign = () => {
             </div>
           </div>
         </div>
+        
         <div
           style={{
             width: "100%",
