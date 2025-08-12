@@ -48,7 +48,7 @@ export function LotteryCard({
       }}
     >
       <div className="lottery-card-image-container">
-        <Image
+        <img
           src={image}
           alt={title}
           fill

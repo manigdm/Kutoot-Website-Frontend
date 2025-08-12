@@ -25,16 +25,23 @@ import { FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {
   const homepageData = useHomePage();
+  const {campaigns,banners,baseplans,products,marquee} = homepageData;
   const width = useWindowWidth();
   const [index, setIndex] = useState(0);
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const banner = homepageData?.data?.banner;
+  // const banner = homepageData?.data?.banners[0] || {};
+  
+   const banner = campaigns?.[0] || {};
+
   const lines = [
     banner?.title1 || "Your ₹5 Crore Villa — Only on Kutoot!",
     banner?.title2 || "Luxury living at Rs. 99 Lakh on Kutoot Now!",
   ];
+
+  // console.log('Banner Data:', products);
+
 
   const handleVideoToggle = () => {
     if (!videoRef.current) return;
@@ -59,25 +66,29 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [lines]);
 
+
   return (
     <>
       <FixedEnterButton />
       <section className="hero">
-        {homepageData?.data?.banner?.video ? (
+        {banner?.video ? (
           <>
             <video
               ref={videoRef}
               className="hero__video"
               src={
-                `${process.env.NEXT_PUBLIC_BASE_URL}` +
-                homepageData.data.banner.video
+                `${process.env.NEXT_PUBLIC_BASE_URL}` + banner?.video
+                // homepageData.data.banner.video
               }
               autoPlay
               loop
               muted
               playsInline
             />
-            <button className="video-control-button" onClick={handleVideoToggle}>
+            <button
+              className="video-control-button"
+              onClick={handleVideoToggle}
+            >
               {isPlaying ? (
                 <IoPauseCircleOutline size={24} color="white" />
               ) : (
@@ -121,8 +132,8 @@ const Hero = () => {
             </AnimatePresence>
 
             <div className="header__title">
-              {/* {banner?.title || " */}
-              Enter to win a luxury Buildiko Springwoods Villa!
+              {/* {banner?.title }  */}
+              Enter to win a luxury Buildiko Springwoods Villa! 
             </div>
             <p className="header__description">
               {banner?.short_description ||
@@ -142,14 +153,14 @@ const Hero = () => {
         </div>
 
         <div className="blur-overlay mt-20">
-          <LuckyDrawSlider />
+          <LuckyDrawSlider campaigns={campaigns} />
         </div>
       </section>
       <div className="promo-section-container">
-        <PromoSection />
+        <PromoSection baseplans={baseplans} />
       </div>
       <div className="exclusive-campaign-container">
-        <ExclusiveCampaign />
+        <ExclusiveCampaign campaigns={campaigns} />
       </div>
       <div className="exclusive-campaign-container d-none">
         <YoutubeTestimonials />
@@ -158,13 +169,13 @@ const Hero = () => {
         <Testimonials />
       </div>
       <div>
-        <UpcomingCampaigns />
+        <UpcomingCampaigns campaigns={campaigns} />
       </div>
       <div>
-        <EcommerceLayout />
+        <EcommerceLayout products={products} banners={banners} />
       </div>
       <div>
-        <PartnersSection />
+        <PartnersSection marquee={marquee} />
       </div>
       <div>
         <HowItWorks />

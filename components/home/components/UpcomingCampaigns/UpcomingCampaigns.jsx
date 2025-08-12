@@ -31,9 +31,27 @@ const campaigns = [
   },
 ];
 
-export default function UpcomingCampaigns() {
+export default function UpcomingCampaigns({campaigns}) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+
+//   const today = new Date();
+//  today.setHours(0, 0, 0, 0);
+
+// // Filter only upcoming campaigns
+// const upcomingCampaigns = campaigns.filter(campaign => {
+//   if (!campaign.start_date) return false;
+
+//   // Parse safely
+//   const [year, month, day] = campaign.start_date.split('-').map(Number);
+//   const startDate = new Date(year, month - 1, day);
+//   startDate.setHours(0, 0, 0, 0);
+
+//   // Ensure both dates are in the same timezone/day context
+//   //  console.log('upcoming', startDate > today);
+// });
+
+// console.log('exclusive',upcomingCampaigns);
 
   return (
     <section className="campaign-carousel">
@@ -68,14 +86,30 @@ export default function UpcomingCampaigns() {
             <IoIosArrowForward className="right-arrow" />
           </button>
         </div>
-        {campaigns.map((campaign, index) => (
+       {campaigns
+  ?.filter(campaign => {
+    if (!campaign.start_date) return false; // skip if no date
+
+    const campaignDate = new Date(campaign.start_date);
+    const today = new Date();
+
+    // remove time for comparison
+    today.setHours(0, 0, 0, 0);
+    campaignDate.setHours(0, 0, 0, 0);
+
+    return campaignDate > today; // only future dates
+  }).map((campaign, index) => (
           <SwiperSlide key={index}>
             <div className="campaign-card">
               <div className="campaign-card__content">
                 <h3>{campaign.title}</h3>
-                <p className="campaign-card__description">
+                {/* <p className="campaign-card__description" >
                   {campaign.description}
-                </p>
+                </p> */}
+                   <div
+          className="campaign-card__description"
+          dangerouslySetInnerHTML={{ __html: campaign.description }}
+        />
               </div>
               <button className="campaign-card__button">
                 <FaArrowRight className="campaign-card__button-icon" />

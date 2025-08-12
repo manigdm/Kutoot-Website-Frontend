@@ -59,9 +59,10 @@ const data = [
   },
 ];
 
-const LuckyDrawSlider = () => {
+const LuckyDrawSlider = ({campaigns}) => {
   const enterNow = () => {};
-
+const item= campaigns || [] ;
+// console.log('Item Data:', item);
   return (
     <div className="lucky-draw-slider">
       <div className="custom-swiper-button-prev">‹</div>
@@ -75,13 +76,15 @@ const LuckyDrawSlider = () => {
           prevEl: ".custom-swiper-button-prev",
         }}
         loop
+        pagination={{ clickable: true }}
+        className="lucky-draw-slider__swiper"
       >
-        {data.map((item, index) => (
+        {item.map((item, index) => (
           <SwiperSlide key={index}>
             <div
               className="draw-card"
-              style={{ backgroundImage: `url(${item.image})` }}
-            ></div>
+              style={{ backgroundImage: `url(${item.img})` }}
+            >
             <div className="draw-card-content">
               <div className="top-label">
                 <span>LUCKY DRAW COUNTDOWN</span>
@@ -95,7 +98,7 @@ const LuckyDrawSlider = () => {
                   </div>
                 </div> */}
                 <div className="progress-bar">
-                  <span>{item.progress}%</span>
+                  <span>{item.display_percentage}%</span>
                   <div className="header__bar">
                     {[...Array(10)].map((_, i) => (
                       <div
@@ -108,7 +111,7 @@ const LuckyDrawSlider = () => {
               </div>
               <div className="details">
                 <h3>{item.title}</h3>
-                <p className="text-white">worth {item.worth}</p>
+                <p className="text-white">worth {item.tag1}</p>
               </div>
               <div className="actions">
                 <button
@@ -126,6 +129,7 @@ const LuckyDrawSlider = () => {
                   Buy Now
                 </button>
               </div>
+            </div>
             </div>
           </SwiperSlide>
         ))}
