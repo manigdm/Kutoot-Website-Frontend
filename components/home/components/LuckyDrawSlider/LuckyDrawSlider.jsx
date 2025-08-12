@@ -61,7 +61,7 @@ const data = [
 
 const LuckyDrawSlider = ({campaigns}) => {
   const enterNow = () => {};
-const item= campaigns || {};
+const item= campaigns || [] ;
 // console.log('Item Data:', item);
   return (
     <div className="lucky-draw-slider">
@@ -76,13 +76,15 @@ const item= campaigns || {};
           prevEl: ".custom-swiper-button-prev",
         }}
         loop
+        pagination={{ clickable: true }}
+        className="lucky-draw-slider__swiper"
       >
         {item.map((item, index) => (
           <SwiperSlide key={index}>
             <div
               className="draw-card"
               style={{ backgroundImage: `url(${item.img})` }}
-            ></div>
+            >
             <div className="draw-card-content">
               <div className="top-label">
                 <span>LUCKY DRAW COUNTDOWN</span>
@@ -96,7 +98,7 @@ const item= campaigns || {};
                   </div>
                 </div> */}
                 <div className="progress-bar">
-                  <span>{item.progress}%</span>
+                  <span>{item.display_percentage}%</span>
                   <div className="header__bar">
                     {[...Array(10)].map((_, i) => (
                       <div
@@ -127,6 +129,7 @@ const item= campaigns || {};
                   Buy Now
                 </button>
               </div>
+            </div>
             </div>
           </SwiperSlide>
         ))}

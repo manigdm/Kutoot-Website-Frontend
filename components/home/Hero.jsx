@@ -132,8 +132,8 @@ const Hero = () => {
             </AnimatePresence>
 
             <div className="header__title">
-              {/* {banner?.title || " */}
-              Enter to win a luxury Buildiko Springwoods Villa!
+              {/* {banner?.title }  */}
+              Enter to win a luxury Buildiko Springwoods Villa! 
             </div>
             <p className="header__description">
               {banner?.short_description ||
