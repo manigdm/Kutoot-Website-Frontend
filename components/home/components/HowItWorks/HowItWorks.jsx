@@ -38,7 +38,7 @@ const HowItWorks = () => {
         {stepsData.map((step, index) => (
           <div className="step-card" key={step.number}>
             <div className="step-header">
-              <Image
+              <img
                 src={step.numberImage}
                 alt={`Step ${step.number}`}
                 width={70}

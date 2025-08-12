@@ -1,267 +1,245 @@
-import React, { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { FaArrowRight } from 'react-icons/fa';
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { ProductCard } from "./ProductCard/ProductCard.jsx";
+import { NewsCard } from "./NewsCard/NewsCard.jsx";
+import CommonButton from "@/components/common/CommonButton.jsx";
+import "swiper/css/pagination";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "./EcommerceLayout.scss";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { FaArrowRight } from "react-icons/fa";
 
-const Page = () => {
+const PRODUCTS = [
+  {
+    title: "Fine silver jewellery",
+    subtitle: "Best value",
+    image:
+      "https://plus.unsplash.com/premium_photo-1681276170092-446cd1b5b32d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
+    buttonText: "Buy now",
+    buttonVariant: "orange",
+    backgroundColor: "bg-gradient-navy",
+  },
+  {
+    title: "Best deals on smartwatches",
+    subtitle: "Best price",
+    image:
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=654&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    buttonText: "Buy now",
+    buttonVariant: "orange",
+    backgroundColor: "bg-gradient-cyan",
+  },
+  {
+    title: "Min 70% off on handbags",
+    subtitle: "Best offer",
+    image:
+      "https://images.unsplash.com/photo-1608060434411-0c3fa9049e7b?q=80&w=776&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    buttonText: "Buy now",
+    buttonVariant: "orange",
+    backgroundColor: "bg-gradient-brown",
+  },
+  {
+    title: "Fine silver jewellery",
+    subtitle: "Best value",
+    image:
+      "https://plus.unsplash.com/premium_photo-1681276170092-446cd1b5b32d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
+    buttonText: "Buy now",
+    buttonVariant: "orange",
+    backgroundColor: "bg-gradient-navy",
+  },
+];
+
+const NEWS = [
+  {
+    title: "Kutoot User Wins Dream Villa in Goa!",
+    description:
+      "In our biggest giveaway yet, Renu Sutilish from Pune bagged a 25.2L villa in South Goa. More Dream Coupons incoming!",
+    image:
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Kutoot Crosses ₹10 Crore in Coin Sales — 5% Donated to Charity",
+    description:
+      "Thanks to our amazing community, we've hit a milestone that matters. We've hit a total of ₹10 crore in verified NGOs across India.",
+    image:
+      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Kutoot Partners with 50+ New Vendors Across India",
+    description:
+      "From boutique cafes to premium wellness brands, our vendor family just got bigger. More places to use your Kutoot rewards and more fun.",
+    image:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Kutoot Crosses ₹10 Crore in Coin Sales — 5% Donated to Charity",
+    description:
+      "Thanks to our amazing community, we've hit a milestone that matters. We've hit a total of ₹10 crore in verified NGOs across India.",
+    image:
+      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
+  },
+];
+
+const featuredBannerData = [
+  {
+    title: "Best deals for all Headphones!",
+    brand: "boat",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop",
+    buttonText: "Shop Now",
+  },
+  {
+    title: "Massive Discounts on Speakers!",
+    brand: "JBL",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop",
+    buttonText: "Shop Now",
+  },
+];
+
+export const EcommerceLayout = ({products,banners}) => {
   const swiperRef = useRef(null);
-  
+
   const handlePrev = () => {
     swiperRef.current?.slidePrev();
   };
-  
+
   const handleNext = () => {
     swiperRef.current?.slideNext();
   };
 
-  const galleryButtonStyle = {
-    borderRadius: '20px',
-    background: '#3B322B',
-    display: 'flex',
-    width: '82px',
-    height: '32px',
-    padding: '12.006px 20.01px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '8.004px',
-    color: '#FFF',
-    textAlign: 'center',
-    fontFamily: 'Poppins',
-    fontSize: '14px',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    lineHeight: '14px',
-    border: 'none',
-    cursor: 'pointer'
-  };
-
-  const infoButtonStyle = {
-    borderRadius: '20px',
-    border: '0.8px solid #FFF',
-    display: 'flex',
-    width: '70px',
-    height: '32px',
-    padding: '12.006px 20.01px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '8.004px',
-    color: '#FFF',
-    textAlign: 'center',
-    fontFamily: 'Poppins',
-    fontSize: '14px',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    lineHeight: '14px',
-    background: 'transparent',
-    cursor: 'pointer'
-  };
-
   return (
-    <div style={{ paddingTop: '80px', textAlign: 'center' }}>
-      {/* Title */}
-      <h1
-        style={{
-          color: '#3B322B',
-          fontFamily: '"Zurich Extra Black", sans-serif',
-          fontSize: '52px',
-          fontStyle: 'normal',
-          fontWeight: 900,
-          lineHeight: '70px',
-          letterSpacing: '-1.04px',
-          marginBottom: '20px',
-        }}
-      >
-        Suzuki Hayabusa – Worth ₹20 Lakhs
-      </h1>
-      {/* Subtitle */}
-      <h2
-        style={{
-          color: '#3B322B',
-          fontFamily: '"Zurich Extra Black", sans-serif',
-          fontSize: '32px',
-          fontStyle: 'normal',
-          fontWeight: 900,
-          lineHeight: '48px',
-          letterSpacing: '-0.64px',
-          marginBottom: '16px',
-        }}
-      >
-        Unleash the beast. More speed, more chances, more roar.
-      </h2>
-      {/* Description */}
-      <p
-        style={{
-          color: '#3B322B',
-          fontFamily: 'Poppins, sans-serif',
-          fontSize: '20px',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          lineHeight: '24px',
-          WebkitTextStrokeWidth: '0.4px',
-          WebkitTextStrokeColor: '#FFF',
-          marginBottom: '40px',
-        }}
-      >
-        Minimum Purchase: ₹20 | Bundles include Shopping Coins + Free Lucky Draw Coupons
-      </p>
-      
-      {/* Main content with image and text */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        gap: '40px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {/* Left side image with arrows and buttons */}
-        <div style={{
-          display: 'flex',
-          width: '727px',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: '-92px',
-          borderRadius: '12px',
-          overflow: 'hidden',
-          position: 'relative'
-        }}>
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={0}
-            slidesPerView={1}
-            navigation={false}
-            pagination={{ clickable: true }}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
-            loop={true}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-            style={{ width: '100%', height: '400px' }}
-          >
-            <SwiperSlide>
-              <img 
-                src="/path/to/hayabusa-image.jpg" 
-                alt="Suzuki Hayabusa" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img 
-                src="/path/to/hayabusa-image-2.jpg" 
-                alt="Suzuki Hayabusa" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </SwiperSlide>
-          </Swiper>
-          
-          {/* Navigation Arrows */}
-          <div style={{ 
-            position: 'absolute', 
-            top: '50%', 
-            transform: 'translateY(-50%)', 
-            width: '100%', 
-            display: 'flex', 
-            justifyContent: 'space-between',
-            padding: '0 20px',
-            zIndex: 10
-          }}>
-            <button 
-              onClick={handlePrev}
-              style={{ 
-                background: 'rgba(0,0,0,0.5)', 
-                border: 'none', 
-                borderRadius: '50%', 
-                width: '40px', 
-                height: '40px', 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              <MdArrowBackIos style={{ color: 'white', fontSize: '20px' }} />
-            </button>
-            <button 
-              onClick={handleNext}
-              style={{ 
-                background: 'rgba(0,0,0,0.5)', 
-                border: 'none', 
-                borderRadius: '50%', 
-                width: '40px', 
-                height: '40px', 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              <MdArrowForwardIos style={{ color: 'white', fontSize: '20px' }} />
-            </button>
+    <div className="ecommerce-layout">
+      <div className="container">
+        <section className="header-component">
+          <div className="header-content">
+            <h1 className="main-title">Best Products</h1>
+            <p className="main-subtitle">ECOMMERCE</p>
           </div>
-          
-          {/* Gallery and Info Buttons */}
-          <div style={{ 
-            display: 'flex', 
-            gap: '10px', 
-            marginTop: '20px',
-            alignSelf: 'center'
-          }}>
-            <button style={galleryButtonStyle}>
-              Gallery
-            </button>
-            <button style={infoButtonStyle}>
-              Info
-            </button>
-          </div>
-        </div>
-        
-        {/* Right side content */}
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'flex-start',
-          textAlign: 'left',
-          maxWidth: '500px'
-        }}>
-          <h3 
-            style={{
-              color: '#3B322B',
-              fontFamily: 'Poppins',
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: 700,
-              lineHeight: '18px',
-              marginBottom: '16px'
-            }}
-          >
-            Feel the power of a legend
-          </h3>
-          <p 
-            style={{
-              color: '#3B322B',
-              fontFamily: 'Poppins',
-              fontSize: '14px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: '18px',
-              marginBottom: '24px'
-            }}
-          >
-            Start with just ₹20 and unlock your shot at owning the legendary beast on two
-            wheels. The more you throttle up, the better your chances — more coins, more coupons,
-            more speed! Climb the ranks, collect badges, and feel the rush — because this isn't just a draw, it's your race to win the Hayabusa.
-          </p>
-          
-          <button className="kutoot--header__button">
-            <FaArrowRight className="kutoot--header__button-icon" />
-            Enter Now
+          <button className="ecommerce-layout__button">
+            <FaArrowRight className="ecommerce-layout__button-icon" />
+            Shop Now
           </button>
-        </div>
+        </section>
+        <section className="products-section">
+          <section className="products-section">
+            <Swiper
+              className="products-swiper"
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={24}
+              slidesPerView={3}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 1000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+            >
+              {products?.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCard 
+                  // {...product}
+                    title= {product.name}
+                    subtitle={product.short_name}
+                    image ={`${process.env.NEXT_PUBLIC_BASE_URL}${product.thumb_image}`}
+                    buttonText="Shop Now"  
+                    buttonVariant="orange"
+                    backgroundColor="bg-gradient-cyan"
+                   />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </section>
+        </section>
+        <section className="featured-section">
+          <Swiper
+            modules={[Autoplay]}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            className="featured-swiper"
+          >
+            {banners.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="featured-banner">
+                  <div className="banner-content">
+                    <p>{item.title}</p>
+                    <h2>{item.title}</h2>
+                    <div className="mt-3">
+                      <button className="featured__button">
+                        <FaArrowRight className="featured__button-icon" />
+                        Shop Now
+                      </button>
+                    </div>
+                  </div>
+                  <div className="banner-image">
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`} alt={item.image} />
+                  </div>
+                </div>
+                <div className="banner-arrows">
+                  <div className="prev-arrow">
+                    <MdArrowBackIos onClick={handlePrev} className="arrow" />
+                  </div>
+                  <div className="next-arrow">
+                    <MdArrowForwardIos onClick={handleNext} className="arrow" />
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </section>
+        <section className="news-section">
+          <div className="news-header">
+            <h2 className="news-title">Kutoot Newsroom</h2>
+            <p className="news-subtitle">
+              Catch the latest buzz, breakthroughs, and big wins
+            </p>
+          </div>
+
+          <div className="news-carousel-main">
+            <section className="news-section">
+              <div className="news-carousel">
+                <div className="custom-swiper-button-prev news-nav">
+                  <MdArrowBackIos className="back-arrow" />
+                </div>
+                <div className="custom-swiper-button-next news-nav">
+                  <MdArrowForwardIos />
+                </div>
+                <Swiper
+                  modules={[Navigation, Autoplay]}
+                  spaceBetween={24}
+                  slidesPerView={3}
+                  navigation={{
+                    nextEl: ".news-carousel .custom-swiper-button-next",
+                    prevEl: ".news-carousel .custom-swiper-button-prev",
+                  }}
+                  loop
+                  autoplay={{
+                    delay: 2000,
+                    disableOnInteraction: false,
+                  }}
+                >
+                  {NEWS.map((news, index) => (
+                    <SwiperSlide key={index}>
+                      <NewsCard {...news} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </section>
+          </div>
+
+          <div className="news-footer">
+            <button className="news-footer__button">
+              <FaArrowRight className="news-footer__button-icon" />
+              View more
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   );
 };
-
-export default Page;

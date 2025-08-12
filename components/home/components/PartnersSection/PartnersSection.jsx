@@ -16,7 +16,7 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
         <h2 className="partners-heading">{title}</h2>
         <div className="carousel-container">
           <Swiper
-          dir="rtl"
+            dir="rtl"
             slidesPerView={4.2}
             spaceBetween={32}
             loop={true}
@@ -24,6 +24,7 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
             autoplay={{
               delay: 1,
               disableOnInteraction: false,
+              reverseDirection: true,
               pauseOnMouseEnter: true,
             }}
             freeMode={{ enabled: true }}
@@ -32,8 +33,8 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
           >
             {partnerLogos.map((logo, index) => (
               <SwiperSlide key={index}>
-                <div className="partner-logo" style={{ direction: "ltr" }}>
-                  <Image
+                <div className="partner-logo" style={{ direction: "rtl" }}>
+                  <img
                     src={logo}
                     alt={`partner-logo-${index}`}
                     width={150}
@@ -58,7 +59,11 @@ const partners = [
   "/images/landingpage/the_hindu.png",
 ];
 
-const PartnersSection = () => {
+const PartnersSection = ({ marquee = [] }) => {
+  const charityPartners = marquee.map(
+    item => `${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`
+  );
+  // const businessPartners = marquee.filter(item => item.type === "business").map(item => `${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`);
   return (
     <div className="partners-container">
          <PartnerCarousel
@@ -69,7 +74,7 @@ const PartnersSection = () => {
       <PartnerCarousel
         title="Our Charity Partners"
         backgroundColor="#362f2a"
-        partnerLogos={partners}
+        partnerLogos={charityPartners}
       />
    
     </div>
