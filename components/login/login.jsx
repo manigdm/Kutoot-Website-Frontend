@@ -18,10 +18,14 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // State to track if social login is in progress
   const [socialLoginInProgress, setSocialLoginInProgress] = useState(false);
-  
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   // Ref for timeout
   const timeoutRef = useRef(null);
-  
+
   // Reset all states to initial values
   const resetState = () => {
     setActiveButton(null);
@@ -33,44 +37,95 @@ const Login = () => {
     setTimerActive(false);
     setIsLoggedIn(false);
     setSocialLoginInProgress(false);
-    
+
     // Clear any pending timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
   };
-  
-  // Handle Send OTP click
-  const handleSendOtp = () => {
-    if (inputValue.trim()) {
-      // Only proceed if input is not empty
+
+  const isValidEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.com$/i.test(email);
+
+  const isValidPhone = (phone) =>
+    /^\d{10}$/.test(phone);
+
+  const isValid = isValidEmail(inputValue) || isValidPhone(inputValue);
+
+  // Handle Send OTP click  
+  const handleSendOtp = async () => {
+    // Validate input before sending OTP
+    if (!isValidEmail(inputValue) && !isValidPhone(inputValue)) {
+      setError("Please enter valid email or number");
+      return; // stop function here
+    }
+
+    setError(""); // clear error if valid
+
+    try {
+      const res = await fetch("https://kutoot.bigome.com/api/logintrigger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier: inputValue }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send OTP");
+
       setOtpSent(true);
-      setTimerActive(true);
+    } catch (error) {
+      console.error(error);
     }
   };
-  
-  // Handle Login click
-  const handleLogin = () => {
-    if (otpValue.trim()) {
-      // Process login with OTP
-      console.log("Logging in with OTP:", otpValue);
-      // Here you would typically make an API call to verify the OTP
-      setIsLoggedIn(true); // Set logged in state to true
+
+  const handleChange = (e) => {
+    setOtpValue(e.target.value);
+    setError("");
+    setSuccessMessage("");
+  };
+
+  // Step 2: Verify OTP & log in
+  const handleLogin = async () => {
+    if (!otpValue.trim()) {
+      setError("Please enter OTP");
+      return;
+    }
+
+    setError("");
+    try {
+      const res = await fetch("https://kutoot.bigome.com/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          identifier: inputValue,
+          otp: otpValue,
+        }),
+      });
+
+      if (!res.ok) throw new Error("OTP verification failed");
+
+      const data = await res.json();
+      console.log("OTP verified successfully", data);
+      setSuccessMessage("OTP verified successfully!");
+    } catch (err) {
+      console.error(err);
+      setError("OTP verification failed");
     }
   };
-  
+
   // Handle Social Login click
   const handleSocialLogin = (provider) => {
     setActiveButton(provider);
     setSocialLoginInProgress(true);
     console.log(`Logging in with ${provider}`);
-    
+
     // Clear any existing timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     // Set a timeout to simulate login process and then show welcome screen
     timeoutRef.current = setTimeout(() => {
       // Here you would typically make an API call to authenticate with the social provider
@@ -78,7 +133,7 @@ const Login = () => {
       setSocialLoginInProgress(false);
     }, 500); // 500ms delay to show the button state change
   };
-  
+
   // Handle Resend OTP click
   const handleResendOtp = () => {
     if (inputValue.trim()) {
@@ -88,11 +143,11 @@ const Login = () => {
       console.log("Resending OTP to:", inputValue);
     }
   };
-  
+
   // Timer effect
   useEffect(() => {
     let interval;
-    
+
     if (timerActive && timer > 0) {
       interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
@@ -100,12 +155,12 @@ const Login = () => {
     } else if (timer === 0) {
       setTimerActive(false);
     }
-    
+
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [timerActive, timer]);
-  
+
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
@@ -114,39 +169,39 @@ const Login = () => {
       }
     };
   }, []);
-  
+
   // Format timer to MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  
+
   // X icon component
   const XIcon = () => (
-    <svg 
-      width="16" 
-      height="16" 
-      viewBox="0 0 16 16" 
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
       fill="none"
       style={{
         cursor: 'pointer'
       }}
     >
-      <path 
-        d="M1 1L15 15M15 1L1 15" 
-        stroke="#3B322B" 
+      <path
+        d="M1 1L15 15M15 1L1 15"
+        stroke="#3B322B"
         strokeWidth="0.7"
       />
     </svg>
   );
-  
+
   // Eye icon component
   const EyeIcon = ({ visible }) => (
-    <svg 
-      width="20" 
-      height="20" 
-      viewBox="0 0 24 24" 
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
       fill="none"
       style={{
         cursor: 'pointer'
@@ -156,23 +211,23 @@ const Login = () => {
       {visible ? (
         // Eye open icon
         <>
-          <path 
-            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" 
+          <path
+            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
             fill="#3B322B"
           />
         </>
       ) : (
         // Eye closed icon
         <>
-          <path 
-            d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" 
+          <path
+            d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
             fill="#3B322B"
           />
         </>
       )}
     </svg>
   );
-  
+
   // Render Welcome screen if logged in
   if (isLoggedIn) {
     return (
@@ -208,7 +263,7 @@ const Login = () => {
               objectFit: "cover",
             }}
           />
-          
+
           {/* X icon in top-right corner of rectangle */}
           <div
             style={{
@@ -223,7 +278,7 @@ const Login = () => {
             <XIcon />
           </div>
         </div>
-        
+
         {/* Welcome content */}
         <div
           style={{
@@ -256,7 +311,7 @@ const Login = () => {
           >
             Welcome!
           </div>
-          
+
           {/* Subtitle text */}
           <div
             style={{
@@ -271,7 +326,7 @@ const Login = () => {
           >
             Keep Shopping and Unlock Exciting Rewards.
           </div>
-          
+
           {/* Kutoot Logo */}
           <img
             src="/images/loginpage/kutoot.png"
@@ -286,7 +341,7 @@ const Login = () => {
       </div>
     );
   }
-  
+
   // Render Login form if not logged in
   return (
     <div
@@ -321,7 +376,7 @@ const Login = () => {
             objectFit: "cover",
           }}
         />
-        
+
         {/* X icon in top-right corner of rectangle */}
         <div
           style={{
@@ -336,7 +391,7 @@ const Login = () => {
           <XIcon />
         </div>
       </div>
-      
+
       {/* Left-side content box */}
       <div
         style={{
@@ -380,7 +435,18 @@ const Login = () => {
               type="text"
               placeholder="Enter your email ID or mobile number*"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                if (touched) {
+                  // Validate live if already touched
+                  if (!isValidEmail(e.target.value) && !isValidPhone(e.target.value)) {
+                    setError("Please enter valid email or number");
+                  } else {
+                    setError("");
+                  }
+                }
+              }}
+              onBlur={() => setTouched(true)} // Mark as touched when leaving field
               style={{
                 border: "1.055px solid #DEDEDE",
                 borderRadius: "8px",
@@ -394,32 +460,39 @@ const Login = () => {
                 letterSpacing: "-0.14px",
               }}
             />
+            {touched && error && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {error}
+              </p>
+            )}
             <style jsx>{`
               input::placeholder {
                 color: #64646499;
               }
             `}</style>
             {/* OTP message */}
-            <div
-              style={{
-                color: "#3B322B",
-                fontFamily: "Poppins",
-                fontSize: "14px",
-                fontWeight: "400",
-                lineHeight: "26px",
-                letterSpacing: "-0.28px",
-              }}
-            >
-              We will send you a magic OTP to unlock your world
-            </div>
+            {isValid && (
+              <div
+                style={{
+                  color: "#3B322B",
+                  fontFamily: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  lineHeight: "26px",
+                  letterSpacing: "-0.28px",
+                }}
+              >
+                We will send you a magic OTP to unlock your world
+              </div>
+            )}
             {/* Send OTP button (color changes after click) */}
             <button
               onClick={handleSendOtp}
-              onMouseDown={() => setActiveButton("sendOtp")} // Change button color on click
+              disabled={!isValid} // Optional: disable click when invalid
               style={{
                 border: "none",
                 borderRadius: "30px",
-                background: activeButton === "sendOtp" ? "#EA6B1E" : "#909090", // Change color after click
+                background: isValid ? "#EA6B1E" : "#909090", // Orange if valid, grey if invalid
                 display: "flex",
                 width: "405px",
                 height: "44px",
@@ -427,6 +500,7 @@ const Login = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "6px",
+                cursor: isValid ? "pointer" : "not-allowed", // Change cursor style
               }}
             >
               <span
@@ -442,6 +516,7 @@ const Login = () => {
                 Send OTP
               </span>
             </button>
+
             {/* OR Separator */}
             <div
               style={{
@@ -665,12 +740,13 @@ const Login = () => {
               }}
             />
             {/* Enter OTP input with eye icon */}
-            <div style={{ position: "relative", width: "100%" }}>
+            <div style={{ width: "100%", margin: "0 auto" }}>
+              {/* OTP input */}
               <input
-                type={otpVisible ? "text" : "password"}
+                type="text"
                 placeholder="Enter OTP"
                 value={otpValue}
-                onChange={(e) => setOtpValue(e.target.value)}
+                onChange={handleChange}
                 style={{
                   border: "1.055px solid #DEDEDE",
                   borderRadius: "8px",
@@ -682,131 +758,74 @@ const Login = () => {
                   fontSize: "14px",
                   fontWeight: "400",
                   letterSpacing: "-0.14px",
-                  color: "#646464",
                 }}
               />
-              <style jsx>{`
-                input::placeholder {
-                  color: #64646499;
-                }
-              `}</style>
-              {/* Eye icon */}
+
+              {/* Resend OTP & Timer */}
               <div
                 style={{
-                  position: "absolute",
-                  right: "12px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "12px",
+                  fontFamily: "Poppins",
+                  fontSize: "14px",
+                  lineHeight: "20px",
                 }}
               >
-                <EyeIcon visible={otpVisible} />
-              </div>
-            </div>
-            {/* Resend OTP message with timer */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {timerActive ? (
-                <>
-                  <span
-                    onClick={handleResendOtp}
-                    style={{
-                      color: "#3B322B",
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: "700",
-                      lineHeight: "26px",
-                      letterSpacing: "-0.28px",
-                      textDecorationLine: "underline",
-                      textDecorationStyle: "solid",
-                      textDecorationSkipInk: "auto",
-                      textDecorationThickness: "auto",
-                      textUnderlineOffset: "auto",
-                      textUnderlinePosition: "from-font",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Resend
-                  </span>
-                  <span
-                    style={{
-                      color: "#3B322B",
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      lineHeight: "26px",
-                      letterSpacing: "-0.28px",
-                      marginRight: "4px", // Added space before "OTP"
-                    }}
-                  >
-                    {" "}
-                  </span>
-                  <span
-                    style={{
-                      color: "#3B322B",
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      lineHeight: "26px",
-                      letterSpacing: "-0.28px",
-                    }}
-                  >
-                    {`OTP in ${formatTime(timer)} minutes`}
-                  </span>
-                </>
-              ) : (
-                <span 
+                {/* Error / Success messages */}
+                <div>
+                  {error && <p style={{ color: "red", marginBottom: "8px" }}>{error}</p>}
+                  {successMessage && (
+                    <p style={{ color: "green", marginBottom: "8px" }}>{successMessage}</p>
+                  )}
+                </div>
+
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "10px"
+                }}>
+                <div style={{ color: "#3B322B" }}>
+                  {timerActive ? `OTP in ${timer}s` : ""}
+                </div>
+
+                <button
                   onClick={handleResendOtp}
-                  style={{ 
-                    color: "#EA6B1E", 
-                    cursor: "pointer",
+                  disabled={timerActive}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    color: "#EA6B1E",
+                    cursor: timerActive ? "not-allowed" : "pointer",
                     textDecoration: "underline",
-                    fontFamily: "Poppins",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    lineHeight: "26px",
-                    letterSpacing: "-0.28px",
+                    fontWeight: 700,
+                    padding: 0,
                   }}
                 >
-                  Resend OTP
-                </span>
-              )}
-            </div>
-            {/* Log in button */}
-            <button
-              onClick={handleLogin}
-              style={{
-                border: "none",
-                borderRadius: "30px",
-                background: "#EA6B1E",
-                display: "flex",
-                width: "405px",
-                height: "44px",
-                padding: "12.006px 20.01px",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "6px",
-                cursor: "pointer",
-              }}
-            >
-              <span
+                  {timerActive ? "Resend" : "Resend OTP"}
+                </button>
+                </div>
+              </div>
+
+              {/* Login button */}
+              <button
+                onClick={handleLogin}
+                disabled={otpValue.length === 0 || loading}
                 style={{
-                  color: "#FFF",
-                  fontFamily: "Poppins",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  lineHeight: "12px",
-                  letterSpacing: "-0.24px",
+                  width: "100%",
+                  padding: "10px",
+                  background: otpValue.length > 0 ? "#EA6B1E" : "#DEDEDE",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: otpValue.length > 0 ? "pointer" : "not-allowed",
                 }}
               >
-                Log in
-              </span>
-            </button>
+                {loading ? "Verifying..." : "Login"}
+              </button>
+            </div>
             {/* OR Separator */}
             <div
               style={{

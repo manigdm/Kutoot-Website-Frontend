@@ -1,11 +1,25 @@
 'use client';
 
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "@/components/home/components/Footer/Footer";
 import { FaArrowRight } from "react-icons/fa";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import axios from "axios";
 
 const Campaign = () => {
+  const [campaignId, setCampaignId] = useState(null);
   const [campaignData, setCampaignData] = useState(null);
+  const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
+    const swiperRef = useRef(null);
+    const searchParams = useSearchParams();
+
   const prizeHighlights = [
     {
       title: "1340cc inline-four engine",
@@ -34,22 +48,62 @@ const Campaign = () => {
     },
   ];
 
-  useEffect(() => {
-    const storedData = sessionStorage.getItem('selectedCampaign');
+  const slides = [
+    "/images/campaignpage/bike.png",
+    "/images/campaignpage/bike2.png", // Add additional bike images as needed
+  ];
 
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      setCampaignData(parsedData);
+  useEffect(() => {
+    let id = null;
+
+    // First, try to get the ID from the history state (for direct push)
+    if (typeof window !== 'undefined' && window.history.state && window.history.state.state) {
+      id = window.history.state.state.campaignId;
+      console.log('ID from history state:', id);
     }
-  }, []);
+
+    // If no ID is found, fall back to the URL search parameters (for refresh/direct access)
+    if (!id) {
+      id = searchParams.get('id');
+      console.log('ID from search params:', id);
+    }
+
+    if (id) {
+      setCampaignId(id);
+    } else {
+      console.log('No Campaign ID found.');
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    // Only proceed if campaignId has a value
+    if (campaignId) {
+        axios
+            .get(`https://kutoot.bigome.com/api/coin-campaigns/details/${campaignId}`)
+            .then((res) => {
+                console.log("API Response:", res.data.data);
+                setCampaignData(res.data.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching campaigns:", err);
+                setLoading(false);
+            });
+    }
+}, [campaignId]);
+
 
   console.log('Current state of campaignData:', campaignData);
 
   function stripHtml(html) {
+    // Check if document exists before creating a div
+    if (typeof document === 'undefined') {
+      return "";
+    }
     const div = document.createElement("div");
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
-}
+  }
 
   const getLabelIcon = () => {
     return (
@@ -267,7 +321,6 @@ const Campaign = () => {
             }}
           >{stripHtml(campaignData?.description)}
           </p>
-
           <button className="kutoot--header__button">
             <FaArrowRight className="kutoot--header__button-icon" />
             Enter Now

@@ -4,9 +4,11 @@ import { FaShareAlt } from "react-icons/fa";
 import { useState } from "react";
 import CommonButton from "@/components/common/CommonButton";
 import { FaArrowRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +59,7 @@ const Header = () => {
             <FaArrowRight className="kutoot--header__button-icon" />
             Shop Now
           </button>
-          <button className="header__button outline">Log in</button>
+          <button className="header__button outline" onClick={() => router.push("/login")}>Log in</button>
           <div className="header__icon">
             <FaShareAlt />
           </div>

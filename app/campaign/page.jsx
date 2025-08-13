@@ -12,7 +12,7 @@ import Footer from "@/components/home/components/Footer/Footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const App = () => {
+const App = ({ offer }) => {
     const [activeTab, setActiveTab] = useState('All');
     const [campaigns, setCampaigns] = useState([]);
     const filteredCampaigns = filterCampaigns(campaigns, activeTab);
@@ -124,9 +124,14 @@ const App = () => {
     }
 
     const viewCampaign = (selectedCampaign) => {
-  sessionStorage.setItem('selectedCampaign', JSON.stringify(selectedCampaign));
-  router.push('/campaignpage');
-};
+        // Pass state for immediate use, and a query parameter for persistence
+        router.push(`/campaignpage?id=${selectedCampaign.id}`, { 
+            state: { 
+                campaignId: selectedCampaign.id 
+            } 
+        });
+    };
+      
 
     return (
         <>
