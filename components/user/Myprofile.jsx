@@ -140,7 +140,7 @@ const Myprofile = () => {
       minHeight: "800px",
       position: "absolute",
       top: "100px",
-      left: "90px",
+      left: "100px",
       display: "flex",
       flexDirection: "column",
       gap: "26px",
