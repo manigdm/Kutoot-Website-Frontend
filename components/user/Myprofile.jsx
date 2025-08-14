@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useCallback } from "react";
-
 const Myprofile = () => {
   // State for image handling
   const [file, setFile] = useState(null);
@@ -23,7 +22,7 @@ const Myprofile = () => {
     height: 0,
   });
   const [croppedImage, setCroppedImage] = useState(null);
-
+  
   // State for form data
   const [formData, setFormData] = useState({
     username: "",
@@ -38,23 +37,29 @@ const Myprofile = () => {
     pinCode: "",
     country: "",
   });
-
+  
   // State for join date (simulating user join date)
   const [joinDate, setJoinDate] = useState("2nd May 2025");
-
+  
   // State for view management: 'edit', 'saved', 'profile'
   const [viewMode, setViewMode] = useState("edit");
-
+  
   // State for deactivate modal
   const [showDeactivateModal, setShowDeactivateModal] = useState(false);
-
+  
+  // State for logout modal
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  
+  // State for logout success modal
+  const [showLogoutSuccessModal, setShowLogoutSuccessModal] = useState(false);
+  
   // State for active tab
   const [activeTab, setActiveTab] = useState("dashboard");
-
+  
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const fileInputRef = useRef(null);
-
+  
   // Tab components
   const DashboardTab = () => (
     <div>
@@ -67,7 +72,6 @@ const Myprofile = () => {
       
     </div>
   );
-
   const CouponsTab = () => (
     <div>
       <h2
@@ -75,11 +79,9 @@ const Myprofile = () => {
       >
         My Coupons
       </h2>
-
       <p>my coupons.</p>
     </div>
   );
-
   const CampaignsTab = () => (
     <div>
       <h2
@@ -90,7 +92,6 @@ const Myprofile = () => {
      <p>my campaigns</p>
     </div>
   );
-
   const OrdersTab = () => (
     <div>
       <h2
@@ -101,7 +102,6 @@ const Myprofile = () => {
     <p>my orders</p>
     </div>
   );
-
   const InvoicesTab = () => (
     <div>
       <h2
@@ -112,13 +112,34 @@ const Myprofile = () => {
      <p>my invoices</p>
     </div>
   );
-
+  
+  // Logout handlers
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+  const handleCloseLogoutModal = () => {
+    setShowLogoutModal(false);
+  };
+  const handleConfirmLogout = () => {
+    // Add logout logic here
+    console.log("Logging out...");
+    setShowLogoutModal(false);
+    setShowLogoutSuccessModal(true);
+  };
+  
+  // Logout success handlers
+  const handleCloseLogoutSuccessModal = () => {
+    setShowLogoutSuccessModal(false);
+    // Redirect to login page
+    window.location.href = "/login";
+  };
+  
   const styles = {
     container: {
       backgroundColor: "#FFFDF2",
       minHeight: "800px",
       position: "absolute",
-      top: "129px",
+      top: "100px",
       left: "90px",
       display: "flex",
       flexDirection: "column",
@@ -949,50 +970,195 @@ const Myprofile = () => {
       height: "80%",
       objectFit: "contain",
     },
+    // Logout Modal Styles - Updated with proper spacing and close button
+    logoutModalOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backdropFilter: "blur(7.5px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1002,
+    },
+    logoutModal: {
+      position: "relative",
+      width: "440px",
+      height: "360px",
+      borderRadius: "12px",
+      border: "1px solid #EA6B1E",
+      background: "#FFFDF2",
+      backdropFilter: "blur(7.5px)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      overflow: "hidden",
+    },
+    logoutModalIcon: {
+      width: "64px",
+      height: "64px",
+      marginBottom: "24px",
+      zIndex: 3,
+    },
+    logoutModalTitle: {
+      color: "#3B322B",
+      textAlign: "center",
+      fontFamily: "Zurich Extra Black",
+      fontSize: "32px",
+      fontStyle: "normal",
+      fontWeight: 900,
+      lineHeight: "36px", /* 112.5% */
+      letterSpacing: "-0.64px",
+      marginBottom: "16px",
+      zIndex: 3,
+      maxWidth: "90%",
+    },
+    logoutModalMessage: {
+      color: "#3B322B",
+      fontFamily: "Poppins",
+      fontSize: "20px",
+      fontStyle: "normal",
+      fontWeight: 500,
+      lineHeight: "26px", /* 130% */
+      marginBottom: "40px",
+      textAlign: "center",
+      zIndex: 3,
+      maxWidth: "80%",
+    },
+    logoutModalButtons: {
+      display: "flex",
+      gap: "24px",
+      zIndex: 3,
+    },
+    logoutModalButton: {
+      padding: "14px 32px",
+      borderRadius: "20px",
+      fontSize: "16px",
+      fontWeight: "600",
+      cursor: "pointer",
+      border: "none",
+      minWidth: "120px",
+    },
+    logoutConfirmButton: {
+      borderRadius: "20px",
+      border: "0.8px solid #3B322B",
+      color: "#3B322B",
+      fontFamily: "Poppins",
+      fontSize: "16px",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "14px", /* 87.5% */
+      background: "transparent",
+    },
+    logoutCancelButton: {
+      borderRadius: "20px",
+      background: "#EA6B1E",
+      color: "#FFF",
+      fontFamily: "Poppins",
+      fontSize: "16px",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "16px", /* 100% */
+      border: "none",
+    },
+    logoutModalCloseButton: {
+      position: "absolute",
+      top: "5px",
+      right: "10px",
+      width: "16px",
+      height: "16px",
+      fill: "#3B322B",
+      strokeWidth: "0.7px",
+      stroke: "#3B322B",
+      flexShrink: 0,
+      aspectRatio: "1/1",
+      cursor: "pointer",
+      zIndex: 4,
+      background: "transparent",
+      border: "none",
+    },
+    // Logout Success Modal Styles
+    logoutSuccessModalOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backdropFilter: "blur(7.5px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1003, // Higher than logout modal
+    },
+    logoutSuccessModal: {
+      position: "relative",
+      width: "440px",
+      height: "360px",
+      borderRadius: "12px",
+      border: "1px solid #EA6B1E",
+      background: "#FFFDF2",
+      backdropFilter: "blur(7.5px)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      overflow: "hidden",
+    },
+    logoutSuccessModalIcon: {
+      width: "64px",
+      height: "64px",
+      marginBottom: "24px",
+    },
+    logoutSuccessModalTitle: {
+      color: "#3B322B",
+      textAlign: "center",
+      fontFamily: "Zurich Extra Black",
+      fontSize: "32px",
+      fontStyle: "normal",
+      fontWeight: 900,
+      lineHeight: "36px", /* 112.5% */
+      letterSpacing: "-0.64px",
+      marginBottom: "40px",
+      maxWidth: "90%",
+    },
+    logoutSuccessModalButton: {
+      borderRadius: "20px",
+      background: "#EA6B1E",
+      color: "#FFF",
+      fontFamily: "Poppins",
+      fontSize: "16px",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "16px", /* 100% */
+      border: "none",
+      padding: "14px 32px",
+      cursor: "pointer",
+    },
+    logoutSuccessModalCloseButton: {
+      position: "absolute",
+      top: "5px",
+      right: "10px",
+      width: "16px",
+      height: "16px",
+      fill: "#3B322B",
+      strokeWidth: "0.7px",
+      stroke: "#3B322B",
+      flexShrink: 0,
+      aspectRatio: "1/1",
+      cursor: "pointer",
+      zIndex: 4,
+      background: "transparent",
+      border: "none",
+    }
   };
-
-  const globalStyles = `
-    * {
-      color: #333333;
-    }
-    *:focus {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-    input, select, textarea {
-      -webkit-tap-highlight-color: transparent;
-      color: #333333 !important;
-    }
-    input::placeholder {
-      color: #999999 !important;
-      opacity: 1 !important;
-    }
-    select option {
-      color: #333333 !important;
-      background: #FFFFFF !important;
-    }
-    select:invalid {
-      color: #999999;
-    }
-    select:focus {
-      color: #333333;
-    }
-    .upload-area {
-      cursor: pointer !important;
-    }
-    .upload-area:hover {
-      background-color: #E8E8E8CC !important;
-      border-color: #666666 !important;
-    }
-    .upload-overlay {
-      cursor: pointer !important;
-    }
-    .upload-content * {
-      pointer-events: none !important;
-      user-select: none !important;
-    }
-  `;
-
+  
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.startsWith("image/")) {
@@ -1005,20 +1171,20 @@ const Myprofile = () => {
       reader.readAsDataURL(selectedFile);
     }
   };
-
+  
   const handleUploadAreaClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-
+  
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
-
+  
   const handleCropMouseDown = useCallback(
     (e) => {
       if (e.target.classList.contains("crop-handle")) {
@@ -1040,7 +1206,7 @@ const Myprofile = () => {
     },
     [cropData]
   );
-
+  
   const handleMouseMove = useCallback(
     (e) => {
       if (isDragging) {
@@ -1083,12 +1249,12 @@ const Myprofile = () => {
     },
     [isDragging, isResizing, dragStart, resizeStart, cropData]
   );
-
+  
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     setIsResizing(false);
   }, []);
-
+  
   React.useEffect(() => {
     if (showCropModal) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -1099,7 +1265,7 @@ const Myprofile = () => {
       };
     }
   }, [showCropModal, handleMouseMove, handleMouseUp]);
-
+  
   const cropImage = () => {
     const canvas = canvasRef.current;
     const img = imageRef.current;
@@ -1127,32 +1293,32 @@ const Myprofile = () => {
       setShowCropModal(false);
     }
   };
-
+  
   const handleSaveChanges = () => {
     console.log("Profile saved:", { ...formData, profileImage: croppedImage });
     setViewMode("saved");
   };
-
+  
   const handleRemoveImage = () => {
     console.log("Removing profile image");
     setCroppedImage(null);
     setFile(null);
     setPreviewImage(null);
   };
-
+  
   const handleChangeImage = () => {
     console.log("Changing profile image");
     handleUploadAreaClick();
   };
-
+  
   const handleDeactivateAccount = () => {
     setShowDeactivateModal(true);
   };
-
+  
   const handleCloseDeactivateModal = () => {
     setShowDeactivateModal(false);
   };
-
+  
   // First frame: Edit form
   const renderEditView = () => (
     <>
@@ -1375,7 +1541,7 @@ const Myprofile = () => {
       </button>
     </>
   );
-
+  
   // Second frame: Saved data view
   const renderSavedView = () => (
     <>
@@ -1515,7 +1681,7 @@ const Myprofile = () => {
       </button>
     </>
   );
-
+  
   // Third frame: Profile view that matches the screenshot
   const renderProfileView = () => (
     <>
@@ -1602,7 +1768,7 @@ const Myprofile = () => {
       </button>
     </>
   );
-
+  
   // Deactivate Account Modal - Updated to match reference image
   const renderDeactivateModal = () => (
     <div style={styles.deactivateModalOverlay}>
@@ -1652,10 +1818,194 @@ const Myprofile = () => {
       </div>
     </div>
   );
-
+  
+  // Logout Modal - Updated to match the second image
+  const renderLogoutModal = () => (
+    <div style={styles.logoutModalOverlay}>
+      <div style={styles.logoutModal}>
+        {/* Orange background image - now visible behind the frame */}
+        <img
+          src="/images/myprofile/rectangle-logout.png"
+          alt="Logout Background"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "752px",
+            height: "403px",
+            objectFit: "cover",
+            zIndex: 1,
+          }}
+        />
+        {/* Modal content positioned correctly */}
+        <div style={{ 
+          position: "relative", 
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+          padding: "16px",
+          boxSizing: "border-box",
+          borderRadius: "12px",
+          border: "1px solid #EA6B1E",
+          background: "rgba(255, 253, 242, 0.8)", // Semi-transparent background
+          backdropFilter: "blur(7.5px)",
+        }}>
+          {/* Close button */}
+          <button
+            style={styles.logoutModalCloseButton}
+            onClick={handleCloseLogoutModal}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          {/* Icon */}
+          <div style={{ position: "relative", zIndex: 3 }}>
+            <img
+              src="/images/myprofile/logout-icon.png" // Orange circular icon with arrow
+              alt="Logout Warning"
+              style={styles.logoutModalIcon}
+            />
+          </div>
+          {/* Title */}
+          <h2 style={styles.logoutModalTitle}>Oh no! You are leaving.. Are you sure?</h2>
+          {/* Message */}
+          <p style={styles.logoutModalMessage}>Are you sure you want to log out?</p>
+          {/* Buttons */}
+          <div style={styles.logoutModalButtons}>
+            <button
+              style={{ ...styles.logoutModalButton, ...styles.logoutConfirmButton }}
+              onClick={handleConfirmLogout}
+            >
+              Log out
+            </button>
+            <button
+              style={{ ...styles.logoutModalButton, ...styles.logoutCancelButton }}
+              onClick={handleCloseLogoutModal}
+            >
+              Cancel .
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+  
+  // Logout Success Modal - Shows after successful logout
+  const renderLogoutSuccessModal = () => (
+    <div style={styles.logoutSuccessModalOverlay}>
+      <div style={styles.logoutSuccessModal}>
+        {/* Orange background image */}
+        <img
+          src="/images/myprofile/rectangle-logout.png"
+          alt="Logout Background"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 1,
+          }}
+        />
+        
+        {/* Modal content */}
+        <div style={{ 
+          position: "relative", 
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+          padding: "16px",
+          boxSizing: "border-box",
+          borderRadius: "12px",
+          border: "1px solid #EA6B1E",
+          background: "rgba(255, 253, 242, 0.8)",
+          backdropFilter: "blur(7.5px)",
+        }}>
+          {/* Close button */}
+          <button
+            style={styles.logoutSuccessModalCloseButton}
+            onClick={handleCloseLogoutSuccessModal}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          
+          {/* Success icon */}
+          <img
+            src="/images/myprofile/logout-success-icon.png" // Path to your success icon
+            alt="Logout Success"
+            style={styles.logoutSuccessModalIcon}
+          />
+          
+          {/* Success message */}
+          <h2 style={styles.logoutSuccessModalTitle}>You have successfully logged out.</h2>
+          
+          {/* Back to login button */}
+          <button
+            style={styles.logoutSuccessModalButton}
+            onClick={handleCloseLogoutSuccessModal}
+          >
+            Back to login .
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+  
   return (
     <>
-      <style>{globalStyles}</style>
+      <style jsx global>{`
+        * {
+          color: #333333;
+        }
+        *:focus {
+          outline: none !important;
+          box-shadow: none !important;
+        }
+        input, select, textarea {
+          -webkit-tap-highlight-color: transparent;
+          color: #333333 !important;
+        }
+        input::placeholder {
+          color: #999999 !important;
+          opacity: 1 !important;
+        }
+        select option {
+          color: #333333 !important;
+          background: #FFFFFF !important;
+        }
+        select:invalid {
+          color: #999999;
+        }
+        select:focus {
+          color: #333333;
+        }
+        .upload-area {
+          cursor: pointer !important;
+        }
+        .upload-area:hover {
+          background-color: #E8E8E8CC !important;
+          border-color: #666666 !important;
+        }
+        .upload-overlay {
+          cursor: pointer !important;
+        }
+        .upload-content * {
+          pointer-events: none !important;
+          user-select: none !important;
+        }
+      `}</style>
       <div className="container">
         <div style={styles.container}>
           <div style={styles.header}>
@@ -1698,7 +2048,6 @@ const Myprofile = () => {
           <div style={styles.contentWrapper}>
             <div style={styles.leftSidebar}>
               <div style={styles.myAccountHeader}>My Account</div>
-
               {/* Dashboard Tab */}
               <div
                 style={
@@ -1715,7 +2064,6 @@ const Myprofile = () => {
                 />
                 My Dashboard
               </div>
-
               {/* Coupons Tab */}
               <div
                 style={
@@ -1732,7 +2080,6 @@ const Myprofile = () => {
                 />
                 My Coupons
               </div>
-
               {/* Profile Tab */}
               <div
                 style={
@@ -1749,7 +2096,6 @@ const Myprofile = () => {
                 />
                 My Profile
               </div>
-
               {/* Campaigns Tab */}
               <div
                 style={
@@ -1766,7 +2112,6 @@ const Myprofile = () => {
                 />
                 My Campaigns
               </div>
-
               {/* Orders Tab */}
               <div
                 style={
@@ -1783,7 +2128,6 @@ const Myprofile = () => {
                 />
                 My Orders
               </div>
-
               {/* Invoices Tab */}
               <div
                 style={
@@ -1800,11 +2144,9 @@ const Myprofile = () => {
                 />
                 My Invoices
               </div>
-
               <div style={styles.smallLine}></div>
-              <button style={styles.logoutButton}>Log out</button>
+              <button style={styles.logoutButton} onClick={handleLogoutClick}>Log out</button>
             </div>
-
             <div style={styles.rightContent}>
               {/* Render content based on active tab */}
               {activeTab === "dashboard" && <DashboardTab />}
@@ -1823,7 +2165,6 @@ const Myprofile = () => {
           </div>
         </div>
       </div>
-
       {/* Image Cropping Modal */}
       {showCropModal && (
         <div style={styles.modalOverlay}>
@@ -1872,9 +2213,12 @@ const Myprofile = () => {
           <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
       )}
-
       {/* Deactivate Account Modal */}
       {showDeactivateModal && renderDeactivateModal()}
+      {/* Logout Modal */}
+      {showLogoutModal && renderLogoutModal()}
+      {/* Logout Success Modal */}
+      {showLogoutSuccessModal && renderLogoutSuccessModal()}
     </>
   );
 };
