@@ -11,19 +11,20 @@ import SubscriptionForm from '@/components/home/components/SubscriptionForm/Subs
 import Footer from "@/components/home/components/Footer/Footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loading from '@/components/common/loading'
 
 const App = ({ offer }) => {
     const [activeTab, setActiveTab] = useState('All');
     const [campaigns, setCampaigns] = useState([]);
     const filteredCampaigns = filterCampaigns(campaigns, activeTab);
     const [loading, setLoading] = useState(true);
-    const tabs = ['All', 'Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
+    const tabs = ['All', 'Active', 'Upcoming', 'Completed','Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
     const left_section_img = '/images/campaign/campaign_villa.svg';
     const kutoot_slide_top = '/images/campaign/campaigncard.svg'
     const scrollRef = useRef(null);
     const router = useRouter();
-
     const [showArrows, setShowArrows] = useState({ left: false, right: true });
+
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -63,21 +64,34 @@ const App = ({ offer }) => {
 
     // API call
     useEffect(() => {
+        let url = "https://kutoot.bigome.com/api/coin-campaigns";
+    
+        if (activeTab === "Active") {
+          url += "?type=1";
+        } else if (activeTab === "Completed") {
+          url += "?type=3";
+        } else if (activeTab === "Upcoming") {
+          url += "?type=2";
+        }
+    
+        setLoading(true);
         axios
-            .get("https://kutoot.bigome.com/api/coin-campaigns")
-            .then((res) => {
-                console.log("API Response:", res.data.data);
-                setCampaigns(res.data.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching campaigns:", err);
-                setLoading(false);
-            });
-    }, []);
+          .get(url)
+          .then((res) => {
+            console.log(`${activeTab} API Response:`, res.data.data);
+            setCampaigns(res.data.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error("Error fetching campaigns:", err);
+            setLoading(false);
+          });
+      }, [activeTab]);
 
     if (loading) {
-        return <div>Loading campaigns...</div>;
+       return (
+        <Loading />
+       )
     }
 
     function stripHtml(html) {
@@ -117,6 +131,10 @@ const App = ({ offer }) => {
             case "Best Deals":
                 // Filter to only "Featured" promotion campaigns
                 return campaigns.filter(campaign => campaign.promotion === "Featured");
+
+            case "Active":
+            case "Completed":
+            case "Upcoming":
 
             default:
                 return campaigns;
@@ -161,7 +179,7 @@ const App = ({ offer }) => {
                                         }}
                                     >
                                         <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
-                                            BEST SELLER BUNDLE OF THE MONTH
+                                            {offer?.marketing_message}
                                         </div>
                                         <div className={`position-absolute text-black ${styles.left_img_btm_txt}`}>
                                             <h2 className="fw-bold">{stripHtml(offer?.title)}</h2>
