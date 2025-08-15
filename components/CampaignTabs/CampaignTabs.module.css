@@ -58,8 +58,11 @@
   .campaign_card {
     margin-bottom: 20px;
     background-color: #ffffff;
-    border: 3px solid #D90156;
+    border: 1px solid #3B322B;
     border-radius: 14px;
+  }
+  .campaign_card:hover {
+    border: 2px solid #D90156;
   }
   .left_img_top_txt {
     font-weight: 600;
@@ -71,6 +74,10 @@
     left: 6%;
     top: 3%;
     border-radius: 6px;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .left_img_btm_txt {
     color: #ffffff;
@@ -110,11 +117,28 @@
     font-weight: 700;
     color: #ffffff;
     background-color: #EA6B1E;
+    padding: 8px 16px;
+  }
+  .kutoot__campaign_button:hover {
+    color: #ffffff;
+    background-color: #EA6B1E;
   }
   .arrow_icon {
     padding-bottom: 10px;
   }
   .border_fix {
     border-bottom: 0.5px solid #3B322B66
+  }
+  .text_fix {
+    color: #FFD48E;
+  }
+  .sub_text_fix {
+    background: linear-gradient(267.5deg, #EA6B1E -4.5%, #D90156 100%);
+    display: inline-block;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
   }
   

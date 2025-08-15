@@ -10,18 +10,21 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import SubscriptionForm from '@/components/home/components/SubscriptionForm/SubscriptionForm';
 import Footer from "@/components/home/components/Footer/Footer";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import Loading from '@/components/common/loading'
 
-const App = () => {
+const App = ({ offer }) => {
     const [activeTab, setActiveTab] = useState('All');
     const [campaigns, setCampaigns] = useState([]);
     const filteredCampaigns = filterCampaigns(campaigns, activeTab);
     const [loading, setLoading] = useState(true);
-    const tabs = ['All', 'Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
+    const tabs = ['All', 'Active', 'Upcoming', 'Completed','Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
     const left_section_img = '/images/campaign/campaign_villa.svg';
     const kutoot_slide_top = '/images/campaign/campaigncard.svg'
     const scrollRef = useRef(null);
-
+    const router = useRouter();
     const [showArrows, setShowArrows] = useState({ left: false, right: true });
+
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -61,21 +64,34 @@ const App = () => {
 
     // API call
     useEffect(() => {
+        let url = "https://kutoot.bigome.com/api/coin-campaigns";
+    
+        if (activeTab === "Active") {
+          url += "?type=1";
+        } else if (activeTab === "Completed") {
+          url += "?type=3";
+        } else if (activeTab === "Upcoming") {
+          url += "?type=2";
+        }
+    
+        setLoading(true);
         axios
-            .get("https://kutoot.bigome.com/api/coin-campaigns")
-            .then((res) => {
-                console.log("API Response:", res.data.data);
-                setCampaigns(res.data.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching campaigns:", err);
-                setLoading(false);
-            });
-    }, []);
+          .get(url)
+          .then((res) => {
+            console.log(`${activeTab} API Response:`, res.data.data);
+            setCampaigns(res.data.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error("Error fetching campaigns:", err);
+            setLoading(false);
+          });
+      }, [activeTab]);
 
     if (loading) {
-        return <div>Loading campaigns...</div>;
+       return (
+        <Loading />
+       )
     }
 
     function stripHtml(html) {
@@ -91,35 +107,49 @@ const App = () => {
 
     function filterCampaigns(campaigns, activeTab) {
         if (!campaigns || campaigns.length === 0) return [];
-      
+
         switch (activeTab) {
-          case "All":
-            return campaigns;
-      
-          case "Latest":
-            // Sort by creation date descending
-            return [...campaigns].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      
-          case "Fast filling":
-            // Sort by progress or display_percentage descending
-            return [...campaigns].sort((a, b) => (b.progress || b.display_percentage) - (a.progress || a.display_percentage));
-      
-          case "Highest Prize":
-            // Sort by ticket price descending
-            return [...campaigns].sort((a, b) => (b.ticket_price || 0) - (a.ticket_price || 0));
-      
-          case "Value for Money":
-            // Sort by ticket price ascending
-            return [...campaigns].sort((a, b) => (a.ticket_price || 0) - (b.ticket_price || 0));
-      
-          case "Best Deals":
-            // Filter to only "Featured" promotion campaigns
-            return campaigns.filter(campaign => campaign.promotion === "Featured");
-      
-          default:
-            return campaigns;
+            case "All":
+                return campaigns;
+
+            case "Latest":
+                // Sort by creation date descending
+                return [...campaigns].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            case "Fast filling":
+                // Sort by progress or display_percentage descending
+                return [...campaigns].sort((a, b) => (b.progress || b.display_percentage) - (a.progress || a.display_percentage));
+
+            case "Highest Prize":
+                // Sort by ticket price descending
+                return [...campaigns].sort((a, b) => (b.ticket_price || 0) - (a.ticket_price || 0));
+
+            case "Value for Money":
+                // Sort by ticket price ascending
+                return [...campaigns].sort((a, b) => (a.ticket_price || 0) - (b.ticket_price || 0));
+
+            case "Best Deals":
+                // Filter to only "Featured" promotion campaigns
+                return campaigns.filter(campaign => campaign.promotion === "Featured");
+
+            case "Active":
+            case "Completed":
+            case "Upcoming":
+
+            default:
+                return campaigns;
         }
-      }
+    }
+
+    const viewCampaign = (selectedCampaign) => {
+        // Pass state for immediate use, and a query parameter for persistence
+        router.push(`/campaignpage?id=${selectedCampaign.id}`, { 
+            state: { 
+                campaignId: selectedCampaign.id 
+            } 
+        });
+    };
+      
 
     return (
         <>
@@ -137,18 +167,19 @@ const App = () => {
                                 {/* Main campaign card */}
                                 <Col md={4} lg={4} className="position-relative mb-4">
                                     <div
-                                        className="bg-cover bg-center h-100 rounded-2xl"
+                                        className="bg-cover bg-center rounded-2xl"
                                         style={{
                                             backgroundImage: `url(${offer?.img})`,
                                             backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover',
+                                            backgroundSize: 'contain',
                                             backgroundPosition: 'center',
-                                            height: '320px !important',
                                             borderRadius: '8px',
+                                            width: '390px',
+                                            height: '330px',
                                         }}
                                     >
                                         <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
-                                            BEST SELLER BUNDLE OF THE MONTH
+                                            {offer?.marketing_message}
                                         </div>
                                         <div className={`position-absolute text-black ${styles.left_img_btm_txt}`}>
                                             <h2 className="fw-bold">{stripHtml(offer?.title)}</h2>
@@ -159,61 +190,63 @@ const App = () => {
                                 {/* Offer cards container */}
                                 <Col md={8}>
                                     <div ref={scrollRef} className={`d-flex overflow-auto gap-4 ${styles.scrollbar_fix}`}>
-                                        <div
-                                            key={index}
-                                            className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"
-                                            style={{
-                                                width: '300px',
-                                                position: 'relative',
-                                                flex: '0 0 auto'
-                                            }}
-                                        >
+                                        {offer?.baseplans?.map((plan, index) =>
                                             <div
-                                                className="position-relative text-white rounded-2xl"
+                                                key={index}
+                                                className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"
                                                 style={{
-                                                    backgroundImage: `url(${kutoot_slide_top})`,
-                                                    backgroundSize: "cover",
-                                                    backgroundRepeat: "no-repeat",
-                                                    backgroundPosition: "center",
-                                                    width: "100%",
-                                                    height: "300px",
+                                                    width: '300px',
+                                                    position: 'relative',
+                                                    flex: '0 0 auto'
                                                 }}
                                             >
-                                                <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
-                                                    <div>
-                                                        <h4 className="fw-bold mb-1 mt-4">{offer?.title1}</h4>
-                                                        <span className="badge bg-danger px-3 py-1">{offer?.title2}</span>
-                                                    </div>
-                                                    <div>
-                                                        <div className="d-flex justify-content-between flex-column text-black">
-                                                            <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
-                                                                <div className="fs-1 fw-bold">₹{offer?.ticket_price}</div>
-                                                                <div>{offer?.max_coins_per_transaction} Coins</div>
-                                                            </div>
-                                                            <div className="d-flex justify-content-between align-items-center flex-row">
-                                                                <div className="fs-2 fw-bold">{offer?.coupons_per_campaign}</div>
-                                                                <div>Lucky draw coupons</div>
-                                                            </div>
+                                                <div
+                                                    className="position-relative text-white rounded-2xl"
+                                                    style={{
+                                                        backgroundImage: `url(${kutoot_slide_top})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundRepeat: "no-repeat",
+                                                        backgroundPosition: "center",
+                                                        width: "100%",
+                                                        height: "300px",
+                                                    }}
+                                                >
+                                                    <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
+                                                        <div>
+                                                            <h4 className={`fw-bold mb-1 mt-4 ${styles.text_fix}`}>{plan?.title}</h4>
+                                                            <span className={`badge bg-danger px-3 py-1 ${styles.sub_text_fix}`}>{stripHtml(plan?.description)}</span>
                                                         </div>
-
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <div className="w-50">
-                                                                <p className="text-muted small m-0">*Validity up to {formatDate(offer?.start_date)}</p>
+                                                        <div>
+                                                            <div className="d-flex justify-content-between flex-column text-black">
+                                                                <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
+                                                                    <div className="fs-1 fw-bold">₹{plan?.ticket_price}</div>
+                                                                    <div>{plan?.coins_per_campaign} Coins</div>
+                                                                </div>
+                                                                <div className="d-flex justify-content-between align-items-center flex-row">
+                                                                    <div className="fs-2 fw-bold">{plan?.coupons_per_campaign}</div>
+                                                                    <div>Lucky draw coupons</div>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <button
-                                                                    className={`btn w-100 fw-bold rounded-pill ${styles.kutoot__button}`}
-                                                                >
-                                                                    Enter Now .
-                                                                </button>
+
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                <div className="w-50">
+                                                                    <p className="text-muted small m-0">*Validity up to {formatDate(offer?.start_date)}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <button
+                                                                        className={`btn w-100 fw-bold rounded-pill ${styles.kutoot__button}`} onClick={() => viewCampaign(offer)}
+                                                                    >
+                                                                        Enter Now .
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
-
-
-                                        </div>
+                                        )}
                                     </div>
 
                                     {/* Scroll arrows */}
@@ -240,9 +273,9 @@ const App = () => {
 
                                     {/* "View Campaign" button */}
                                     <div className="d-flex justify-content-end">
-                                        <Button variant="warning" size="lg" className={`rounded-pill ${styles.kutoot__campaign_button}`}>
+                                        <button className={`btn btn-sm rounded-pill ${styles.kutoot__campaign_button}`} onClick={() => viewCampaign(offer)}>
                                             View Campaign
-                                        </Button>
+                                        </button>
                                     </div>
                                 </Col>
                             </Row>
