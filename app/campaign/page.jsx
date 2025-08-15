@@ -149,14 +149,15 @@ const App = ({ offer }) => {
                                 {/* Main campaign card */}
                                 <Col md={4} lg={4} className="position-relative mb-4">
                                     <div
-                                        className="bg-cover bg-center h-100 rounded-2xl"
+                                        className="bg-cover bg-center rounded-2xl"
                                         style={{
                                             backgroundImage: `url(${offer?.img})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'contain',
                                             backgroundPosition: 'center',
-                                            height: '320px !important',
                                             borderRadius: '8px',
+                                            width: '390px',
+                                            height: '330px',
                                         }}
                                     >
                                         <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
