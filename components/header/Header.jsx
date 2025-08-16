@@ -2,13 +2,21 @@ import React, { useEffect } from "react";
 import "./Header.scss";
 import { FaShareAlt } from "react-icons/fa";
 import { useState } from "react";
-import CommonButton from "@/components/common/CommonButton";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [user, setUser] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("userData");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser?.user);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +67,31 @@ const Header = () => {
             <FaArrowRight className="kutoot--header__button-icon" />
             Shop Now
           </button>
-          <button className="header__button outline" onClick={() => router.push("/login")}>Log in</button>
+          {user ? (
+            // If logged in, show profile image
+            <div style={{marginLeft: '1rem'}}>
+              <img
+                src={user?.image || "/images/campaign/profile-after-login.svg"} // adjust key if different
+                alt="Profile"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+
+                }}
+                onClick={() => router.push("/user")} // optional: go to profile page
+              />
+            </div>
+          ) : (
+            // If not logged in, show login button
+            <button
+              className="header__button outline"
+              onClick={() => router.push("/login")}
+            >
+              Log in
+            </button>
+          )}
           <div className="header__icon">
             <FaShareAlt />
           </div>
