@@ -54,7 +54,7 @@ const Myprofile = () => {
   const [showLogoutSuccessModal, setShowLogoutSuccessModal] = useState(false);
   
   // State for active tab
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("profile");
   
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
@@ -137,19 +137,13 @@ const Myprofile = () => {
   const styles = {
     container: {
       backgroundColor: "#FFFDF2",
-      minHeight: "800px",
-      position: "absolute",
-      top: "10px",
-      left: "90px",
       display: "flex",
       flexDirection: "column",
       gap: "26px",
-      transform: "rotate(0deg)",
-      opacity: 1,
       boxSizing: "border-box",
       padding: "20px",
       fontFamily: "Poppins",
-      marginTop: "270px",
+      marginTop: "100px",
     },
     header: {
       display: "flex",
@@ -235,7 +229,7 @@ const Myprofile = () => {
       margin: "12px 0",
     },
     rightContent: {
-      width: "871px",
+      
       minHeight: "930px",
       borderRadius: "8px",
       padding: "12.01px 20.01px 12.01px 20.01px",
@@ -2048,6 +2042,22 @@ const Myprofile = () => {
           <div style={styles.contentWrapper}>
             <div style={styles.leftSidebar}>
               <div style={styles.myAccountHeader}>My Account</div>
+               {/* Profile Tab */}
+              <div
+                style={
+                  activeTab === "profile"
+                    ? styles.activeMenuItem
+                    : styles.menuItem
+                }
+                onClick={() => setActiveTab("profile")}
+              >
+                <img
+                  src="/images/myprofile/pic2.png"
+                  alt="Profile Icon"
+                  style={styles.menuItemIcon}
+                />
+                My Profile
+              </div>
               {/* Dashboard Tab */}
               <div
                 style={
@@ -2080,22 +2090,7 @@ const Myprofile = () => {
                 />
                 My Coupons
               </div>
-              {/* Profile Tab */}
-              <div
-                style={
-                  activeTab === "profile"
-                    ? styles.activeMenuItem
-                    : styles.menuItem
-                }
-                onClick={() => setActiveTab("profile")}
-              >
-                <img
-                  src="/images/myprofile/pic2.png"
-                  alt="Profile Icon"
-                  style={styles.menuItemIcon}
-                />
-                My Profile
-              </div>
+             
               {/* Campaigns Tab */}
               <div
                 style={
