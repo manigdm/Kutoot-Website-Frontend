@@ -39,13 +39,11 @@ export const HomePageProvider = ({ children }) => {
       try {
         const [bannersRes, 
                marqueeRes,
-               productsRes,
-               baseplansRes, 
+               productsRes,  
                campaignsRes] = await Promise.all([
           fetch("https://kutoot.bigome.com/api/image-items/by-type?type=Banner").then(res => res.json()),
           fetch("https://kutoot.bigome.com/api/image-items/by-type?type=partners").then(res => res.json()),
           fetch("https://kutoot.bigome.com/api/product").then(res => res.json()),
-          fetch("https://kutoot.bigome.com/api/baseplans").then(res => res.json()),
           fetch("https://kutoot.bigome.com/api/coin-campaigns").then(res => res.json())
         ]);
 
@@ -53,7 +51,6 @@ export const HomePageProvider = ({ children }) => {
           banners: bannersRes?.data || [],
           marquee: marqueeRes?.data || [],
           products: productsRes?.products.data || [],
-          baseplans: baseplansRes?.data || [],
           campaigns: campaignsRes?.data || []
         });
 

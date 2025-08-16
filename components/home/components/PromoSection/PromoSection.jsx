@@ -75,8 +75,18 @@ const PromoSection = ({baseplans}) => {
   //     )
   //   : [];
 
-  const slides = baseplans ? baseplans : [];
-  //  console.log("slides", slides);
+
+    const bannerCampaign = baseplans?.find(
+  (c) => c?.promotion === "Top-Banner"
+);
+
+const slides = bannerCampaign
+  ? [bannerCampaign.img, bannerCampaign.image1, bannerCampaign.image2].filter(Boolean)
+  : [];
+
+
+  //  const slides = baseplans ? baseplans : [];
+   console.log("slides", slides);
 
   const propertyDescriptionMemoized = useMemo(() => {
     return {
@@ -144,8 +154,6 @@ const propertyDescription = slides[0]?.description;
                     <div
                       style={{
                         position: "relative",
-                        width: "100%",
-                        height: "450px",
                       }}
                     >
                       {/* <Image
@@ -154,13 +162,10 @@ const propertyDescription = slides[0]?.description;
                         fill
                         style={{ objectFit: "cover" }}
                       /> */}
-                        <img
-        src={slide.img
-              ? slide.img 
-              : `${process.env.NEXT_PUBLIC_BASE_URL}${slide.img}`}
-        alt="slide"
-        fill
-        style={{ objectFit: "cover" }}
+         <img
+        src={slide.startsWith("http") ? slide : `${process.env.NEXT_PUBLIC_BASE_URL}${slide}`}
+        alt={`slide-${i}`}
+        style={{ objectFit: "cover", width: "100%", height: "100%" }}
       />
                       <div className="property-plan">
                         <button className="active">Gallery</button>
