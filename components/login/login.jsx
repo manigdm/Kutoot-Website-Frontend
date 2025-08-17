@@ -90,7 +90,6 @@ const Login = () => {
   const handleChange = (e) => {
     setOtpValue(e.target.value);
     setError("");
-    setSuccessMessage("");
   };
 
   // Step 2: Verify OTP & log in
@@ -111,12 +110,12 @@ const Login = () => {
         }),
       });
 
-      if (!res.ok) throw new Error("OTP verification failed");
+      if (!res.ok) throw new Error("Please enter correct OTP");
 
       const data = await res.json();
       localStorage.setItem("userData", JSON.stringify(data));
       console.log("OTP verified successfully", data);
-
+      setSuccessMessage("OTP verified successfully..");
       setIsLoggedIn(true);
     } catch (err) {
       console.error(err);
@@ -323,6 +322,11 @@ const Login = () => {
             zIndex: 5,
           }}
         >
+          <div>
+          {successMessage && (
+            <p style={{ color: "green", marginBottom: "8px" }}>{successMessage}</p>
+          )}
+          </div>
           {/* Welcome! text */}
           <div
             style={{

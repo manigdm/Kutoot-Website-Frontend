@@ -1,7 +1,9 @@
 "use client";
 import React, { useState, useRef, useCallback } from "react";
+import axios from "axios";
+
+
 const Myprofile = () => {
-  // State for image handling
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
@@ -22,6 +24,7 @@ const Myprofile = () => {
     height: 0,
   });
   const [croppedImage, setCroppedImage] = useState(null);
+  const [logoutMsg, setLogoutMsg] = useState("");
   
   // State for form data
   const [formData, setFormData] = useState({
@@ -120,9 +123,36 @@ const Myprofile = () => {
   const handleCloseLogoutModal = () => {
     setShowLogoutModal(false);
   };
-  const handleConfirmLogout = () => {
+  const handleConfirmLogout = async () => {
     // Add logout logic here
-    console.log("Logging out...");
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("userData"));
+
+      if (!storedUser || !storedUser.access_token) {
+        console.error("No user token found");
+        return;
+      }
+
+      const token = storedUser.access_token;
+
+      const response = await axios.get(
+        "https://kutoot.bigome.com/api/user/logout",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(response.data.notification);
+        setLogoutMsg(response.data.notification);
+        localStorage.removeItem("userData");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+
     setShowLogoutModal(false);
     setShowLogoutSuccessModal(true);
   };
@@ -130,9 +160,13 @@ const Myprofile = () => {
   // Logout success handlers
   const handleCloseLogoutSuccessModal = () => {
     setShowLogoutSuccessModal(false);
-    // Redirect to login page
     window.location.href = "/login";
   };
+
+  const handleCloseLogoutSuccesslanding = () => {
+    setShowLogoutSuccessModal(false);
+    window.location.href = "/";
+  }
   
   const styles = {
     container: {
@@ -1934,7 +1968,7 @@ const Myprofile = () => {
           {/* Close button */}
           <button
             style={styles.logoutSuccessModalCloseButton}
-            onClick={handleCloseLogoutSuccessModal}
+            onClick={handleCloseLogoutSuccesslanding}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1943,13 +1977,13 @@ const Myprofile = () => {
           
           {/* Success icon */}
           <img
-            src="/images/myprofile/logout-success-icon.png" // Path to your success icon
+            src="/images/myprofile/logout-success-icon.png"
             alt="Logout Success"
             style={styles.logoutSuccessModalIcon}
           />
           
           {/* Success message */}
-          <h2 style={styles.logoutSuccessModalTitle}>You have successfully logged out.</h2>
+          <h2 style={styles.logoutSuccessModalTitle}>{logoutMsg}</h2>
           
           {/* Back to login button */}
           <button
