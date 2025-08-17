@@ -170,10 +170,13 @@ export function ExclusiveCampaign({campaigns}) {
         </div>
 
         <div className="lottery-view-more-button">
-          <button className="lottery-cards__button">
+         
+                <a href="/campaign">
+  <button className="lottery-cards__button">
             <FaArrowRight className="lottery-cards__button-icon" />
             View more
           </button>
+</a>
         </div>
 
         {/* Footer Info */}

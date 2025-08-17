@@ -1,7 +1,7 @@
 import "./HowItWorks.scss";
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import Link from "next/link";
 
 const stepsData = [
   {
@@ -31,12 +31,20 @@ const stepsData = [
 ];
 
 const HowItWorks = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   return (
-    <div className="how-it-works-container">
+    <div className="how-it-works-container" id="how-kutoot-works">
       <h2 className="section-title capitalize">How Kutoot Works</h2>
       <div className="steps-wrapper">
         {stepsData.map((step, index) => (
-          <div className="step-card" key={step.number}>
+          <div
+            className="step-card"
+            key={step.number}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+            style={{ position: "relative" }}
+          >
             <div className="step-header">
               <img
                 src={step.numberImage}
@@ -46,8 +54,29 @@ const HowItWorks = () => {
                 className="step-number-img"
               />
             </div>
-            <h3 className="step-title">{step.title}</h3>
-            <p className="step-description">{step.description}</p>
+            <div style={{ position: "relative", zIndex: 2 }}>
+    <h3 className="step-title">{step.title}</h3>
+    <p className="step-description">{step.description}</p>
+  </div>
+
+
+            {/* Hover GIF overlay */}
+            {hoveredIndex === index && (
+               <img
+      src="/images/Coins-Floating.gif"
+      alt="Coin Animation"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        width: "100px",
+        height: "100px",
+        transform: "translateX(-50%)",
+        pointerEvents: "none",
+        zIndex: 1, // below text but above card background
+      }}
+    />
+            )}
 
             {/* Show arrow only if not last card */}
             {index < stepsData.length - 1 && (
@@ -61,10 +90,12 @@ const HowItWorks = () => {
         ))}
       </div>
       <div className="how-it-works__button-wrapper">
-        <button className="how-it-works__button">
-          <FaArrowRight className="how-it-works__button-icon" />
-          Enter Now
-        </button>
+        <Link href="/campaign" passHref>
+          <button className="how-it-works__button">
+            <FaArrowRight className="how-it-works__button-icon" />
+            Enter Now
+          </button>
+        </Link>
       </div>
     </div>
   );

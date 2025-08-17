@@ -1,9 +1,10 @@
 .lucky-draw-slider {
-  padding: 3rem 2rem;
+  padding: 2rem 1rem;
   position: relative;
   width: 90%;
   margin: auto;
   overflow: visible;
+
 
   .custom-swiper-button-prev,
   .custom-swiper-button-next {
@@ -30,18 +31,19 @@
   .draw-card {
     background-size: cover;
     background-position: center;
-    border-radius: 1rem;
+    border-radius: 14px;
     color: white;
-    height: 300px;
+    height: 240px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
 
-    // &:hover {
-    //   transform: scale(1.05);
-    //   transition: transform 0.3s ease;
-    // }
+    &:hover {
+     transform: scale(1.1);
+    transition: transform 0.5s ease;
+
+    }
 
     &-content {
       position: absolute;
@@ -54,14 +56,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 10px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 16px 16px 0 0;
+    border-radius: 14px 14px 0 0;
     padding: 0.5rem 1rem;
 
     span {
-      font-size: 0.75rem;
-      color: #ffffff;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .progress-bar {
@@ -73,45 +75,59 @@
   }
 
   .details {
-    background: rgba(0, 0, 0, 0.5);
-    margin: 80px 40px 0 40px;
-    border-radius: 8px;
+    border-radius: 2px;
+    background: rgba(96, 94, 105, 0.30);
+    backdrop-filter: blur(12.5px);
+    -webkit-backdrop-filter: blur(12.5px); // for Safari
     text-align: center;
+    padding: 2px;
+    margin: auto;
 
     h3 {
-      font-size: 1rem;
+      font-size: 14px;
     }
+
     p {
-      font-size: 0.85rem;
+      font-size: 10px;
     }
   }
 
   .actions {
     display: flex;
     justify-content: space-between;
-    margin: 72px 16px 0 16px;
+    margin: 150px 16px 0 16px;
 
     .draw-button {
-      background: #fff;
-      color: #333;
-      border-radius: 9999px;
-      padding: 0.4rem 1rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      /* Medium is typically handled by font-weight */
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0;
+      width: 120px;
+      height: 38px;
+      border-radius: 40px;
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 4px;
+      opacity: 1;
+      cursor: pointer;
 
-      // &.locked {
-      //   opacity: 0.6;
-      // }
-
-      .lock-icon {
-        margin-bottom: 4px;
-      }
     }
+
+    .draw-button.locked::before {
+      content: "";
+      background-image: url('/images/lock-1.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 16px;
+      height: 16px;
+    }
+
 
     .buy-button {
       background: #f26a1b;

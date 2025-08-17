@@ -1,39 +1,37 @@
+"use client";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
-import Image from "next/image";
-
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
 
 import "./PartnersSection.scss";
 
-const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
+const PartnerCarousel = ({ title, backgroundColor, partnerLogos, reverse }) => {
   return (
     <section className="partners-section" style={{ backgroundColor }}>
       <div className="partners-wrapper">
         <h2 className="partners-heading">{title}</h2>
         <div className="carousel-container">
           <Swiper
-            dir="rtl"
             slidesPerView={4.2}
             spaceBetween={32}
             loop={true}
-            speed={5000}
+            speed={5000} // higher speed = smoother continuous scroll
             autoplay={{
-              delay: 1,
+              delay: 0, // 👈 continuous autoplay (no waiting)
               disableOnInteraction: false,
-              reverseDirection: true,
-              pauseOnMouseEnter: true,
+              reverseDirection: reverse, // left-to-right or right-to-left
             }}
-            freeMode={{ enabled: true }}
+            freeMode={true} // 👈 enables continuous "marquee" effect
+            freeModeMomentum={false} // 👈 prevents sudden stopping
             grabCursor={true}
             modules={[Autoplay, FreeMode]}
           >
             {partnerLogos.map((logo, index) => (
               <SwiperSlide key={index}>
-                <div className="partner-logo" style={{ direction: "rtl" }}>
+                <div className="partner-logo">
                   <img
                     src={logo}
                     alt={`partner-logo-${index}`}
@@ -51,32 +49,51 @@ const PartnerCarousel = ({ title, backgroundColor, partnerLogos }) => {
   );
 };
 
+// Mock partner data
 const partners = [
   "/images/landingpage/thaagam_foundation.png",
   "/images/landingpage/narayana_health.png",
   "/images/landingpage/narayana_netralaya.png",
   "/images/landingpage/toi.png",
   "/images/landingpage/the_hindu.png",
+   "/images/landingpage/thaagam_foundation.png",
+  "/images/landingpage/narayana_health.png",
+  "/images/landingpage/narayana_netralaya.png",
+  "/images/landingpage/toi.png",
+  "/images/landingpage/the_hindu.png",
 ];
 
-const PartnersSection = ({ marquee = [] }) => {
-  const charityPartners = marquee.map(
-    item => `${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`
-  );
-  // const businessPartners = marquee.filter(item => item.type === "business").map(item => `${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`);
+const charityPartners = [
+  "/images/landingpage/thaagam_foundation.png",
+  "/images/landingpage/narayana_health.png",
+  "/images/landingpage/narayana_netralaya.png",
+  "/images/landingpage/toi.png",
+  "/images/landingpage/the_hindu.png",
+   "/images/landingpage/thaagam_foundation.png",
+  "/images/landingpage/narayana_health.png",
+  "/images/landingpage/narayana_netralaya.png",
+  "/images/landingpage/toi.png",
+  "/images/landingpage/the_hindu.png",
+];
+
+const PartnersSection = () => {
   return (
     <div className="partners-container">
-         <PartnerCarousel
+      {/* 👈 left → right */}
+      <PartnerCarousel
         title="Our Partners"
         backgroundColor="#b5233e"
         partnerLogos={partners}
+        reverse={false}
       />
+
+      {/* 👈 right → left */}
       <PartnerCarousel
         title="Our Charity Partners"
         backgroundColor="#362f2a"
         partnerLogos={charityPartners}
+        reverse={true}
       />
-   
     </div>
   );
 };

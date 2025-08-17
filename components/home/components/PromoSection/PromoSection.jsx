@@ -214,10 +214,14 @@ Buy coins, enter the lucky draw, and this<br/> dream villa could be yours.</p>
                 <p className="call-to-action">
                 Buy coins. Enter the draw. No extra cost.
                 </p>
-                <button className="features__button">
+             
+
+                     <a href="/campaign">
+                       <button className="features__button">
                   <FaArrowRight className="features__button-icon" />
-                  Enter Now.
+                  Enter Now
                 </button>
+                      </a>
               </div>
             </div>
           </div>
