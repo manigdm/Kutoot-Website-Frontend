@@ -56,22 +56,23 @@ const Footer = () => {
           <h3>Legal & Policies</h3>
           <ul>
             <li>
-              <a href="/terms">Terms & Conditions</a>
+              <a href="/termsandcondition">Terms & Conditions</a>
             </li>
             <li>
-              <a href="/refund-policy">Return & Refund</a>
+              <a href="/returnrefund">Return & Refund</a>
             </li>
             <li>
-              <a href="/privacy-policy">Privacy</a>
+              <a href="/privacypolicy">Privacy</a>
             </li>
           </ul>
         </div>
 
         <div className="footer-column connect-section">
           <h3>Connect</h3>
-          <p className="text-white">Contact us</p>
-          <a href="mailto:info@xyz.com" className="email-link">
-            info@xyz.com
+       <p className="!text-gray-400">Contact us</p>
+
+          <a href="mailto:support@kutoot.com" className="email-link">
+            support@kutoot.com
           </a>
           <div className="social-icons">
             <a href="#">
