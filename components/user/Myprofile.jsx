@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
+import Coupons from "@/components/user/coupons";
 
 
 const Myprofile = () => {
@@ -23,46 +24,91 @@ const Myprofile = () => {
     width: 0,
     height: 0,
   });
-  const [croppedImage, setCroppedImage] = useState(null);
   const [logoutMsg, setLogoutMsg] = useState("");
-  
+
   // State for form data
   const [formData, setFormData] = useState({
-    username: "",
+    identifier: "",
+    name: "",
     gender: "",
-    email: "",
-    mobile: "",
     address: "",
-    houseNumber: "",
     street: "",
-    city: "",
-    state: "",
-    pinCode: "",
-    country: "",
+    house_no: "",
+    country_id: "",
+    state_id: "",
+    city_id: "",
+    zip_code: "",
+    phone: "",
+    image: "",
   });
-  
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [formErrors, setFormErrors] = useState({});
+  const storedUser = JSON.parse(localStorage.getItem("userData"));
+  const token = storedUser?.access_token;
+
   // State for join date (simulating user join date)
   const [joinDate, setJoinDate] = useState("2nd May 2025");
-  
+
   // State for view management: 'edit', 'saved', 'profile'
   const [viewMode, setViewMode] = useState("edit");
-  
+
   // State for deactivate modal
   const [showDeactivateModal, setShowDeactivateModal] = useState(false);
-  
+
   // State for logout modal
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  
+
   // State for logout success modal
   const [showLogoutSuccessModal, setShowLogoutSuccessModal] = useState(false);
-  
+
   // State for active tab
   const [activeTab, setActiveTab] = useState("profile");
-  
+
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const fileInputRef = useRef(null);
-  
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get(
+          `https://kutoot.bigome.com/api/user/my-profile?token=${token}`
+        );
+
+        const data = res.data;
+        console.log("data related API response", data);
+
+        setFormData({
+          identifier: data?.personInfo?.email || "",
+          name: data?.personInfo?.name || "",
+          gender: "", // API has no gender
+          address: data?.personInfo?.address || "",
+          street: "", // not in API
+          house_no: "", // not in API
+          country_id: data?.personInfo?.country_id || "",
+          state_id: data?.personInfo?.state_id || "",
+          city_id: data?.personInfo?.city_id || "",
+          zip_code: data?.personInfo?.zip_code || "",
+          phone: data?.personInfo?.phone || "",
+          image: data?.personInfo?.image || data?.defaultProfile?.image || "",
+        });
+
+        setCountries(data.countries || []);
+        setStates(data.states || []);
+        setCities(data.cities || []);
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+      }
+    };
+
+    if (token) {
+      fetchProfile();
+    }
+  }, [token]);
+
   // Tab components
   const DashboardTab = () => (
     <div>
@@ -71,19 +117,12 @@ const Myprofile = () => {
       >
         My Dashboard
       </h2>
-        <p style={{ marginBottom: "15px" }}>my dashboard</p>
-      
+      <p style={{ marginBottom: "15px" }}>my dashboard</p>
+
     </div>
   );
   const CouponsTab = () => (
-    <div>
-      <h2
-        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
-      >
-        My Coupons
-      </h2>
-      <p>my coupons.</p>
-    </div>
+   <Coupons />
   );
   const CampaignsTab = () => (
     <div>
@@ -92,7 +131,7 @@ const Myprofile = () => {
       >
         My Campaigns
       </h2>
-     <p>my campaigns</p>
+      <p>my campaigns</p>
     </div>
   );
   const OrdersTab = () => (
@@ -102,7 +141,7 @@ const Myprofile = () => {
       >
         My Orders
       </h2>
-    <p>my orders</p>
+      <p>my orders</p>
     </div>
   );
   const InvoicesTab = () => (
@@ -112,10 +151,10 @@ const Myprofile = () => {
       >
         My Invoices
       </h2>
-     <p>my invoices</p>
+      <p>my invoices</p>
     </div>
   );
-  
+
   // Logout handlers
   const handleLogoutClick = () => {
     setShowLogoutModal(true);
@@ -156,7 +195,7 @@ const Myprofile = () => {
     setShowLogoutModal(false);
     setShowLogoutSuccessModal(true);
   };
-  
+
   // Logout success handlers
   const handleCloseLogoutSuccessModal = () => {
     setShowLogoutSuccessModal(false);
@@ -167,7 +206,7 @@ const Myprofile = () => {
     setShowLogoutSuccessModal(false);
     window.location.href = "/";
   }
-  
+
   const styles = {
     container: {
       backgroundColor: "#FFFDF2",
@@ -208,7 +247,7 @@ const Myprofile = () => {
       height: "336px",
       display: "flex",
       flexDirection: "column",
-     
+
       alignItems: "flex-start",
     },
     myAccountHeader: {
@@ -263,7 +302,7 @@ const Myprofile = () => {
       margin: "12px 0",
     },
     rightContent: {
-      
+
       minHeight: "930px",
       borderRadius: "8px",
       padding: "12.01px 20.01px 12.01px 20.01px",
@@ -366,7 +405,7 @@ const Myprofile = () => {
       color: "#333333",
     },
     uploadArea: {
-      width: "831px",
+      // width: "831px",
       height: "96px",
       padding: "0",
       border: croppedImage ? "1px solid #E6E6E6" : "1px dashed #999999",
@@ -491,10 +530,10 @@ const Myprofile = () => {
       flexDirection: "row",
       gap: "20px",
       marginBottom: "16px",
-      flexWrap: "wrap",
+      // flexWrap: "wrap",
     },
     inputField: {
-      width: "405px",
+      width: "490px",
       height: "50px",
       border: "1.06px solid #E6E6E6",
       borderRadius: "8px",
@@ -510,7 +549,7 @@ const Myprofile = () => {
       outline: "none",
     },
     dropdown: {
-      width: "405px",
+      width: "490px",
       height: "50px",
       border: "1.06px solid #E6E6E6",
       borderRadius: "8px",
@@ -1186,7 +1225,7 @@ const Myprofile = () => {
       border: "none",
     }
   };
-  
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.startsWith("image/")) {
@@ -1199,20 +1238,75 @@ const Myprofile = () => {
       reader.readAsDataURL(selectedFile);
     }
   };
-  
+
   const handleUploadAreaClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
+
+    setFormErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+
+      switch (field) {
+        case "name":
+          if (!value.trim()) newErrors.name = "Name is required";
+          else delete newErrors.name;
+          break;
+        case "identifier":
+          if (!value.trim()) newErrors.email = "Email is required";
+          else if (!/^\S+@\S+\.\S+$/.test(value))
+            newErrors.email = "Invalid email format";
+          else delete newErrors.email;
+          break;
+        case "phone":
+          if (!value.trim()) newErrors.phone = "Phone number is required";
+          else if (!/^\d{10}$/.test(value))
+            newErrors.phone = "Phone number must be 10 digits";
+          else delete newErrors.phone;
+          break;
+        case "address":
+          if (!value.trim()) newErrors.address = "Address is required";
+          else delete newErrors.address;
+          break;
+        case "house_no":
+          if (!value.trim()) newErrors.house_no = "House number is required";
+          else delete newErrors.house_no;
+          break;
+        case "street":
+          if (!value.trim()) newErrors.street = "Street is required";
+          else delete newErrors.street;
+          break;
+        case "city_id":
+          if (!value) newErrors.city_id = "Select a city";
+          else delete newErrors.city_id;
+          break;
+        case "state_id":
+          if (!value) newErrors.state_id = "Select a state";
+          else delete newErrors.state_id;
+          break;
+        case "zip_code":
+          if (!value.trim()) newErrors.zip_code = "Pin code is required";
+          else delete newErrors.zip_code;
+          break;
+        case "country_id":
+          if (!value) newErrors.country_id = "Select a country";
+          else delete newErrors.country_id;
+          break;
+        default:
+          break;
+      }
+
+      return newErrors;
+    });
   };
-  
+
   const handleCropMouseDown = useCallback(
     (e) => {
       if (e.target.classList.contains("crop-handle")) {
@@ -1234,7 +1328,7 @@ const Myprofile = () => {
     },
     [cropData]
   );
-  
+
   const handleMouseMove = useCallback(
     (e) => {
       if (isDragging) {
@@ -1277,12 +1371,12 @@ const Myprofile = () => {
     },
     [isDragging, isResizing, dragStart, resizeStart, cropData]
   );
-  
+
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     setIsResizing(false);
   }, []);
-  
+
   React.useEffect(() => {
     if (showCropModal) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -1293,7 +1387,7 @@ const Myprofile = () => {
       };
     }
   }, [showCropModal, handleMouseMove, handleMouseUp]);
-  
+
   const cropImage = () => {
     const canvas = canvasRef.current;
     const img = imageRef.current;
@@ -1321,32 +1415,119 @@ const Myprofile = () => {
       setShowCropModal(false);
     }
   };
-  
-  const handleSaveChanges = () => {
-    console.log("Profile saved:", { ...formData, profileImage: croppedImage });
-    setViewMode("saved");
+
+  const handleSaveChanges = async () => {
+    if (validateForm()) {
+      console.log("Form data ready to submit:", formData);
+      // Submit your data here
+    }
+
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("userData"));
+      const token = storedUser?.access_token;
+
+      if (!token) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+      const payload = {
+        name: formData.name,
+        identifier: formData.identifier,
+        gender: formData.gender,
+        phone: formData.phone,
+        address: formData.address,
+        house_no: formData.house_no,
+        street: formData.street,
+        country_id: formData.country_id,
+        state_id: formData.state_id,
+        city_id: formData.city_id,
+        zip_code: formData.zip_code,
+        image: croppedImage || formData.image,
+      };
+
+      const res = await axios.post(
+        `https://kutoot.bigome.com/api/user/v1/update-profile`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Update profile response:", res.data);
+
+      if (res.data.success) {
+        alert("Profile updated successfully!");
+        setViewMode("saved");
+      } else {
+        alert("Failed to update profile. " + (res.data.message || ""));
+      }
+
+    } catch (err) {
+      console.error("Error updating profile:", err);
+    }
   };
-  
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.identifier.trim()) errors.email = "Email is required";
+    else if (!/^\S+@\S+\.\S+$/.test(formData.identifier))
+      errors.email = "Invalid email format";
+
+    if (!formData.phone.trim()) errors.phone = "Phone number is required";
+    else if (!/^\d{10}$/.test(formData.phone))
+      errors.phone = "Phone number must be 10 digits";
+
+    if (!formData.address.trim()) errors.address = "Address is required";
+    if (!formData.house_no.trim()) errors.house_no = "House number is required";
+    if (!formData.street.trim()) errors.street = "Street is required";
+    if (!formData.city_id) errors.city_id = "Select a city";
+    if (!formData.state_id) errors.state_id = "Select a state";
+    if (!formData.zip_code.trim()) errors.zip_code = "Pin code is required";
+    if (!formData.country_id) errors.country_id = "Select a country";
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const isFormValid =
+    Object.keys(formErrors).length === 0 &&
+    formData.name &&
+    formData.identifier &&
+    formData.phone &&
+    formData.address &&
+    formData.house_no &&
+    formData.street &&
+    formData.city_id &&
+    formData.state_id &&
+    formData.zip_code &&
+    formData.country_id;
+
+
   const handleRemoveImage = () => {
     console.log("Removing profile image");
     setCroppedImage(null);
     setFile(null);
     setPreviewImage(null);
   };
-  
+
   const handleChangeImage = () => {
     console.log("Changing profile image");
     handleUploadAreaClick();
   };
-  
+
   const handleDeactivateAccount = () => {
     setShowDeactivateModal(true);
   };
-  
+
   const handleCloseDeactivateModal = () => {
     setShowDeactivateModal(false);
   };
-  
+
   // First frame: Edit form
   const renderEditView = () => (
     <>
@@ -1432,9 +1613,12 @@ const Myprofile = () => {
             type="text"
             placeholder="Enter user name"
             style={styles.inputField}
-            value={formData.username}
-            onChange={(e) => handleInputChange("username", e.target.value)}
+            value={formData.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
           />
+          {formErrors.name && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.name}</div>
+          )}
         </div>
         <div>
           <label style={styles.label}>Gender*</label>
@@ -1459,9 +1643,12 @@ const Myprofile = () => {
             type="email"
             placeholder="Enter email ID"
             style={styles.inputField}
-            value={formData.email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
+            value={formData.identifier}
+            onChange={(e) => handleInputChange("identifier", e.target.value)}
           />
+          {formErrors.email && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.email}</div>
+          )}
         </div>
         <div>
           <label style={styles.label}>Mobile number*</label>
@@ -1469,9 +1656,12 @@ const Myprofile = () => {
             type="tel"
             placeholder="Enter mobile number"
             style={styles.inputField}
-            value={formData.mobile}
-            onChange={(e) => handleInputChange("mobile", e.target.value)}
+            value={formData.phone}
+            onChange={(e) => handleInputChange("phone", e.target.value)}
           />
+          {formErrors.phone && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.phone}</div>
+          )}
         </div>
       </div>
       <div style={styles.additionalLine}></div>
@@ -1482,10 +1672,13 @@ const Myprofile = () => {
           <input
             type="text"
             placeholder="Enter address"
-            style={{ ...styles.inputField, width: "830px" }}
+            style={{ ...styles.inputField, width: "100%" }}
             value={formData.address}
             onChange={(e) => handleInputChange("address", e.target.value)}
           />
+          {formErrors.address && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.address}</div>
+          )}
         </div>
       </div>
       <div style={styles.inputContainer}>
@@ -1495,9 +1688,12 @@ const Myprofile = () => {
             type="text"
             placeholder="Enter house number"
             style={styles.inputField}
-            value={formData.houseNumber}
-            onChange={(e) => handleInputChange("houseNumber", e.target.value)}
+            value={formData.house_no}
+            onChange={(e) => handleInputChange("house_no", e.target.value)}
           />
+          {formErrors.house_no && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.house_no}</div>
+          )}
         </div>
         <div>
           <label style={styles.label}>Street*</label>
@@ -1508,28 +1704,43 @@ const Myprofile = () => {
             value={formData.street}
             onChange={(e) => handleInputChange("street", e.target.value)}
           />
+          {formErrors.street && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.street}</div>
+          )}
         </div>
       </div>
       <div style={styles.inputContainer}>
         <div>
           <label style={styles.label}>City*</label>
-          <input
-            type="text"
-            placeholder="Enter city name"
-            style={styles.inputField}
-            value={formData.city}
-            onChange={(e) => handleInputChange("city", e.target.value)}
-          />
+          <select
+            style={styles.dropdown}
+            value={formData.city_id}
+            onChange={(e) => handleInputChange("city_id", e.target.value)}
+          >
+            {formErrors.city_id && (
+              <div style={{ color: "red", fontSize: "14px" }}>{formErrors.city_id}</div>
+            )}
+            <option value="" disabled hidden>Select city</option>
+            {cities.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
         </div>
         <div>
           <label style={styles.label}>State*</label>
-          <input
-            type="text"
-            placeholder="Enter state name"
-            style={styles.inputField}
-            value={formData.state}
-            onChange={(e) => handleInputChange("state", e.target.value)}
-          />
+          <select
+            style={styles.dropdown}
+            value={formData.state_id}
+            onChange={(e) => handleInputChange("state_id", e.target.value)}
+          >
+            {formErrors.state_id && (
+              <div style={{ color: "red", fontSize: "14px" }}>{formErrors.state_id}</div>
+            )}
+            <option value="" disabled hidden>Select state</option>
+            {states.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
         </div>
       </div>
       <div style={styles.inputContainer}>
@@ -1539,23 +1750,27 @@ const Myprofile = () => {
             type="text"
             placeholder="Enter pin code"
             style={styles.inputField}
-            value={formData.pinCode}
-            onChange={(e) => handleInputChange("pinCode", e.target.value)}
+            value={formData.zip_code}
+            onChange={(e) => handleInputChange("zip_code", e.target.value)}
           />
+          {formErrors.zip_code && (
+            <div style={{ color: "red", fontSize: "14px" }}>{formErrors.zip_code}</div>
+          )}
         </div>
         <div>
           <label style={styles.label}>Country of residence*</label>
           <select
             style={styles.dropdown}
-            value={formData.country}
-            onChange={(e) => handleInputChange("country", e.target.value)}
+            value={formData.country_id}
+            onChange={(e) => handleInputChange("country_id", e.target.value)}
           >
-            <option value="" disabled hidden>
-              Select country
-            </option>
-            <option value="India">India</option>
-            <option value="USA">USA</option>
-            <option value="Canada">Canada</option>
+            {formErrors.country_id && (
+              <div style={{ color: "red", fontSize: "14px" }}>{formErrors.country_id}</div>
+            )}
+            <option value="" disabled hidden>Select country</option>
+            {countries.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
           </select>
         </div>
       </div>
@@ -1563,13 +1778,14 @@ const Myprofile = () => {
       <button
         style={styles.saveChangesButtonContainer}
         onClick={handleSaveChanges}
+
       >
         <span style={styles.saveChangesButtonText}>Save Changes</span>
         <div style={styles.saveChangesButtonDot}></div>
       </button>
     </>
   );
-  
+
   // Second frame: Saved data view
   const renderSavedView = () => (
     <>
@@ -1703,13 +1919,14 @@ const Myprofile = () => {
       <button
         style={styles.viewProfileButton}
         onClick={() => setViewMode("profile")}
+        disabled={!isFormValid}
       >
         <span style={styles.arrow}>&#8594;</span> Save Changes{" "}
         <span style={styles.dot}>•</span>
       </button>
     </>
   );
-  
+
   // Third frame: Profile view that matches the screenshot
   const renderProfileView = () => (
     <>
@@ -1796,7 +2013,7 @@ const Myprofile = () => {
       </button>
     </>
   );
-  
+
   // Deactivate Account Modal - Updated to match reference image
   const renderDeactivateModal = () => (
     <div style={styles.deactivateModalOverlay}>
@@ -1846,7 +2063,7 @@ const Myprofile = () => {
       </div>
     </div>
   );
-  
+
   // Logout Modal - Updated to match the second image
   const renderLogoutModal = () => (
     <div style={styles.logoutModalOverlay}>
@@ -1866,8 +2083,8 @@ const Myprofile = () => {
           }}
         />
         {/* Modal content positioned correctly */}
-        <div style={{ 
-          position: "relative", 
+        <div style={{
+          position: "relative",
           zIndex: 2,
           display: "flex",
           flexDirection: "column",
@@ -1888,7 +2105,7 @@ const Myprofile = () => {
             onClick={handleCloseLogoutModal}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           {/* Icon */}
@@ -1922,7 +2139,7 @@ const Myprofile = () => {
       </div>
     </div>
   );
-  
+
   // Logout Success Modal - Shows after successful logout
   const renderLogoutSuccessModal = () => (
     <div style={styles.logoutSuccessModalOverlay}>
@@ -1941,10 +2158,10 @@ const Myprofile = () => {
             zIndex: 1,
           }}
         />
-        
+
         {/* Modal content */}
-        <div style={{ 
-          position: "relative", 
+        <div style={{
+          position: "relative",
           zIndex: 2,
           display: "flex",
           flexDirection: "column",
@@ -1965,20 +2182,20 @@ const Myprofile = () => {
             onClick={handleCloseLogoutSuccesslanding}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          
+
           {/* Success icon */}
           <img
             src="/images/myprofile/logout-success-icon.png"
             alt="Logout Success"
             style={styles.logoutSuccessModalIcon}
           />
-          
+
           {/* Success message */}
           <h2 style={styles.logoutSuccessModalTitle}>{logoutMsg}</h2>
-          
+
           {/* Back to login button */}
           <button
             style={styles.logoutSuccessModalButton}
@@ -1990,7 +2207,7 @@ const Myprofile = () => {
       </div>
     </div>
   );
-  
+
   return (
     <>
       <style jsx global>{`
@@ -2076,7 +2293,7 @@ const Myprofile = () => {
           <div style={styles.contentWrapper}>
             <div style={styles.leftSidebar}>
               <div style={styles.myAccountHeader}>My Account</div>
-               {/* Profile Tab */}
+              {/* Profile Tab */}
               <div
                 style={
                   activeTab === "profile"
@@ -2124,7 +2341,7 @@ const Myprofile = () => {
                 />
                 My Coupons
               </div>
-             
+
               {/* Campaigns Tab */}
               <div
                 style={

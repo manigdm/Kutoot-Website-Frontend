@@ -110,7 +110,7 @@ const Login = () => {
         }),
       });
 
-      if (!res.ok) throw new Error("Please enter correct OTP");
+      if (!res.ok) throw new Error("OTP verification failed");
 
       const data = await res.json();
       localStorage.setItem("userData", JSON.stringify(data));
@@ -119,7 +119,7 @@ const Login = () => {
       setIsLoggedIn(true);
     } catch (err) {
       console.error(err);
-      setError("OTP verification failed");
+      setError("Please enter correct OTP");
     }
   };
 
