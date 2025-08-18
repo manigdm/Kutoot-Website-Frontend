@@ -81,7 +81,7 @@ const LuckyDrawSlider = ({ campaigns }) => {
                 textOverflow: "ellipsis",
               }}
             >
-              {hoveredIndex === index ? item.title2 : item.title}
+              {hoveredIndex === index ? `NEXT DRAW:${item.winner_announcement_date}` : item.title}
             </h3>
             <p
               style={{
@@ -94,7 +94,7 @@ const LuckyDrawSlider = ({ campaigns }) => {
                 lineHeight: "16px",
               }}
             >
-              worth {item.tag1}
+             {hoveredIndex === index ? `` : item.tag1}
             </p>
           </div>
 
