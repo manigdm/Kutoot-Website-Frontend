@@ -1,5 +1,4 @@
 'use client';
-
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "@/components/home/components/Footer/Footer";
 import { FaArrowRight } from "react-icons/fa";
@@ -11,7 +10,6 @@ import 'swiper/css/navigation';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import axios from "axios";
-
 const Campaign = () => {
   const [campaignId, setCampaignId] = useState(null);
   const [campaignData, setCampaignData] = useState(null);
@@ -20,27 +18,23 @@ const Campaign = () => {
   const swiperRef = useRef(null);
   const searchParams = useSearchParams();
   const [imagesArray, setImagesArray] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let id = null;
-
     // First, try to get the ID from the history state (for direct push)
     if (typeof window !== 'undefined' && window.history.state && window.history.state.state) {
       id = window.history.state.state.campaignId;
       console.log('ID from history state:', id);
     }
-
     // If no ID is found, fall back to the URL search parameters (for refresh/direct access)
     if (!id) {
       id = searchParams.get('id');
       console.log('ID from search params:', id);
     }
-
     if (id) {
       setCampaignId(id);
     }
   }, [searchParams]);
-
   useEffect(() => {
     // Only proceed if campaignId has a value
     if (campaignId) {
@@ -49,7 +43,6 @@ const Campaign = () => {
         .then((res) => {
           const data = res.data.data;
           console.log("API Response:", data);
-
           // Create an array of image objects
           const imagesArray = [
             { src: data.image1 },
@@ -58,7 +51,6 @@ const Campaign = () => {
           ].filter(img => img.src); // remove null or undefined
           setImagesArray(imagesArray);
           console.log("After array transformation:", imagesArray);
-
           // Store campaign data with imagesArray
           setCampaignData({
             ...data,
@@ -72,10 +64,7 @@ const Campaign = () => {
         });
     }
   }, [campaignId]);
-
-
   console.log('Current state of campaignData:', campaignData);
-
   function stripHtml(html) {
     // Check if document exists before creating a div
     if (typeof document === 'undefined') {
@@ -85,7 +74,6 @@ const Campaign = () => {
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
   }
-
   const getLabelIcon = () => {
     return (
       <svg
@@ -103,7 +91,6 @@ const Campaign = () => {
       </svg>
     );
   };
-
   return (
     <>
       <div style={{ paddingTop: "150px", textAlign: "center" }}>
@@ -201,7 +188,6 @@ const Campaign = () => {
             >
               <IoIosArrowBack style={{ fontSize: "24px", color: "#3B322B" }} />
             </div>
-
             {/* Right arrow */}
             <div
               className="custom-swiper-button-next"
@@ -226,7 +212,6 @@ const Campaign = () => {
             >
               <IoIosArrowForward style={{ fontSize: "24px", color: "#3B322B" }} />
             </div>
-
             <Swiper
               modules={[Navigation, Autoplay]}
               onSwiper={(swiper) => {
@@ -267,7 +252,6 @@ const Campaign = () => {
               ))}
             </Swiper>
           </div>
-
           {/* Right side content */}
           <div
             style={{
@@ -309,7 +293,6 @@ const Campaign = () => {
             </button>
           </div>
         </div>
-
         {/* Prize Highlights Section */}
         <div style={{ marginTop: "40px", marginBottom: "40px" }}>
           <h2
@@ -362,7 +345,6 @@ const Campaign = () => {
                     marginBottom: "8px",
                   }}
                 />
-
                 {Object.entries(item).map(([key, value]) => (
                   <div
                     key={key}
@@ -383,7 +365,6 @@ const Campaign = () => {
                     >
                       {key}
                     </p>
-
                     {/* Value */}
                     <p
                       style={{
@@ -401,9 +382,7 @@ const Campaign = () => {
               </div>
             ))}
           </div>
-
         </div>
-
         {/* New Section with Pricing Cards */}
         <div style={{ background: "#EFEFEF" }}>
           <div
@@ -447,7 +426,6 @@ const Campaign = () => {
             >
               {campaignData?.title}
             </p>
-
             {/* Pricing cards section */}
             <div
               style={{
@@ -479,9 +457,10 @@ const Campaign = () => {
                     justifyContent: "flex-start",
                     alignItems: "center",
                   }}
-                  className="baseplan_main_card"
+                  className={`baseplan_main_card ${tier?.point3 === null ? 'no-gradient-card' : ''}`}
                 >
                   <div
+                    className="baseplan_inner_div"
                     style={{
                       // width: "100%",
                       height: "100%",
@@ -526,7 +505,6 @@ const Campaign = () => {
                         marginTop: "8px",
                       }}
                     />
-
                     {/* Title and Subtitle */}
                     <div
                       style={{
@@ -569,7 +547,6 @@ const Campaign = () => {
                         {stripHtml(tier?.description)}
                       </p>
                     </div>
-
                     <div
                       style={{
                         width: "172px",
@@ -577,7 +554,6 @@ const Campaign = () => {
                         background: "#cfc4bc",
                       }}
                     ></div>
-
                     {/* Spend details */}
                     <div
                       style={{
@@ -616,7 +592,6 @@ const Campaign = () => {
                         ₹{tier?.ticket_price}
                       </p>
                     </div>
-
                     <div
                       style={{
                         width: "172px",
@@ -624,7 +599,6 @@ const Campaign = () => {
                         background: "#cfc4bc",
                       }}
                     ></div>
-
                     {/* Shopping Coins */}
                     <div
                       style={{
@@ -663,7 +637,6 @@ const Campaign = () => {
                         {tier?.coins_per_campaign}
                       </p>
                     </div>
-
                     <div
                       style={{
                         width: "172px",
@@ -671,7 +644,6 @@ const Campaign = () => {
                         background: "#cfc4bc",
                       }}
                     ></div>
-
                     {/* Free Coupons */}
                     <div
                       style={{
@@ -710,7 +682,6 @@ const Campaign = () => {
                         {tier?.coupons_per_campaign}
                       </p>
                     </div>
-
                     <div
                       style={{
                         width: "172px",
@@ -718,7 +689,6 @@ const Campaign = () => {
                         background: "#cfc4bc",
                       }}
                     ></div>
-
                     {/* Per Coupon Cost */}
                     <div
                       style={{
@@ -757,7 +727,6 @@ const Campaign = () => {
                         ₹{tier.costPerCoupon}
                       </p>
                     </div>
-
                     {/* Dotted Line */}
                     <div
                       style={{
@@ -767,9 +736,9 @@ const Campaign = () => {
                         margin: "12px 0",
                       }}
                     ></div>
-
                     {/* Buy Now Button */}
                     <button
+                      className="baseplan-button"
                       style={{
                         display: "flex",
                         height: "36px",
@@ -792,7 +761,6 @@ const Campaign = () => {
                       Buy now .
                     </button>
                   </div>
-
                   {
                     tier.label && (
                       <div
@@ -842,7 +810,6 @@ const Campaign = () => {
                   }
                 </div>
               ))}
-
               <div>
                 <p
                   style={{
@@ -872,7 +839,6 @@ const Campaign = () => {
                   }}
                 />
               </div>
-
               <div
                 style={{
                   borderRadius: "40px",
@@ -923,7 +889,6 @@ const Campaign = () => {
               </div>
             </div>
           </div>
-
           <div
             style={{
               width: "100%",
@@ -942,15 +907,33 @@ const Campaign = () => {
       </div >
       <style>
         {`
+        
+          
           .baseplan_main_card:hover {
-          background-color: #3a322b !important;
-          color: #fff;
+            background-color: #3a322b !important;
+          }
+          
+          .baseplan_main_card:hover .baseplan_inner_div {
+            background-color: #3a322b !important;
+          }
+          
+          .baseplan_main_card:hover .baseplan_inner_div,
+          .baseplan_main_card:hover .baseplan_inner_div * {
+            color: #fff !important;
+          }
+          
+          .baseplan_main_card:hover .baseplan_badge {
+            background: linear-gradient(267.5deg, #fff -4.5%, #ddd 100%) !important;
+            color: #3a322b !important;
+          }
+          
+          /* Add white border for cards without gradient on hover */
+          .no-gradient-card:hover {
+            border: 2px solid #fff !important;
           }
         `}
       </style>
     </>
   );
-
 };
-
 export default Campaign;
