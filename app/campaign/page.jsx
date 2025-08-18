@@ -167,12 +167,25 @@ const App = ({ offer }) => {
                                         className="bg-cover bg-center rounded-2xl"
                                         style={{
                                             backgroundImage: `url(${offer?.img})`,
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'contain',
-                                            backgroundPosition: 'center',
-                                            borderRadius: '8px',
-                                            width: '390px',
-                                            height: '330px',
+                                            // backgroundRepeat: 'no-repeat',
+                                            // backgroundSize: 'contain',
+                                            // backgroundPosition: 'center',
+                                            // borderRadius: '8px',
+                                            // width: '390px',
+                                            // height: '330px',
+
+
+
+
+                                            backgroundRepeat: "no-repeat",
+                                            backgroundSize: "contain",
+                                            backgroundPosition: "center",
+                                            borderRadius: "6px", // updated from 8px to 6px
+                                            width: "330px", // updated from 390px
+                                            height: "290px", // updated from 330px
+                                            flexShrink: 0,
+                                            background:
+                                                "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 67.18%, rgba(0, 0, 0, 0.50) 77.03%), url(<path-to-image>) lightgray 0px -106px / 99.984% 173.696% no-repeat",
                                         }}
                                     >
                                         {offer?.tag1 && (
@@ -180,8 +193,16 @@ const App = ({ offer }) => {
                                                 {offer.tag1}
                                             </div>
                                         )}
-                                        <div className={`position-absolute text-black ${styles.left_img_btm_txt}`}>
-                                            <h2 className="fw-bold">{stripHtml(offer?.title)}</h2>
+                                        <div className={`position-absolute text-white ${styles.left_img_btm_txt}`} >
+                                            <h2 className="fw-bold" style={{
+                                                color: "#FFF",
+                                                fontFamily: "Zurich Extra Black, sans-serif",
+                                                fontSize: "26px",
+                                                fontStyle: "normal",
+                                                fontWeight: 900,
+                                                lineHeight: "32px",
+                                                letterSpacing: "-0.56px",
+                                            }}>{stripHtml(offer?.title)}</h2>
                                         </div>
                                     </div>
                                 </Col>
@@ -218,12 +239,52 @@ const App = ({ offer }) => {
                                                         <div>
                                                             <div className="d-flex justify-content-between flex-column text-black">
                                                                 <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
-                                                                    <div className="fs-1 fw-bold">₹{plan?.ticket_price}</div>
+                                                                    <div
+                                                                        className=""
+                                                                        style={{
+                                                                            color: "#3B322B",
+                                                                            fontFamily: "Poppins, sans-serif",
+                                                                            fontSize: "26px",
+                                                                            fontStyle: "normal",
+                                                                            fontWeight: 700,
+                                                                            lineHeight: "24px",
+                                                                        }}
+                                                                    >
+                                                                        ₹{plan?.ticket_price}
+                                                                    </div>
+
                                                                     <div>{plan?.coins_per_campaign} Coins</div>
                                                                 </div>
                                                                 <div className="d-flex justify-content-between align-items-center flex-row">
-                                                                    <div className="fs-2 fw-bold">{plan?.coupons_per_campaign}</div>
-                                                                    <div>Lucky draw coupons</div>
+                                                                    <div
+                                                                        className=""
+                                                                        style={{
+                                                                            color: "#3B322B",
+                                                                            fontFamily: "Poppins, sans-serif",
+                                                                            fontSize: "26px",
+                                                                            fontStyle: "normal",
+                                                                            fontWeight: 700,
+                                                                            lineHeight: "24px",
+                                                                        }}
+                                                                    >
+                                                                        {plan?.coupons_per_campaign}
+                                                                    </div>
+
+                                                                    <div
+                                                                        style={{
+                                                                            color: "#3B322B",
+                                                                            fontFamily: "Poppins, sans-serif",
+                                                                            fontSize: "12px",
+                                                                            fontStyle: "normal",
+                                                                            fontWeight: 500,
+                                                                            lineHeight: "13px",
+                                                                        }}
+                                                                    >
+                                                                        Lucky draw
+                                                                        <br />
+                                                                        coupons
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
 
