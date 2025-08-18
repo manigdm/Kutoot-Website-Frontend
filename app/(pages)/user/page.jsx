@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
        <Myprofile />
-      <div className="mt-minus-150 pb-120">
+      <div className="mt-minus-150">
         <div className="container">
           <div className="row ">
            

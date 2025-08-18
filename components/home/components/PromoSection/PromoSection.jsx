@@ -53,21 +53,21 @@ const extractPropertyDetails = (str) => {
 
   return matches
     ? {
-        bedrooms: parseInt(matches[1]),
-        bathrooms: parseInt(matches[2]),
-        sqft: parseInt(matches[3].replace(/,/g, "")),
-      }
+      bedrooms: parseInt(matches[1]),
+      bathrooms: parseInt(matches[2]),
+      sqft: parseInt(matches[3].replace(/,/g, "")),
+    }
     : null;
 };
 
-const PromoSection = ({baseplans}) => {
+const PromoSection = ({ baseplans }) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const homepageData = useHomePage();
 
-  const enterNow = () => {};
+  const enterNow = () => { };
 
   // const slides = homepageData?.data?.banner
   //   ? [homepageData.data.banner.image1, homepageData.data.banner.image2].filter(
@@ -75,18 +75,28 @@ const PromoSection = ({baseplans}) => {
   //     )
   //   : [];
 
-  const slides = baseplans ? baseplans : [];
-  //  console.log("slides", slides);
+
+  const bannerCampaign = baseplans?.find(
+    (c) => c?.promotion === "Top-Banner"
+  );
+
+  const slides = bannerCampaign
+    ? [bannerCampaign.img, bannerCampaign.image1, bannerCampaign.image2].filter(Boolean)
+    : [];
+
+
+  //  const slides = baseplans ? baseplans : [];
+  console.log("slides", slides);
 
   const propertyDescriptionMemoized = useMemo(() => {
     return {
       // __html: homepageData?.data?.banner?.description || "",
-      __html:slides[0]?.description || "",
+      __html: slides[0]?.description || "",
     };
   }, [slides]);
 
   // const propertyDescription = homepageData?.data?.banner?.description;
-const propertyDescription = slides[0]?.description;
+  const propertyDescription = slides[0]?.description;
 
   const propertyDetails = useMemo(() => {
     return extractPropertyDetails(propertyDescription);
@@ -96,7 +106,7 @@ const propertyDescription = slides[0]?.description;
     <div className="promo-section">
       <header className="promo-header">
         <h2 className="promo-header__title">
-          Win the ₹5 Crore Buildiko Springwoods<br/> Designer Villa
+          Win the ₹5 Crore Buildiko Springwoods<br /> Designer Villa
         </h2>
         <div className="featured-in">
           <span>As featured in</span>
@@ -144,8 +154,6 @@ const propertyDescription = slides[0]?.description;
                     <div
                       style={{
                         position: "relative",
-                        width: "100%",
-                        height: "450px",
                       }}
                     >
                       {/* <Image
@@ -154,14 +162,11 @@ const propertyDescription = slides[0]?.description;
                         fill
                         style={{ objectFit: "cover" }}
                       /> */}
-                        <img
-        src={slide.img
-              ? slide.img 
-              : `${process.env.NEXT_PUBLIC_BASE_URL}${slide.img}`}
-        alt="slide"
-        fill
-        style={{ objectFit: "cover" }}
-      />
+                      <img
+                        src={slide.startsWith("http") ? slide : `${process.env.NEXT_PUBLIC_BASE_URL}${slide}`}
+                        alt={`slide-${i}`}
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                      />
                       <div className="property-plan">
                         <button className="active">Gallery</button>
                         <button className="active">Floor plan</button>
@@ -199,8 +204,8 @@ const propertyDescription = slides[0]?.description;
               </p> */}
 
               <div className="features">
-                <p className="features-title">Live like royalty in Sarjapur Road’s most<br/> luxurious estate.<br/>
-Buy coins, enter the lucky draw, and this<br/> dream villa could be yours.</p>
+                <p className="features-title">Live like royalty in Sarjapur Road’s most<br /> luxurious estate.<br />
+                  Buy coins, enter the lucky draw, and this<br /> dream villa could be yours.</p>
 
                 <ul>
                   {FEATURE_POINTS.map((point, i) => (
@@ -212,16 +217,16 @@ Buy coins, enter the lucky draw, and this<br/> dream villa could be yours.</p>
                   dangerouslySetInnerHTML={propertyDescriptionMemoized}
                 /> */}
                 <p className="call-to-action">
-                Buy coins. Enter the draw. No extra cost.
+                  Buy coins. Enter the draw. No extra cost.
                 </p>
-             
 
-                     <a href="/campaign">
-                       <button className="features__button">
-                  <FaArrowRight className="features__button-icon" />
-                  Enter Now
-                </button>
-                      </a>
+
+                <a href="/campaign">
+                  <button className="features__button">
+                    <FaArrowRight className="features__button-icon" />
+                    Enter Now
+                  </button>
+                </a>
               </div>
             </div>
           </div>

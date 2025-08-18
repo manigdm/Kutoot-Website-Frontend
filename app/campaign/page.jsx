@@ -18,7 +18,7 @@ const App = ({ offer }) => {
     const [campaigns, setCampaigns] = useState([]);
     const filteredCampaigns = filterCampaigns(campaigns, activeTab);
     const [loading, setLoading] = useState(true);
-    const tabs = ['All', 'Active', 'Upcoming', 'Completed','Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
+    const tabs = ['All', 'Active', 'Upcoming', 'Completed', 'Latest', 'Fast filling', 'Highest Prize', 'Value for Money', 'Best Deals'];
     const left_section_img = '/images/campaign/campaign_villa.svg';
     const kutoot_slide_top = '/images/campaign/campaigncard.svg'
     const scrollRef = useRef(null);
@@ -65,33 +65,39 @@ const App = ({ offer }) => {
     // API call
     useEffect(() => {
         let url = "https://kutoot.bigome.com/api/coin-campaigns";
-    
+
         if (activeTab === "Active") {
-          url += "?type=1";
+            url += "?type=1";
         } else if (activeTab === "Completed") {
-          url += "?type=3";
+            url += "?type=3";
         } else if (activeTab === "Upcoming") {
-          url += "?type=2";
+            url += "?type=2";
+        } else if (activeTab === "Highest Prize") {
+            url += "?type=4";
+        } else if (activeTab === "Best Deals") {
+            url += "?type=5";
+        } else if (activeTab === "Latest") {
+            url += "?type=6";
         }
-    
+
         setLoading(true);
         axios
-          .get(url)
-          .then((res) => {
-            console.log(`${activeTab} API Response:`, res.data.data);
-            setCampaigns(res.data.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.error("Error fetching campaigns:", err);
-            setLoading(false);
-          });
-      }, [activeTab]);
+            .get(url)
+            .then((res) => {
+                console.log(`${activeTab} API Response:`, res.data.data);
+                setCampaigns(res.data.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching campaigns:", err);
+                setLoading(false);
+            });
+    }, [activeTab]);
 
     if (loading) {
-       return (
-        <Loading />
-       )
+        return (
+            <Loading />
+        )
     }
 
     function stripHtml(html) {
@@ -113,25 +119,16 @@ const App = ({ offer }) => {
                 return campaigns;
 
             case "Latest":
-                // Sort by creation date descending
-                return [...campaigns].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
             case "Fast filling":
                 // Sort by progress or display_percentage descending
                 return [...campaigns].sort((a, b) => (b.progress || b.display_percentage) - (a.progress || a.display_percentage));
 
             case "Highest Prize":
-                // Sort by ticket price descending
-                return [...campaigns].sort((a, b) => (b.ticket_price || 0) - (a.ticket_price || 0));
-
             case "Value for Money":
                 // Sort by ticket price ascending
                 return [...campaigns].sort((a, b) => (a.ticket_price || 0) - (b.ticket_price || 0));
 
             case "Best Deals":
-                // Filter to only "Featured" promotion campaigns
-                return campaigns.filter(campaign => campaign.promotion === "Featured");
-
             case "Active":
             case "Completed":
             case "Upcoming":
@@ -143,13 +140,13 @@ const App = ({ offer }) => {
 
     const viewCampaign = (selectedCampaign) => {
         // Pass state for immediate use, and a query parameter for persistence
-        router.push(`/campaignpage?id=${selectedCampaign.id}`, { 
-            state: { 
-                campaignId: selectedCampaign.id 
-            } 
+        router.push(`/campaignpage?id=${selectedCampaign.id}`, {
+            state: {
+                campaignId: selectedCampaign.id
+            }
         });
     };
-      
+
 
     return (
         <>
@@ -178,9 +175,11 @@ const App = ({ offer }) => {
                                             height: '330px',
                                         }}
                                     >
-                                        <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
-                                            {offer?.marketing_message}
-                                        </div>
+                                        {offer?.tag1 && (
+                                            <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
+                                                {offer.tag1}
+                                            </div>
+                                        )}
                                         <div className={`position-absolute text-black ${styles.left_img_btm_txt}`}>
                                             <h2 className="fw-bold">{stripHtml(offer?.title)}</h2>
                                         </div>
@@ -230,7 +229,8 @@ const App = ({ offer }) => {
 
                                                             <div className="d-flex justify-content-between align-items-center">
                                                                 <div className="w-50">
-                                                                    <p className="text-muted small m-0">*Validity up to {formatDate(offer?.start_date)}</p>
+                                                                    <p className="text-muted small m-0"></p>
+                                                                    {/* *Validity up to {formatDate(offer?.start_date)} */}
                                                                 </div>
                                                                 <div>
                                                                     <button

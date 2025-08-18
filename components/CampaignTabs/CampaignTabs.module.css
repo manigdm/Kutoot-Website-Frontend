@@ -84,8 +84,9 @@
     font-weight: 900;
     font-style: Regular;
     font-size: 28px;
-    bottom: 3%;
-    left: 3%;
+    bottom: 10px;
+    /* left: 3%; */
+    padding: 0px 20px;
   }
   .scrollbar_fix {
     scrollbar-width: none;

@@ -2,13 +2,21 @@ import React, { useEffect } from "react";
 import "./Header.scss";
 import { FaShareAlt } from "react-icons/fa";
 import { useState } from "react";
-import CommonButton from "@/components/common/CommonButton";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [user, setUser] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("userData");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser?.user);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

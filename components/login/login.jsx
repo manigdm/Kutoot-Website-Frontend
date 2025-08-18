@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+
 const Login = () => {
   // State to track which social login button is active
   const [activeButton, setActiveButton] = useState(null);
@@ -25,6 +27,7 @@ const Login = () => {
 
   // Ref for timeout
   const timeoutRef = useRef(null);
+  const router = useRouter();
 
   // Reset all states to initial values
   const resetState = () => {
@@ -44,6 +47,10 @@ const Login = () => {
       timeoutRef.current = null;
     }
   };
+
+  const redirectAfterLogin = () => {
+    router.push("/user"); // redirect to profile page
+  }
 
   const isValidEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.com$/i.test(email);
@@ -83,7 +90,6 @@ const Login = () => {
   const handleChange = (e) => {
     setOtpValue(e.target.value);
     setError("");
-    setSuccessMessage("");
   };
 
   // Step 2: Verify OTP & log in
@@ -107,11 +113,13 @@ const Login = () => {
       if (!res.ok) throw new Error("OTP verification failed");
 
       const data = await res.json();
+      localStorage.setItem("userData", JSON.stringify(data));
       console.log("OTP verified successfully", data);
-      setSuccessMessage("OTP verified successfully!");
+      setSuccessMessage("OTP verified successfully..");
+      setIsLoggedIn(true);
     } catch (err) {
       console.error(err);
-      setError("OTP verification failed");
+      setError("Please enter correct OTP");
     }
   };
 
@@ -135,31 +143,44 @@ const Login = () => {
   };
 
   // Handle Resend OTP click
-  const handleResendOtp = () => {
-    if (inputValue.trim()) {
-      setTimer(300); // Reset timer to 5 minutes
+  const handleResendOtp = async () => {
+    if (!inputValue.trim()) return;
+
+    try {
+      const res = await fetch("https://kutoot.bigome.com/api/logintrigger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier: inputValue }),
+      });
+
+      if (!res.ok) throw new Error("Failed to resend OTP");
+
+      console.log("Resent OTP to:", inputValue);
+
+      // Reset timer to 1 minute
+      setTimer(60);
       setTimerActive(true);
-      // Here you would typically make an API call to resend the OTP
-      console.log("Resending OTP to:", inputValue);
+    } catch (error) {
+      console.error("Error resending OTP:", error);
     }
   };
 
-  // Timer effect
+
+
+  // Handle countdown
   useEffect(() => {
     let interval;
-
     if (timerActive && timer > 0) {
       interval = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1);
+        setTimer((prev) => prev - 1);
       }, 1000);
     } else if (timer === 0) {
       setTimerActive(false);
     }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [timerActive, timer]);
+    return () => clearInterval(interval);
+  }, [timer, timerActive]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -169,6 +190,10 @@ const Login = () => {
       }
     };
   }, []);
+
+  const handleClose = () => {
+    router.back();
+  };
 
   // Format timer to MM:SS
   const formatTime = (seconds) => {
@@ -273,7 +298,7 @@ const Login = () => {
               cursor: "pointer",
               zIndex: 10,
             }}
-            onClick={resetState}
+            onClick={redirectAfterLogin}
           >
             <XIcon />
           </div>
@@ -297,6 +322,11 @@ const Login = () => {
             zIndex: 5,
           }}
         >
+          <div>
+          {successMessage && (
+            <p style={{ color: "green", marginBottom: "8px" }}>{successMessage}</p>
+          )}
+          </div>
           {/* Welcome! text */}
           <div
             style={{
@@ -378,18 +408,20 @@ const Login = () => {
         />
 
         {/* X icon in top-right corner of rectangle */}
-        <div
-          style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            cursor: "pointer",
-            zIndex: 10,
-          }}
-          onClick={resetState}
-        >
-          <XIcon />
-        </div>
+        {!otpSent && (
+          <div
+            style={{
+              position: "absolute",
+              top: "20px",
+              right: "20px",
+              cursor: "pointer",
+              zIndex: 10,
+            }}
+            onClick={handleClose}
+          >
+            <XIcon />
+          </div>
+        )}
       </div>
 
       {/* Left-side content box */}
@@ -414,18 +446,31 @@ const Login = () => {
           zIndex: 5,
         }}
       >
-        {/* Log in with Kutoot */}
-        <div
-          style={{
-            color: "#3B322B",
-            fontFamily: "Poppins",
-            fontSize: "24px",
-            fontWeight: "700",
-            lineHeight: "26px",
-            letterSpacing: "-0.48px",
-          }}
-        >
-          Log in with Kutoot
+        {/* back Button for edit the email */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '10px'
+        }}>
+          {otpSent && (
+            <div onClick={() => setOtpSent(false)} style={{ cursor: 'pointer' }}>
+              <img src="/images/myprofile/gobackk.png" alt="Back" style={{ height: '12px' }} />
+            </div>
+          )}
+          {/* Log in with Kutoot */}
+          <div
+            style={{
+              color: "#3B322B",
+              fontFamily: "Poppins",
+              fontSize: "24px",
+              fontWeight: "700",
+              lineHeight: "26px",
+              letterSpacing: "-0.48px",
+            }}
+          >
+            Log in with Kutoot
+          </div>
         </div>
         {/* --- OTP NOT SENT YET --- */}
         {!otpSent && (
@@ -787,25 +832,25 @@ const Login = () => {
                   alignItems: "center",
                   gap: "10px"
                 }}>
-                <div style={{ color: "#3B322B" }}>
-                  {timerActive ? `OTP in ${timer}s` : ""}
-                </div>
+                  <div style={{ color: "#3B322B" }}>
+                    {timerActive ? `OTP in ${timer}s` : ""}
+                  </div>
 
-                <button
-                  onClick={handleResendOtp}
-                  disabled={timerActive}
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    color: "#EA6B1E",
-                    cursor: timerActive ? "not-allowed" : "pointer",
-                    textDecoration: "underline",
-                    fontWeight: 700,
-                    padding: 0,
-                  }}
-                >
-                  {timerActive ? "Resend" : "Resend OTP"}
-                </button>
+                  <button
+                    onClick={handleResendOtp}
+                    disabled={timerActive}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: timerActive ? "#999999" : "#EA6B1E",
+                      cursor: timerActive ? "not-allowed" : "pointer",
+                      textDecoration: "underline",
+                      fontWeight: 700,
+                      padding: 0,
+                    }}
+                  >
+                    {timerActive ? "Resend" : "Resend OTP"}
+                  </button>
                 </div>
               </div>
 

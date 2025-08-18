@@ -311,7 +311,7 @@ const Campaign = () => {
         </div>
 
         {/* Prize Highlights Section */}
-        <div style={{ marginTop: "80px", marginBottom: "40px" }}>
+        <div style={{ marginTop: "40px", marginBottom: "40px" }}>
           <h2
             style={{
               color: "#3B322B",
@@ -445,7 +445,7 @@ const Campaign = () => {
                 paddingBottom: "80px",
               }}
             >
-              Own the machine that commands the road.
+              {campaignData?.title}
             </p>
 
             {/* Pricing cards section */}
@@ -455,7 +455,7 @@ const Campaign = () => {
                 justifyContent: "center",
                 flexWrap: "wrap",
                 gap: "24px",
-                maxWidth: "1200px",
+                // maxWidth: "1200px",
                 margin: "0 auto",
               }}
             >
@@ -463,14 +463,14 @@ const Campaign = () => {
                 <div
                   key={index}
                   style={{
-                    width: "204px",
+                    // width: "204px",
                     height: "auto",
-                    padding: tier?.point3 !== null ? "4px" : "0",
+                    padding: tier?.point1 !== null ? "4px" : "0",
                     borderRadius: "24px",
-                    background: tier?.point3 !== null
+                    background: tier?.point1 !== null
                       ? "linear-gradient(268deg, #AE1E3F -4.5%, #EBC500 100%)"
                       : "none",
-                    boxShadow: tier?.point3 !== null
+                    boxShadow: tier?.point1 !== null
                       ? "0 0 4px 0 rgba(249, 249, 249, 0.25)"
                       : "none",
                     position: "relative",
@@ -483,7 +483,7 @@ const Campaign = () => {
                 >
                   <div
                     style={{
-                      width: "100%",
+                      // width: "100%",
                       height: "100%",
                       padding: "24px 16px",
                       display: "flex",
@@ -508,13 +508,13 @@ const Campaign = () => {
                         borderRadius: '8px',
                         position: 'absolute',
                         top: '-12px',
-                        width: '170px',
+                        maxWidth: '170px',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         padding: '0px 8px',
                       }}>
-                      {tier?.point3}
+                      {tier?.point1}
                     </div>
                     {/* Icon */}
                     <img

@@ -32,15 +32,17 @@ const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   // const banner = homepageData?.data?.banners[0] || {};
-  
-   const banner = campaigns?.[0] || {};
+  const bannerCampaign = campaigns?.find(
+  (c) => c?.promotion === "Top-Banner"
+);
+   const banner = bannerCampaign || {};
 
   const lines = [
     banner?.title1 || "Your ₹5 Crore Villa — Only on Kutoot!",
     banner?.title2 || "Luxury living at Rs. 99 Lakh on Kutoot Now!",
   ];
 
-  // console.log('Banner Data:', products);
+// console.log('banner', banner);
 
 
   const handleVideoToggle = () => {
@@ -161,7 +163,7 @@ const Hero = () => {
         </div>
       </section>
       <div className="promo-section-container">
-        <PromoSection baseplans={baseplans} />
+        <PromoSection baseplans={campaigns} />
       </div>
       <div className="exclusive-campaign-container">
         <ExclusiveCampaign campaigns={campaigns} />
