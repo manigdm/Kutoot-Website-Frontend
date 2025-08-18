@@ -165,7 +165,7 @@ const PromoSection = ({ baseplans }) => {
                       <img
                         src={slide.startsWith("http") ? slide : `${process.env.NEXT_PUBLIC_BASE_URL}${slide}`}
                         alt={`slide-${i}`}
-                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                        style={{ objectFit: "cover", width: "100%", height: "400px" }}
                       />
                       <div className="property-plan">
                         <button className="active">Gallery</button>
