@@ -58,7 +58,7 @@ export function ExclusiveCampaign({ campaigns }) {
           {/* Center Column: Featured */}
           <div className="lottery-column middle-column">
             {middleColumn.map((c, index) => (
-              <div>
+              <div style={{ position: "relative", display: "inline-block" }}>
                 {c?.baseplans?.slice(0, 1).map((bp, bpIndex) => (
                   <LotteryCard
                     key={c.id || `middle-${index}`}
@@ -78,6 +78,10 @@ export function ExclusiveCampaign({ campaigns }) {
                     cardIndex={2 + index + 1}
                   />
                 ))}
+                <button className="lucky-draw__button" style={{ position: "absolute", right: "20px", bottom: "100px", zIndex: "9" }}>
+                  <FaArrowRight className="lucky-draw__button-icon" />
+                  Buy Now
+                </button>
               </div>
             ))}
           </div>
