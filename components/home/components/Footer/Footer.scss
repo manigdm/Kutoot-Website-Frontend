@@ -1,4 +1,4 @@
-$footer-bg: #3a312c;
+$footer-bg: #26201B;
 $text-color: #cfcfcf;
 $title-color: #ffffff;
 $link-hover-color: #f9fafb;
@@ -120,9 +120,9 @@ $primary-font: "Poppins";
     display: inline-block;
     margin-bottom: 12px;
 
-    &:hover {
-      text-decoration: underline;
-    }
+    // &:hover {
+    //   text-decoration: underline;
+    // }
   }
 
   .social-icons {

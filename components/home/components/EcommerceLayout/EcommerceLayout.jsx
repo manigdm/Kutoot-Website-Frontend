@@ -99,7 +99,7 @@ const featuredBannerData = [
   },
 ];
 
-export const EcommerceLayout = ({products,banners}) => {
+export const EcommerceLayout = ({ products, banners }) => {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
@@ -118,10 +118,13 @@ export const EcommerceLayout = ({products,banners}) => {
             <h1 className="main-title">Best Products</h1>
             <p className="main-subtitle">ECOMMERCE</p>
           </div>
-          <button className="ecommerce-layout__button">
-            <FaArrowRight className="ecommerce-layout__button-icon" />
-            Shop Now
-          </button>
+          <a href="https://kutoot-frontend-nine.vercel.app/">
+            <button className="featured__button">
+              <FaArrowRight className="featured__button-icon" />
+              Shop Now
+            </button>
+          </a>
+          {/* hiii */}
         </section>
         <section className="products-section">
           <section className="products-section">
@@ -139,15 +142,15 @@ export const EcommerceLayout = ({products,banners}) => {
             >
               {products?.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <ProductCard 
-                  // {...product}
-                    title= {product.name}
+                  <ProductCard
+                    // {...product}
+                    title={product.name}
                     subtitle={product.short_name}
-                    image ={`${process.env.NEXT_PUBLIC_BASE_URL}${product.thumb_image}`}
-                    buttonText="Shop Now"  
+                    image={`${process.env.NEXT_PUBLIC_BASE_URL}${product.thumb_image}`}
+                    buttonText="Shop Now"
                     buttonVariant="orange"
                     backgroundColor="bg-gradient-cyan"
-                   />
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -165,20 +168,34 @@ export const EcommerceLayout = ({products,banners}) => {
             {banners.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="featured-banner">
+                  {/* Banner Image */}
+                  <div className="banner-image">
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`}
+                      alt={item.image}
+
+                    />
+                  </div>
+
+                  {/* Overlay Content */}
                   <div className="banner-content">
-                    <p>{item.title}</p>
-                    <h2>{item.title}</h2>
-                    <div className="mt-3">
-                      <button className="featured__button">
-                        <FaArrowRight className="featured__button-icon" />
-                        Shop Now
-                      </button>
+
+                    <div style={{ marginTop: "146px", marginLeft: "20px" }}>
+                      <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="featured__button">
+                          <FaArrowRight className="featured__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
                     </div>
                   </div>
-                  <div className="banner-image">
-                    <img src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`} alt={item.image} />
-                  </div>
                 </div>
+
+                {/* Navigation Arrows */}
                 <div className="banner-arrows">
                   <div className="prev-arrow">
                     <MdArrowBackIos onClick={handlePrev} className="arrow" />
@@ -191,6 +208,7 @@ export const EcommerceLayout = ({products,banners}) => {
             ))}
           </Swiper>
         </section>
+
         <section className="news-section">
           <div className="news-header">
             <h2 className="news-title">Kutoot Newsroom</h2>

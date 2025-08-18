@@ -111,10 +111,13 @@ export default function UpcomingCampaigns({campaigns}) {
           dangerouslySetInnerHTML={{ __html: campaign.description }}
         />
               </div>
-              <button className="campaign-card__button">
-                <FaArrowRight className="campaign-card__button-icon" />
-                Enter Now
-              </button>
+             
+            <a href="/campaign">
+  <button className="campaign-card__button">
+    <FaArrowRight className="campaign-card__button-icon" />
+    Enter Now
+  </button>
+</a>
             </div>
           </SwiperSlide>
         ))}

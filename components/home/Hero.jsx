@@ -145,10 +145,14 @@ const Hero = () => {
               <Image src={trusted_by_hindu} alt="trusted by hindu" />
             </div> */}
             <div className="d-flex flex-row gap-2 justify-content-center align-items-center mt-6">
-              <button className="hero__button">
+             
+
+                      <a href="/campaign">
+  <button className="hero__button">
                 <FaArrowRight className="hero__button-icon" />
                 Enter Now
               </button>
+</a>
               <LockButton tooltipText="Unlocks once the goal is reached" />
             </div>
           </div>

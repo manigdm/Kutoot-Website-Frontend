@@ -6,17 +6,25 @@
   overflow: hidden;
   text-align: center;
 
-  &__bg {
-    background: url("/images/landingpage/upcoming-villa-bg.jpg") center/cover
-      no-repeat;
-    filter: blur(2px) brightness(0.6);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-  }
+&__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 60px;
+  background: 
+    linear-gradient(
+      0deg, 
+      rgba(0, 0, 0, 0.4) 0%, 
+      rgba(0, 0, 0, 0.4) 100%
+    ), 
+    url("/images/landingpage/upcoming-villa-bg.jpg") lightgray 0px -47.656px / 100% 152.054% no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 
   &__title {
     position: relative;
@@ -25,7 +33,6 @@
     font-weight: 900;
     font-family: zurich extra black;
     color: #fff;
-    margin-bottom: 0.3rem;
     letter-spacing: -2%;
   }
 
@@ -47,7 +54,14 @@
 }
 
 .campaign-card {
-  background: linear-gradient(to right, #2e2b31, #474044);
+  background: 
+    linear-gradient(
+      0deg, 
+      rgba(0, 0, 0, 0.1) 0%, 
+      rgba(0, 0, 0, 0.1) 100%
+    ), 
+    rgba(101, 101, 101, 0.15);
+  backdrop-filter: blur(35px);
   border-radius: 80px;
   padding: 2rem 48px;
   font-family: poppins;
@@ -57,7 +71,8 @@
   justify-content: space-between;
   max-width: 1000px;
   margin: auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+ box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
 
   &__button {
     font-size: 18px;
@@ -102,6 +117,7 @@
       font-size: 1rem;
       line-height: 1.2;
       opacity: 1;
+      color: white;
     }
   }
 

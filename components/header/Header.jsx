@@ -60,8 +60,8 @@ const Header = () => {
         <div className="header__right">
           <nav className="header__nav">
             <a href="#">Campaigns</a>
-            <a href="#">Winners</a>
-            <a href="#">My Coupons</a>
+            {/* <a href="#">Winners</a>
+            <a href="#">My Coupons</a> */}
           </nav>
           <button className="kutoot--header__button">
             <FaArrowRight className="kutoot--header__button-icon" />
