@@ -43,22 +43,34 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <button className="kutoot--header__button">
+          {/* <button className="kutoot--header__button">
             <FaArrowRight className="kutoot--header__button-icon" />
             Enter Now
-          </button>
+          </button> */}
+
+          <a href="/campaign" className="kutoot--header__button">
+            <FaArrowRight className="kutoot--header__button-icon" />
+            Enter Now
+          </a>
+
         </div>
 
         <div className="header__right">
           <nav className="header__nav">
-            <a href="#">Campaigns</a>
+            <a href="/campaign">Campaigns</a>
             {/* <a href="#">Winners</a>
             <a href="#">My Coupons</a> */}
           </nav>
-          <button className="kutoot--header__button">
-            <FaArrowRight className="kutoot--header__button-icon" />
-            Shop Now
-          </button>
+          <a
+            href="https://kutoot-frontend-nine.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="kutoot--header__button">
+              <FaArrowRight className="kutoot--header__button-icon" />
+              Shop Now
+            </button>
+          </a>
           <button className="header__button outline" onClick={() => router.push("/login")}>Log in</button>
           <div className="header__icon">
             <FaShareAlt />

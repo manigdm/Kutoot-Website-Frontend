@@ -46,7 +46,7 @@
     top: 50%;
     left: 50%;
     width: 200px;
-    height: 250px;
+    height: 240px;
     background: url("/images/landingpage/kutoot-logo.png") no-repeat center
       center;
     background-size: contain;
@@ -177,9 +177,11 @@
   border-radius: 32px;
   display: flex;
   align-items: center;
+  text-decoration: none; // in case it's an <a>
 
   &:hover {
     background: linear-gradient(to right, #f26a1b, #8e0038);
+    color: #ffffff; // 👈 keep text white
   }
 
   &-icon {
@@ -191,8 +193,10 @@
 
   &:hover .kutoot--header__button-icon {
     transform: rotate(0deg);
+    color: #ffffff; // 👈 ensure icon also stays white
   }
 }
+
 
 .logo-reveal-container {
   display: flex;

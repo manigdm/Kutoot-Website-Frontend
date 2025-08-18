@@ -78,23 +78,28 @@ const charityPartners = [
 
 const PartnersSection = () => {
   return (
-    <div className="partners-container">
-      {/* 👈 left → right */}
-      <PartnerCarousel
-        title="Our Partners"
-        backgroundColor="#b5233e"
-        partnerLogos={partners}
-        reverse={false}
-      />
+ <div
+  className="partners-container"
+  id="charity-partners"
+  style={{ scrollMarginTop: "100px" }}
+>
+  {/* 👈 left → right */}
+  <PartnerCarousel
+    title="Our Partners"
+    backgroundColor="#b5233e"
+    partnerLogos={partners}
+    reverse={false}
+  />
 
-      {/* 👈 right → left */}
-      <PartnerCarousel
-        title="Our Charity Partners"
-        backgroundColor="#362f2a"
-        partnerLogos={charityPartners}
-        reverse={true}
-      />
-    </div>
+  {/* 👈 right → left */}
+  <PartnerCarousel
+    title="Our Charity Partners"
+    backgroundColor="#362f2a"
+    partnerLogos={charityPartners}
+    reverse={true}
+  />
+</div>
+
   );
 };
 
