@@ -371,12 +371,12 @@ export const EcommerceLayout = ({ products, banners }) => {
             </section>
           </div>
 
-          <div className="news-footer">
+          {/* <div className="news-footer">
             <button className="news-footer__button">
               <FaArrowRight className="news-footer__button-icon" />
               View more
             </button>
-          </div>
+          </div> */}
         </section>
       </div>
     </div>
