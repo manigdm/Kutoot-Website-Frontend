@@ -1,41 +1,73 @@
-import AboutUs from "@/components/about/AboutUs";
-import Exhaustive from "@/components/about/Exhaustive";
-import Banner from "@/components/common/Banner";
-import Testimonial from "@/components/common/Testimonial";
-import Team from "@/components/team/Team";
-import Image from "next/image";
-import inner_hero_shape_2 from "/public/images/elements/inner-hero-shape-2.png";
 
-const page = () => {
+"use client"
+import AboutUs from '@/components/about/AboutUs';
+import React, { useState } from 'react';
+import { FaShareAlt } from 'react-icons/fa';
+// NOTE: I am not importing Link from next/link because the page is self-contained.
+// If you add internal navigation, you'll want to re-add it.
+
+// This is the complete Privacy Policy component, now living directly inside your page file.
+const PrivacyPolicy = () => {
+  const [showShareTooltip, setShowShareTooltip] = useState(false);
+
+  const handleShareClick = () => {
+    // In a real application, this would open a native share dialog or a custom modal.
+    // For this example, we'll toggle a simple tooltip.
+    setShowShareTooltip(!showShareTooltip);
+    if (!showShareTooltip) {
+      setTimeout(() => setShowShareTooltip(false), 2000);
+    }
+  };
+
+
+
   return (
-    <>
-      {/* Banner section here */}
-      <div className="inner-hero-section style--four">
-        <div className="bg-shape">
-          <Image src={inner_hero_shape_2} alt="inner hero shape 2" />
-        </div>
-        <Banner
-          breadcrumb={[
-            ["Home", "/"],
-            ["Pages", "/"],
-            ["About Us", "/"],
-          ]}
-        />
+    <div className="font-poppins text-black ">
+      <div className="bg-white shadow-lg rounded-xl max-w-4xl mx-auto p-8 lg:p-12 my-10 relative">
+        {/* Header */}
+        <header
+          style={{
+            display: "flex",
+            flexDirection: "column",  // stack children vertically
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+            borderBottom: "1px solid #e5e7eb",
+            paddingBottom: "1rem",
+            paddingTop: "100px"
+          }}
+        >
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-black">
+            Privacy Policy
+          </h1>
+          <p className="italic text-black text-sm mt-2">
+            Effective Date: July 11, 2025 | Version: 1.0 | Last Reviewed: July 18, 2025
+          </p>
+        </header>
+
+
+
+
+     
+
+        {/* Footer */}
+        <footer className="text-center text-xs text-black pt-6 border-t mt-8 mb-8">
+          <p className='mb-10'>Kutoot Innovations Pvt. Ltd. © 2025. All Rights Reserved.</p>
+        </footer>
+
       </div>
-
-      {/* About Us section here */}
-      <AboutUs />
-
-      {/* Exhaustive section here*/}
-      <Exhaustive />
-
-      {/* Testimonial section here */}
-      <Testimonial />
-
-      {/* Team section here */}
-      <Team />
-    </>
+    </div>
   );
 };
 
-export default page;
+// This is the default export that Next.js uses to create the page.
+const Page = () => {
+  return (
+    <AboutUs />
+  );
+};
+
+export default Page;
+
+
+
