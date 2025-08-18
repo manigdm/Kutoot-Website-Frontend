@@ -103,12 +103,14 @@ export const EcommerceLayout = ({ products, banners }) => {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
-    swiperRef.current?.slidePrev();
+    if (swiperRef.current) swiperRef.current.slidePrev();
   };
 
   const handleNext = () => {
-    swiperRef.current?.slideNext();
+    if (swiperRef.current) swiperRef.current.slideNext();
   };
+
+
 
   return (
     <div className="ecommerce-layout">
@@ -127,35 +129,157 @@ export const EcommerceLayout = ({ products, banners }) => {
           {/* hiii */}
         </section>
         <section className="products-section">
-          <section className="products-section">
-            <Swiper
-              className="products-swiper"
-              modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={24}
-              slidesPerView={3}
-              pagination={{ clickable: true }}
-              autoplay={{
-                delay: 1000,
-                disableOnInteraction: false,
-              }}
-              loop={true}
-            >
-              {products?.map((product, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard
-                    // {...product}
-                    title={product.name}
-                    subtitle={product.short_name}
-                    image={`${process.env.NEXT_PUBLIC_BASE_URL}${product.thumb_image}`}
-                    buttonText="Shop Now"
-                    buttonVariant="orange"
-                    backgroundColor="bg-gradient-cyan"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </section>
+          <Swiper
+            className="products-swiper"
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={3} // 👈 3 banners visible at a time
+            pagination={{ clickable: true }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+          >
+            <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b1.png"
+                  alt="Headphones Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+
+                  <a href="https://kutoot-frontend-nine.vercel.app/" target="_blank">
+                    <button className="product-banner__button">
+                      <FaArrowRight className="product-banner__button-icon" />
+                      Shop Now
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b2.png"
+                  alt="Smartwatch Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+   <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="product-banner__button">
+                          <FaArrowRight className="product-banner__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b3.png"
+                  alt="Handbag Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+   <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="product-banner__button">
+                          <FaArrowRight className="product-banner__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
+                </div>
+              </div>
+            </SwiperSlide>
+   <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b4.png"
+                  alt="Headphones Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+
+                  <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="product-banner__button">
+                          <FaArrowRight className="product-banner__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b5.png"
+                  alt="Smartwatch Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+
+                  <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="product-banner__button">
+                          <FaArrowRight className="product-banner__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="product-banner">
+                <img
+                  src="/images/b6.png"
+                  alt="Handbag Banner"
+                  className="product-banner__image"
+                />
+
+                <div className="product-banner__content">
+
+                 <a
+                        href="https://kutoot-frontend-nine.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="product-banner__button">
+                          <FaArrowRight className="product-banner__button-icon" />
+                          Shop Now
+                        </button>
+                      </a>
+                </div>
+              </div>
+            </SwiperSlide>
+          </Swiper>
         </section>
+
         <section className="featured-section">
           <Swiper
             modules={[Autoplay]}
@@ -168,18 +292,14 @@ export const EcommerceLayout = ({ products, banners }) => {
             {banners.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="featured-banner">
-                  {/* Banner Image */}
                   <div className="banner-image">
                     <img
                       src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${item.image_path}`}
                       alt={item.image}
-
                     />
                   </div>
 
-                  {/* Overlay Content */}
                   <div className="banner-content">
-
                     <div style={{ marginTop: "146px", marginLeft: "20px" }}>
                       <a
                         href="https://kutoot-frontend-nine.vercel.app/"
@@ -194,20 +314,21 @@ export const EcommerceLayout = ({ products, banners }) => {
                     </div>
                   </div>
                 </div>
-
-                {/* Navigation Arrows */}
-                <div className="banner-arrows">
-                  <div className="prev-arrow">
-                    <MdArrowBackIos onClick={handlePrev} className="arrow" />
-                  </div>
-                  <div className="next-arrow">
-                    <MdArrowForwardIos onClick={handleNext} className="arrow" />
-                  </div>
-                </div>
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* Arrows below image and centered */}
+          <div className="banner-arrows">
+            <div className="prev-arrow" onClick={handlePrev}>
+              <MdArrowBackIos className="arrow" />
+            </div>
+            <div className="next-arrow" onClick={handleNext}>
+              <MdArrowForwardIos className="arrow" />
+            </div>
+          </div>
         </section>
+
 
         <section className="news-section">
           <div className="news-header">
