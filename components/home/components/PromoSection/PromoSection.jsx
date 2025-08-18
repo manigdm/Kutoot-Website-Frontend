@@ -169,8 +169,8 @@ const propertyDescription = slides[0]?.description;
       />
                       <div className="property-plan">
                         <button className="active">Gallery</button>
-                        <button>Floor plan</button>
-                        <button>Info</button>
+                        <button className="active">Floor plan</button>
+                        <button className="active">Info</button>
                       </div>
                       <div className="property-details-overlay d-flex gap-4">
                         <div className="d-flex justify-content-between align-items-center gap-2">
