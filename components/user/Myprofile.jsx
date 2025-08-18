@@ -47,6 +47,7 @@ const Myprofile = () => {
   const [cities, setCities] = useState([]);
   const [formErrors, setFormErrors] = useState({});
   const storedUser = JSON.parse(localStorage.getItem("userData"));
+  const [fileError, setFileError] = useState("");
   const token = storedUser?.access_token;
 
   // State for join date (simulating user join date)
@@ -97,8 +98,8 @@ const Myprofile = () => {
         });
 
         setCountries(data.countries || []);
-        setStates(data.states || []);
-        setCities(data.cities || []);
+        setStates(Array.isArray(data.states) ? data.states : []);
+        setCities(Array.isArray(data.cities) ? data.cities : []);
       } catch (err) {
         console.error("Error fetching profile:", err);
       }
@@ -108,6 +109,41 @@ const Myprofile = () => {
       fetchProfile();
     }
   }, [token]);
+
+  // 1️⃣ Fetch all states on component mount
+  useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        const res = await axios.get(
+          "https://kutoot.bigome.com/api/user/state-by-country/1",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setStates(Array.isArray(res.data.states) ? res.data.states : []);
+      } catch (err) {
+        console.error("Error fetching states:", err);
+      }
+    };
+
+    if (token) fetchStates();
+  }, [token]);
+
+  // 2️⃣ Handle state selection
+  const handleStateChange = async (e) => {
+    const stateId = e.target.value;
+    setFormData({ ...formData, state_id: stateId, city_id: "" }); // reset city
+
+    try {
+      const res = await axios.get(
+        `https://kutoot.bigome.com/api/user/city-by-state/${stateId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setCities(Array.isArray(res.data.cities) ? res.data.cities : []);
+    } catch (err) {
+      console.error("Error fetching cities:", err);
+      setCities([]);
+    }
+  };
 
   // Tab components
   const DashboardTab = () => (
@@ -122,7 +158,7 @@ const Myprofile = () => {
     </div>
   );
   const CouponsTab = () => (
-   <Coupons />
+    <Coupons />
   );
   const CampaignsTab = () => (
     <div>
@@ -184,7 +220,6 @@ const Myprofile = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data.notification);
         setLogoutMsg(response.data.notification);
         localStorage.removeItem("userData");
       }
@@ -1228,15 +1263,34 @@ const Myprofile = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type.startsWith("image/")) {
-      setFile(selectedFile);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setPreviewImage(event.target.result);
-        setShowCropModal(true);
-      };
-      reader.readAsDataURL(selectedFile);
+
+    if (!selectedFile) return;
+
+    // Allowed formats
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    // Validate type
+    if (!allowedTypes.includes(selectedFile.type)) {
+      setFileError("The image must be a file of type: jpg, jpeg, png.");
+      return;
     }
+
+    // Validate size (2MB = 2 * 1024 * 1024)
+    if (selectedFile.size > 2 * 1024 * 1024) {
+      setFileError("The image size must not be more than 2MB.");
+      return;
+    }
+
+    // Clear error if valid
+    setFileError("");
+    setFile(selectedFile);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPreviewImage(event.target.result);
+      setShowCropModal(true);
+    };
+    reader.readAsDataURL(selectedFile);
   };
 
   const handleUploadAreaClick = () => {
@@ -1419,7 +1473,6 @@ const Myprofile = () => {
   const handleSaveChanges = async () => {
     if (validateForm()) {
       console.log("Form data ready to submit:", formData);
-      // Submit your data here
     }
 
     try {
@@ -1447,7 +1500,7 @@ const Myprofile = () => {
       };
 
       const res = await axios.post(
-        `https://kutoot.bigome.com/api/user/v1/update-profile`,
+        `https://kutoot.bigome.com/api/user/v2/update-profile`,
         payload,
         {
           headers: {
@@ -1462,10 +1515,16 @@ const Myprofile = () => {
         alert("Profile updated successfully!");
         setViewMode("saved");
       } else {
-        alert("Failed to update profile. " + (res.data.message || ""));
+        alert("Failed to update profile..");
+        // + (res.data.message || "")
       }
 
     } catch (err) {
+      if (err.response && err.response.status === 422) {
+        alert(err.response.data.message || "Validation error")
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
       console.error("Error updating profile:", err);
     }
   };
@@ -1509,14 +1568,12 @@ const Myprofile = () => {
 
 
   const handleRemoveImage = () => {
-    console.log("Removing profile image");
     setCroppedImage(null);
     setFile(null);
     setPreviewImage(null);
   };
 
   const handleChangeImage = () => {
-    console.log("Changing profile image");
     handleUploadAreaClick();
   };
 
@@ -1531,7 +1588,7 @@ const Myprofile = () => {
   // First frame: Edit form
   const renderEditView = () => (
     <>
-      <h3 style={styles.profilePictureText}>Profile picture</h3>
+      <h3 style={styles.profilePictureText}>Profile picture*</h3>
       <div
         className="upload-area"
         style={{
@@ -1604,6 +1661,11 @@ const Myprofile = () => {
           </>
         )}
       </div>
+      {fileError && (
+        <div style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+          {fileError}
+        </div>
+      )}
       <div style={styles.uploadLine}></div>
       <h3 style={styles.personalInfoText}>Personal information</h3>
       <div style={styles.inputContainer}>
@@ -1711,34 +1773,33 @@ const Myprofile = () => {
       </div>
       <div style={styles.inputContainer}>
         <div>
-          <label style={styles.label}>City*</label>
-          <select
-            style={styles.dropdown}
-            value={formData.city_id}
-            onChange={(e) => handleInputChange("city_id", e.target.value)}
-          >
-            {formErrors.city_id && (
-              <div style={{ color: "red", fontSize: "14px" }}>{formErrors.city_id}</div>
-            )}
-            <option value="" disabled hidden>Select city</option>
-            {cities.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
-        </div>
-        <div>
           <label style={styles.label}>State*</label>
           <select
             style={styles.dropdown}
             value={formData.state_id}
-            onChange={(e) => handleInputChange("state_id", e.target.value)}
+            onChange={handleStateChange}
           >
-            {formErrors.state_id && (
-              <div style={{ color: "red", fontSize: "14px" }}>{formErrors.state_id}</div>
-            )}
             <option value="" disabled hidden>Select state</option>
             {states.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}</option>
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label style={styles.label}>City*</label>
+          <select
+            style={styles.dropdown}
+            value={formData.city_id}
+            onChange={(e) => setFormData({ ...formData, city_id: e.target.value })}
+            disabled={!formData.state_id}
+          >
+            <option value="" disabled hidden>Select city</option>
+            {cities.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
             ))}
           </select>
         </div>

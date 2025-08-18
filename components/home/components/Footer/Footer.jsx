@@ -107,7 +107,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://www.instagram.com/kutootindia"
+              href="https://www.instagram.com/kutoot_india/?igsh=dGNoa3F3bnJ3NGMz&utm_source=qr#"
               target="_blank"
               rel="noopener noreferrer"
             >

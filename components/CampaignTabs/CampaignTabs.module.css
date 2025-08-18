@@ -84,9 +84,10 @@
     font-weight: 900;
     font-style: Regular;
     font-size: 28px;
-    bottom: 10px;
+    bottom: 58px;
     /* left: 3%; */
     padding: 0px 20px;
+     font-family: "Zurich Extra Black, sans-serif";
   }
   .scrollbar_fix {
     scrollbar-width: none;
