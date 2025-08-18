@@ -124,6 +124,7 @@ export const EcommerceLayout = ({ products, banners }) => {
               Shop Now
             </button>
           </a>
+          {/* hiii */}
         </section>
         <section className="products-section">
           <section className="products-section">
