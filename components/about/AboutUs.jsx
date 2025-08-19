@@ -66,18 +66,18 @@ const AboutUs = () => {
             those in need, proving that every coin spent tells a bigger story.</p>
           <p className="mt-4"><strong>Why Choose Kutoot?</strong></p>
           <ul>
-  <li>No Skills Required: Kutoot offers a straightforward and enjoyable shopping experience
-with no need for special skills or teams.</li>
-  <li>Infinite Surprises: Beyond just shopping, every interaction on our platform holds the
-potential for delightful surprises.</li>
-  <li>Community Impact: By choosing Kutoot, you help drive social change and support
-community development.</li>
-</ul>
-<p className="mt-4">✨ Discover a world where shopping is more than just a transaction. It's about surprises,
-rewards, and making a difference — all on a single platform. Welcome to Kutoot, where every
-coin counts and every experience is enriched with possibilities.
+            <li>No Skills Required: Kutoot offers a straightforward and enjoyable shopping experience
+              with no need for special skills or teams.</li>
+            <li>Infinite Surprises: Beyond just shopping, every interaction on our platform holds the
+              potential for delightful surprises.</li>
+            <li>Community Impact: By choosing Kutoot, you help drive social change and support
+              community development.</li>
+          </ul>
+          <p className="mt-4">✨ Discover a world where shopping is more than just a transaction. It's about surprises,
+            rewards, and making a difference — all on a single platform. Welcome to Kutoot, where every
+            coin counts and every experience is enriched with possibilities.
 
-</p>
+          </p>
         </div>
 
 

@@ -102,10 +102,15 @@ const LuckyDrawSlider = ({ campaigns }) => {
             <button className={`draw-button ${item.locked ? "locked" : ""}`}>
               Draw Date
             </button>
-            <button className="lucky-draw__button">
+         
+
+
+                <a href="/campaign" >
+                         <button className="lucky-draw__button">
               <FaArrowRight className="lucky-draw__button-icon" />
               Buy Now
             </button>
+                      </a>
           </div>
         </div>
       </div>

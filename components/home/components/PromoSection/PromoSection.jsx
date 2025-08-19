@@ -235,8 +235,23 @@ const PromoSection = ({ baseplans }) => {
 
       <footer className="deadline-notice">
         <p>
-          The earlier you buy, the luckier you get
-          <div>– before July 30</div>
+          The earlier you buy, the luckier you get<br/>
+         <span
+  style={{
+    fontFamily: "Zurich Extra Black",
+    fontWeight: 900,
+    fontStyle: "normal", // "Regular" is just normal
+    fontSize: "44px",
+    lineHeight: "48px",
+    letterSpacing: "-0.02em", // -2%
+    textAlign: "center",
+    color: "#3B322B",
+    display: "block" // ensures text-align works properly
+  }}
+>
+  – before Sept 30
+</span>
+
         </p>
       </footer>
       <div className="feature-cards">

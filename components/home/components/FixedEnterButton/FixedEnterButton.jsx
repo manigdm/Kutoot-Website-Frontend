@@ -6,31 +6,31 @@ import { BsQuestionLg } from "react-icons/bs";
 const FixedEnterButton = () => {
   return (
     <>
-    
 
 
 
-              <a href="/campaign">
+
+      <a href="/campaign">
         <button className="fixed-enter-button" aria-label="Enter Now">
-        <FiLogIn className="enter-icon" />
-        <span className="enter-text">Enter Now</span>
-      </button>
+          <FiLogIn className="enter-icon" />
+          <span className="enter-text">Enter Now</span>
+        </button>
       </a>
-   <div
-  className="question-mark"
-  onClick={() => {
-    const section = document.getElementById("how-kutoot-works");
-    if (section) {
-      window.scrollTo({
-        top: section.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  }}
-  style={{ cursor: "pointer" }}
->
-  <BsQuestionLg />
-</div>
+      <div
+        className="question-mark"
+        onClick={() => {
+          const section = document.getElementById("how-kutoot-works");
+          if (section) {
+            window.scrollTo({
+              top: section.offsetTop,
+              behavior: "smooth",
+            });
+          }
+        }}
+        style={{ cursor: "pointer" }}
+      >
+        <BsQuestionLg />
+      </div>
     </>
   );
 };

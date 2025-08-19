@@ -81,7 +81,7 @@ export function ExclusiveCampaign({ campaigns }) {
                
 
                    <a href="/campaign">
-            <button className="lucky-draw__button" style={{ position: "absolute", right: "20px", bottom: "100px", zIndex: "9" }}>
+            <button className="lucky-draw__button" style={{ position: "absolute", right: "20px", bottom: "122px", zIndex: "9" }}>
                   <FaArrowRight className="lucky-draw__button-icon" />
                   Buy Now
                 </button>

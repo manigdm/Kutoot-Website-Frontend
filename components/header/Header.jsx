@@ -69,10 +69,19 @@ const Header = () => {
             <a href="/campaign">Campaigns</a>
           </nav>
 
-          <button className="kutoot--header__button">
-            <FaArrowRight className="kutoot--header__button-icon" />
-            Shop Now
-          </button>
+
+
+
+          <a
+            href="https://kutoot-frontend-nine.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="kutoot--header__button">
+              <FaArrowRight className="kutoot--header__button-icon" />
+              Shop Now
+            </button>
+          </a>
 
           {user ? (
             <div style={{ marginLeft: "1rem" }}>
@@ -106,22 +115,22 @@ const Header = () => {
 
       {/* 📌 Popup (toast style) */}
       {copied && (
-       <div
-    style={{
-      position: "fixed",
-      top: "20%",
-      left: "80%",
-      transform: "translate(-50%, -50%)",
-      background: "#333",
-      color: "white",
-      padding: "15px 25px",
-      borderRadius: "10px",
-      fontSize: "16px",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-      zIndex: 1000,
-      animation: "fadeInOut 2.5s ease",
-    }}
-  >
+        <div
+          style={{
+            position: "fixed",
+            top: "20%",
+            left: "80%",
+            transform: "translate(-50%, -50%)",
+            background: "#333",
+            color: "white",
+            padding: "15px 25px",
+            borderRadius: "10px",
+            fontSize: "16px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            zIndex: 1000,
+            animation: "fadeInOut 2.5s ease",
+          }}
+        >
           ✅ Link copied: kutoot.com
         </div>
       )}
