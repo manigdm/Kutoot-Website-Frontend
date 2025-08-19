@@ -2,6 +2,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
 import Coupons from "@/components/user/coupons";
+import Mycampaigns from "./Mycampaigns";
 
 
 const Myprofile = () => {
@@ -142,14 +143,7 @@ const Myprofile = () => {
     <Coupons />
   );
   const CampaignsTab = () => (
-    <div>
-      <h2
-        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
-      >
-        My Campaigns
-      </h2>
-      <p>my campaigns</p>
-    </div>
+    <Mycampaigns/>
   );
   const OrdersTab = () => (
     <div>
