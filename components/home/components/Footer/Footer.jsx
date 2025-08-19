@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import "./Footer.scss";
 import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa";

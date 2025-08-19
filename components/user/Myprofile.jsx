@@ -2,7 +2,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
 import Coupons from "@/components/user/coupons";
-
+import Mycampaigns from "@/components/user/Mycampaigns";
 
 const Myprofile = () => {
   const [file, setFile] = useState(null);
@@ -25,7 +25,6 @@ const Myprofile = () => {
     height: 0,
   });
   const [logoutMsg, setLogoutMsg] = useState("");
-
   // State for form data
   const [formData, setFormData] = useState({
     identifier: "",
@@ -48,39 +47,29 @@ const Myprofile = () => {
   const [formErrors, setFormErrors] = useState({});
   const storedUser = JSON.parse(localStorage.getItem("userData"));
   const token = storedUser?.access_token;
-
   // State for join date (simulating user join date)
   const [joinDate, setJoinDate] = useState("2nd May 2025");
-
   // State for view management: 'edit', 'saved', 'profile'
   const [viewMode, setViewMode] = useState("edit");
-
   // State for deactivate modal
   const [showDeactivateModal, setShowDeactivateModal] = useState(false);
-
   // State for logout modal
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-
   // State for logout success modal
   const [showLogoutSuccessModal, setShowLogoutSuccessModal] = useState(false);
-
   // State for active tab
   const [activeTab, setActiveTab] = useState("profile");
-
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const fileInputRef = useRef(null);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const res = await axios.get(
           `https://kutoot.bigome.com/api/user/my-profile?token=${token}`
         );
-
         const data = res.data;
         console.log("data related API response", data);
-
         setFormData({
           identifier: data?.personInfo?.email || "",
           name: data?.personInfo?.name || "",
@@ -95,7 +84,6 @@ const Myprofile = () => {
           phone: data?.personInfo?.phone || "",
           image: data?.personInfo?.image || data?.defaultProfile?.image || "",
         });
-
         setCountries(data.countries || []);
         setStates(data.states || []);
         setCities(data.cities || []);
@@ -103,36 +91,21 @@ const Myprofile = () => {
         console.error("Error fetching profile:", err);
       }
     };
-
     if (token) {
       fetchProfile();
     }
   }, [token]);
-
   // Tab components
   const DashboardTab = () => (
     <div>
-      <h2
-        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
-      >
-        My Dashboard
-      </h2>
-      <p style={{ marginBottom: "15px" }}>my dashboard</p>
-
+      my dashboard
     </div>
   );
   const CouponsTab = () => (
    <Coupons />
   );
   const CampaignsTab = () => (
-    <div>
-      <h2
-        style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}
-      >
-        My Campaigns
-      </h2>
-      <p>my campaigns</p>
-    </div>
+    <Mycampaigns />
   );
   const OrdersTab = () => (
     <div>
@@ -154,7 +127,6 @@ const Myprofile = () => {
       <p>my invoices</p>
     </div>
   );
-
   // Logout handlers
   const handleLogoutClick = () => {
     setShowLogoutModal(true);
@@ -166,14 +138,11 @@ const Myprofile = () => {
     // Add logout logic here
     try {
       const storedUser = JSON.parse(localStorage.getItem("userData"));
-
       if (!storedUser || !storedUser.access_token) {
         console.error("No user token found");
         return;
       }
-
       const token = storedUser.access_token;
-
       const response = await axios.get(
         "https://kutoot.bigome.com/api/user/logout",
         {
@@ -182,7 +151,6 @@ const Myprofile = () => {
           },
         }
       );
-
       if (response.status === 200) {
         console.log(response.data.notification);
         setLogoutMsg(response.data.notification);
@@ -191,22 +159,18 @@ const Myprofile = () => {
     } catch (error) {
       console.error("Logout failed:", error);
     }
-
     setShowLogoutModal(false);
     setShowLogoutSuccessModal(true);
   };
-
   // Logout success handlers
   const handleCloseLogoutSuccessModal = () => {
     setShowLogoutSuccessModal(false);
     window.location.href = "/login";
   };
-
   const handleCloseLogoutSuccesslanding = () => {
     setShowLogoutSuccessModal(false);
     window.location.href = "/";
   }
-
   const styles = {
     container: {
       backgroundColor: "#FFFDF2",
@@ -243,12 +207,11 @@ const Myprofile = () => {
       flex: 1,
     },
     leftSidebar: {
-      width: "204px",
+     
       height: "336px",
       display: "flex",
       flexDirection: "column",
-
-      alignItems: "flex-start",
+     
     },
     myAccountHeader: {
       fontFamily: "Poppins",
@@ -301,8 +264,14 @@ const Myprofile = () => {
       borderTop: "2px solid #E6E6E6",
       margin: "12px 0",
     },
-    rightContent: {
-
+    // Base right content style (for all tabs)
+    baseRightContent: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "16px",
+    },
+    // Profile-specific right content style
+    profileRightContent: {
       minHeight: "930px",
       borderRadius: "8px",
       padding: "12.01px 20.01px 12.01px 20.01px",
@@ -1225,7 +1194,6 @@ const Myprofile = () => {
       border: "none",
     }
   };
-
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.startsWith("image/")) {
@@ -1238,22 +1206,18 @@ const Myprofile = () => {
       reader.readAsDataURL(selectedFile);
     }
   };
-
   const handleUploadAreaClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
-
     setFormErrors((prevErrors) => {
       const newErrors = { ...prevErrors };
-
       switch (field) {
         case "name":
           if (!value.trim()) newErrors.name = "Name is required";
@@ -1302,11 +1266,9 @@ const Myprofile = () => {
         default:
           break;
       }
-
       return newErrors;
     });
   };
-
   const handleCropMouseDown = useCallback(
     (e) => {
       if (e.target.classList.contains("crop-handle")) {
@@ -1328,7 +1290,6 @@ const Myprofile = () => {
     },
     [cropData]
   );
-
   const handleMouseMove = useCallback(
     (e) => {
       if (isDragging) {
@@ -1371,12 +1332,10 @@ const Myprofile = () => {
     },
     [isDragging, isResizing, dragStart, resizeStart, cropData]
   );
-
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     setIsResizing(false);
   }, []);
-
   React.useEffect(() => {
     if (showCropModal) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -1387,7 +1346,6 @@ const Myprofile = () => {
       };
     }
   }, [showCropModal, handleMouseMove, handleMouseUp]);
-
   const cropImage = () => {
     const canvas = canvasRef.current;
     const img = imageRef.current;
@@ -1415,22 +1373,18 @@ const Myprofile = () => {
       setShowCropModal(false);
     }
   };
-
   const handleSaveChanges = async () => {
     if (validateForm()) {
       console.log("Form data ready to submit:", formData);
       // Submit your data here
     }
-
     try {
       const storedUser = JSON.parse(localStorage.getItem("userData"));
       const token = storedUser?.access_token;
-
       if (!token) {
         console.error("No token found in localStorage");
         return;
       }
-
       const payload = {
         name: formData.name,
         identifier: formData.identifier,
@@ -1445,7 +1399,6 @@ const Myprofile = () => {
         zip_code: formData.zip_code,
         image: croppedImage || formData.image,
       };
-
       const res = await axios.post(
         `https://kutoot.bigome.com/api/user/v1/update-profile`,
         payload,
@@ -1455,33 +1408,26 @@ const Myprofile = () => {
           },
         }
       );
-
       console.log("Update profile response:", res.data);
-
       if (res.data.success) {
         alert("Profile updated successfully!");
         setViewMode("saved");
       } else {
         alert("Failed to update profile. " + (res.data.message || ""));
       }
-
     } catch (err) {
       console.error("Error updating profile:", err);
     }
   };
-
   const validateForm = () => {
     const errors = {};
-
     if (!formData.name.trim()) errors.name = "Name is required";
     if (!formData.identifier.trim()) errors.email = "Email is required";
     else if (!/^\S+@\S+\.\S+$/.test(formData.identifier))
       errors.email = "Invalid email format";
-
     if (!formData.phone.trim()) errors.phone = "Phone number is required";
     else if (!/^\d{10}$/.test(formData.phone))
       errors.phone = "Phone number must be 10 digits";
-
     if (!formData.address.trim()) errors.address = "Address is required";
     if (!formData.house_no.trim()) errors.house_no = "House number is required";
     if (!formData.street.trim()) errors.street = "Street is required";
@@ -1489,11 +1435,9 @@ const Myprofile = () => {
     if (!formData.state_id) errors.state_id = "Select a state";
     if (!formData.zip_code.trim()) errors.zip_code = "Pin code is required";
     if (!formData.country_id) errors.country_id = "Select a country";
-
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
-
   const isFormValid =
     Object.keys(formErrors).length === 0 &&
     formData.name &&
@@ -1507,27 +1451,22 @@ const Myprofile = () => {
     formData.zip_code &&
     formData.country_id;
 
-
   const handleRemoveImage = () => {
     console.log("Removing profile image");
     setCroppedImage(null);
     setFile(null);
     setPreviewImage(null);
   };
-
   const handleChangeImage = () => {
     console.log("Changing profile image");
     handleUploadAreaClick();
   };
-
   const handleDeactivateAccount = () => {
     setShowDeactivateModal(true);
   };
-
   const handleCloseDeactivateModal = () => {
     setShowDeactivateModal(false);
   };
-
   // First frame: Edit form
   const renderEditView = () => (
     <>
@@ -1778,14 +1717,12 @@ const Myprofile = () => {
       <button
         style={styles.saveChangesButtonContainer}
         onClick={handleSaveChanges}
-
       >
         <span style={styles.saveChangesButtonText}>Save Changes</span>
         <div style={styles.saveChangesButtonDot}></div>
       </button>
     </>
   );
-
   // Second frame: Saved data view
   const renderSavedView = () => (
     <>
@@ -1926,7 +1863,6 @@ const Myprofile = () => {
       </button>
     </>
   );
-
   // Third frame: Profile view that matches the screenshot
   const renderProfileView = () => (
     <>
@@ -2013,7 +1949,6 @@ const Myprofile = () => {
       </button>
     </>
   );
-
   // Deactivate Account Modal - Updated to match reference image
   const renderDeactivateModal = () => (
     <div style={styles.deactivateModalOverlay}>
@@ -2063,7 +1998,6 @@ const Myprofile = () => {
       </div>
     </div>
   );
-
   // Logout Modal - Updated to match the second image
   const renderLogoutModal = () => (
     <div style={styles.logoutModalOverlay}>
@@ -2139,7 +2073,6 @@ const Myprofile = () => {
       </div>
     </div>
   );
-
   // Logout Success Modal - Shows after successful logout
   const renderLogoutSuccessModal = () => (
     <div style={styles.logoutSuccessModalOverlay}>
@@ -2158,7 +2091,6 @@ const Myprofile = () => {
             zIndex: 1,
           }}
         />
-
         {/* Modal content */}
         <div style={{
           position: "relative",
@@ -2185,17 +2117,14 @@ const Myprofile = () => {
               <path d="M12 4L4 12M4 4L12 12" stroke="#3B322B" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-
           {/* Success icon */}
           <img
             src="/images/myprofile/logout-success-icon.png"
             alt="Logout Success"
             style={styles.logoutSuccessModalIcon}
           />
-
           {/* Success message */}
           <h2 style={styles.logoutSuccessModalTitle}>{logoutMsg}</h2>
-
           {/* Back to login button */}
           <button
             style={styles.logoutSuccessModalButton}
@@ -2207,7 +2136,6 @@ const Myprofile = () => {
       </div>
     </div>
   );
-
   return (
     <>
       <style jsx global>{`
@@ -2244,7 +2172,7 @@ const Myprofile = () => {
           border-color: #666666 !important;
         }
         .upload-overlay {
-          cursor: pointer !important;
+          cursor: "pointer" !important;
         }
         .upload-content * {
           pointer-events: none !important;
@@ -2341,7 +2269,6 @@ const Myprofile = () => {
                 />
                 My Coupons
               </div>
-
               {/* Campaigns Tab */}
               <div
                 style={
@@ -2393,7 +2320,8 @@ const Myprofile = () => {
               <div style={styles.smallLine}></div>
               <button style={styles.logoutButton} onClick={handleLogoutClick}>Log out</button>
             </div>
-            <div style={styles.rightContent}>
+            {/* Conditionally apply styles based on active tab */}
+            <div style={activeTab === 'profile' ? styles.profileRightContent : styles.baseRightContent}>
               {/* Render content based on active tab */}
               {activeTab === "dashboard" && <DashboardTab />}
               {activeTab === "coupons" && <CouponsTab />}
@@ -2468,5 +2396,4 @@ const Myprofile = () => {
     </>
   );
 };
-
 export default Myprofile;
