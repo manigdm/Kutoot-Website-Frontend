@@ -11,7 +11,6 @@ export function ExclusiveCampaign({ campaigns }) {
   const middleColumn = campaigns.slice(2, 3);
   const rightColumn = campaigns.slice(3, 5);
   console.log("left column", leftColumn);
-  console.log("middle column", middleColumn);
 
   return (
     <div className="lottery-cards-container">

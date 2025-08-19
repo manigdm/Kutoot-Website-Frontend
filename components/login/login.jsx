@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   const redirectAfterLogin = () => {
-    router.push("/user"); // redirect to profile page
+    router.push("/"); // redirect to profile page
   }
 
   const isValidEmail = (email) =>
@@ -478,7 +478,7 @@ const Login = () => {
             {/* Input field */}
             <input
               type="text"
-              placeholder="Enter your email ID or mobile number*"
+              placeholder="Enter your email ID"
               value={inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value);

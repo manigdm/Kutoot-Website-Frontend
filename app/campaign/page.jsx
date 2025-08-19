@@ -189,7 +189,7 @@ const App = ({ offer }) => {
                                 {/* Offer cards container */}
                                 <Col md={8}>
                                     <div ref={scrollRef} className={`d-flex overflow-auto gap-4 ${styles.scrollbar_fix}`}>
-                                        {offer?.baseplans?.map((plan, index) =>
+                                        {offer?.baseplans?.slice().sort((a, b) => a.ticket_price - b.ticket_price).map((plan, index) =>
                                             <div
                                                 key={index}
                                                 className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"

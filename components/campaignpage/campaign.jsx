@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "@/components/home/components/Footer/Footer";
@@ -9,8 +9,8 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Campaign = () => {
   const [campaignId, setCampaignId] = useState(null);
@@ -20,6 +20,7 @@ const Campaign = () => {
   const swiperRef = useRef(null);
   const searchParams = useSearchParams();
   const [imagesArray, setImagesArray] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     let id = null;
@@ -50,12 +51,17 @@ const Campaign = () => {
           const data = res.data.data;
           console.log("API Response:", data);
 
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://kutoot.bigome.com/";
+          const makeUrl = (path) => {
+            if (!path) return null;
+            return path.startsWith("http") ? path : `${baseUrl}${path}`;
+          };
           // Create an array of image objects
           const imagesArray = [
-            { src: data.image1 },
-            { src: data.image2 },
-            { src: data.img }
-          ].filter(img => img.src); // remove null or undefined
+            { src: makeUrl(data.image1) },
+            { src: makeUrl(data.image2) },
+            { src: makeUrl(data.img) }
+          ].filter(img => img.src);
           setImagesArray(imagesArray);
           console.log("After array transformation:", imagesArray);
 
@@ -64,6 +70,7 @@ const Campaign = () => {
             ...data,
             images: imagesArray
           });
+          console.log("campaign data", campaignData)
           setLoading(false);
         })
         .catch((err) => {
@@ -73,8 +80,6 @@ const Campaign = () => {
     }
   }, [campaignId]);
 
-
-  console.log('Current state of campaignData:', campaignData);
 
   function stripHtml(html) {
     // Check if document exists before creating a div
@@ -101,6 +106,12 @@ const Campaign = () => {
       >
         <path d="M11 19v-5H6l7-10v5h5z" />
       </svg>
+    );
+  };
+
+  const handleBuyNow = (tier, campaignId) => {
+    router.push(
+      `/coupons?campaignId=${campaignId}&baseplanId=${tier.id}&ticketPrice=${tier.ticket_price}`
     );
   };
 
@@ -247,24 +258,26 @@ const Campaign = () => {
               }}
               style={{ width: "100%", height: "450px" }}
             >
-              {imagesArray.map((item, i) => (
-                <SwiperSlide key={i}>
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <Image
-                      src={`/${item.src}`}
-                      alt={`Campaign Image ${i + 1}`}
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
+              {imagesArray.length > 0 && (
+                imagesArray.map((item, i) => (
+                  <SwiperSlide key={i}>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <Image
+                        src={item.src}
+                        alt={`Campaign Image ${i + 1}`}
+                        fill
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))
+              )}
             </Swiper>
           </div>
 
@@ -459,7 +472,7 @@ const Campaign = () => {
                 margin: "0 auto",
               }}
             >
-              {campaignData?.baseplans.map((tier, index) => (
+              {campaignData?.baseplans?.slice().sort((a, b) => a.ticket_price - b.ticket_price).map((tier, index) => (
                 <div
                   key={index}
                   style={{
@@ -754,7 +767,7 @@ const Campaign = () => {
                           margin: 0,
                         }}
                       >
-                        ₹{tier.costPerCoupon}
+                       {(tier?.ticket_price / tier?.coupons_per_campaign).toFixed(2)}
                       </p>
                     </div>
 
@@ -788,6 +801,7 @@ const Campaign = () => {
                         cursor: "pointer",
                         marginTop: "20px",
                       }}
+                      onClick={() => handleBuyNow(tier, campaignData.id)}
                     >
                       Buy now .
                     </button>

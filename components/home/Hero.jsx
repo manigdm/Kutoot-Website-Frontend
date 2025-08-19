@@ -153,7 +153,7 @@ const Hero = () => {
                 Enter Now
               </button>
 </a>
-              <LockButton tooltipText="Unlocks once the goal is reached" />
+              <LockButton tooltipText="Unlocks once the goal is reached" banner={banner}/>
             </div>
           </div>
         </div>
