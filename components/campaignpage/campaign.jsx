@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "@/components/home/components/Footer/Footer";
 import { FaArrowRight } from "react-icons/fa";
@@ -10,8 +11,15 @@ import 'swiper/css/navigation';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import axios from "axios";
-const Campaign = () => {
-  const [campaignId, setCampaignId] = useState(null);
+ function Campaign() {
+  return (
+    <Suspense fallback={<div>Loading campaign...</div>}>
+      <CampaignPage />
+    </Suspense>
+  );
+}
+const CampaignPage = () => {
+
   const [campaignData, setCampaignData] = useState(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -19,22 +27,9 @@ const Campaign = () => {
   const searchParams = useSearchParams();
   const [imagesArray, setImagesArray] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    let id = null;
-    // First, try to get the ID from the history state (for direct push)
-    if (typeof window !== 'undefined' && window.history.state && window.history.state.state) {
-      id = window.history.state.state.campaignId;
-      console.log('ID from history state:', id);
-    }
-    // If no ID is found, fall back to the URL search parameters (for refresh/direct access)
-    if (!id) {
-      id = searchParams.get('id');
-      console.log('ID from search params:', id);
-    }
-    if (id) {
-      setCampaignId(id);
-    }
-  }, [searchParams]);
+
+  const campaignId = searchParams.get('id'); 
+
   useEffect(() => {
     // Only proceed if campaignId has a value
     if (campaignId) {
@@ -42,7 +37,7 @@ const Campaign = () => {
         .get(`https://kutoot.bigome.com/api/coin-campaigns/details/${campaignId}`)
         .then((res) => {
           const data = res.data.data;
-          console.log("API Response:", data);
+          // console.log("API Response:", data);
           // Create an array of image objects
           const imagesArray = [
             { src: data.image1 },
@@ -50,7 +45,7 @@ const Campaign = () => {
             { src: data.img }
           ].filter(img => img.src); // remove null or undefined
           setImagesArray(imagesArray);
-          console.log("After array transformation:", imagesArray);
+          // console.log("After array transformation:", imagesArray);
           // Store campaign data with imagesArray
           setCampaignData({
             ...data,
@@ -59,12 +54,12 @@ const Campaign = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.error("Error fetching campaigns:", err);
+          // console.error("Error fetching campaigns:", err);
           setLoading(false);
         });
     }
   }, [campaignId]);
-  console.log('Current state of campaignData:', campaignData);
+  // console.log('Current state of campaignData:', campaignData);
   function stripHtml(html) {
     // Check if document exists before creating a div
     if (typeof document === 'undefined') {

@@ -251,16 +251,13 @@ const App = ({ offer }) => {
                                                         <div>
                                                             <div
                                                                 className="d-flex justify-content-between flex-column text-black"
-                                                                style={{ padding: "40px 40px 0 40px", marginTop: "10px" }}
+                                                                style={{ padding: "30px 30px 0 30px", marginTop: "10px" }}
                                                             >
-
-
-                                                                <div className={`d-flex justify-content-between align-items-center  flex-row ${styles.border_fix}`}>
+                                                                <div className="d-flex justify-content-between align-items-center flex-row">
                                                                     <div
-                                                                        className=""
                                                                         style={{
                                                                             color: "#3B322B",
-                                                                            fontFamily: "Poppins, sans-serif",
+                                                                            fontFamily: "Poppins",
                                                                             fontSize: "26px",
                                                                             fontStyle: "normal",
                                                                             fontWeight: 700,
@@ -273,6 +270,10 @@ const App = ({ offer }) => {
 
                                                                     <div>{plan?.coins_per_campaign} Coins</div>
                                                                 </div>
+
+                                                                {/* ✅ separate border line */}
+                                                                <div className={styles.border_fix}></div>
+
                                                                 <div className="d-flex justify-content-between align-items-center flex-row pt-2 pb-2">
                                                                     <div
                                                                         className=""
@@ -306,7 +307,7 @@ const App = ({ offer }) => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="d-flex  align-items-center">
+                                                            <div className="d-flex align-items-center" style={{ marginTop: "10px" }}>
                                                                 <div className="w-50">
                                                                     <p
                                                                         className="m-0"
@@ -323,10 +324,10 @@ const App = ({ offer }) => {
                                                                     </p>
                                                                 </div>
 
-                                                                <div className=""   >
+                                                              <div className="d-flex justify-content-end" style={{ marginLeft: "26px" }}>
                                                                     <button
                                                                         className={`btn w-100 fw-bold features__button rounded-pill ${styles.kutoot__button}`}
-                                                                       
+
                                                                         onClick={() => viewCampaign(offer)}
                                                                     >
                                                                         <FaArrowRight className="features__button-icon" />
