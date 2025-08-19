@@ -164,48 +164,49 @@ const App = ({ offer }) => {
                                 {/* Main campaign card */}
                                 <Col md={4} lg={4} className="position-relative mb-4">
                                     <div
-                                        className="bg-cover bg-center rounded-2xl"
+                                        className="bg-cover bg-center rounded-2xl position-relative"
                                         style={{
                                             backgroundImage: `url(${offer?.img})`,
-                                            // backgroundRepeat: 'no-repeat',
-                                            // backgroundSize: 'contain',
-                                            // backgroundPosition: 'center',
-                                            // borderRadius: '8px',
-                                            // width: '390px',
-                                            // height: '330px',
-
-
-
-
                                             backgroundRepeat: "no-repeat",
-                                            backgroundSize: "contain",
+                                            backgroundSize: "cover", // use cover instead of contain for proper fit
                                             backgroundPosition: "center",
-                                            borderRadius: "6px", // updated from 8px to 6px
-                                            width: "330px", // updated from 390px
-                                            height: "290px", // updated from 330px
-                                            flexShrink: 0,
-                                            background:
-                                                "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 67.18%, rgba(0, 0, 0, 0.50) 77.03%), url(<path-to-image>) lightgray 0px -106px / 99.984% 173.696% no-repeat",
+                                            borderRadius: "8px",
+                                            width: "350px",
+                                            height: "320px",
                                         }}
                                     >
                                         {offer?.tag1 && (
-                                            <div className={`position-absolute text-white ${styles.left_img_top_txt}`}>
+                                            <div
+                                                className={`position-absolute text-white ${styles.left_img_top_txt}`}
+                                                style={{ top: "10px", left: "10px" }}
+                                            >
                                                 {offer.tag1}
                                             </div>
                                         )}
-                                        <div className={`position-absolute text-white ${styles.left_img_btm_txt}`} >
-                                            <h2 className="fw-bold" style={{
-                                                color: "#FFF",
-                                                fontFamily: "Zurich Extra Black, sans-serif",
-                                                fontSize: "26px",
-                                                fontStyle: "normal",
-                                                fontWeight: 900,
-                                                lineHeight: "32px",
-                                                letterSpacing: "-0.56px",
-                                            }}>{stripHtml(offer?.title)}</h2>
+
+                                        <div
+                                            className={`position-absolute text-white ${styles.left_img_btm_txt}`}
+                                            style={{ bottom: "15px", left: "15px", right: "15px" }}
+                                        >
+                                            <h2
+                                                className="fw-bold"
+                                                style={{
+                                                    color: "white",
+                                                    fontFamily: "Zurich Extra Black",
+                                                    fontSize: "28px",
+                                                    fontStyle: "normal",
+                                                    fontWeight: 900,
+                                                    lineHeight: "32px",
+                                                    letterSpacing: "-0.56px",
+                                                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)",
+                                                }}
+                                            >
+                                                {stripHtml(offer?.title)}
+                                            </h2>
                                         </div>
                                     </div>
                                 </Col>
+
 
                                 {/* Offer cards container */}
                                 <Col md={8}>
@@ -213,7 +214,7 @@ const App = ({ offer }) => {
                                         {offer?.baseplans?.map((plan, index) =>
                                             <div
                                                 key={index}
-                                                className="d-flex flex-column align-items-center text-center bg-white shadow rounded-4 overflow-hidden"
+                                                className="d-flex flex-column align-items-center text-center  rounded-4 overflow-hidden"
                                                 style={{
                                                     width: '300px',
                                                     position: 'relative',
@@ -224,21 +225,37 @@ const App = ({ offer }) => {
                                                     className="position-relative text-white rounded-2xl"
                                                     style={{
                                                         backgroundImage: `url(${kutoot_slide_top})`,
-                                                        backgroundSize: "cover",
+                                                        backgroundSize: "contain",
                                                         backgroundRepeat: "no-repeat",
                                                         backgroundPosition: "center",
                                                         width: "100%",
-                                                        height: "300px",
+                                                        height: "280px",
                                                     }}
                                                 >
-                                                    <div className="position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-between">
+                                                    <div
+                                                        className="position-absolute top-0 start-0 w-100 d-flex flex-column justify-content-between"
+                                                        style={{ height: "90%", }}
+                                                    >
+
+
                                                         <div>
-                                                            <h4 className={`fw-bold mb-1 mt-4 ${styles.text_fix}`}>{plan?.title}</h4>
+                                                            <h4
+                                                                className={`fw-bold mb-1 ${styles.text_fix}`}
+                                                                style={{ marginTop: "2.5rem" }}
+                                                            >
+                                                                {plan?.title}
+                                                            </h4>
+
                                                             <span className={`badge bg-danger px-3 py-1 ${styles.sub_text_fix}`}>{stripHtml(plan?.description)}</span>
                                                         </div>
                                                         <div>
-                                                            <div className="d-flex justify-content-between flex-column text-black">
-                                                                <div className={`d-flex justify-content-between align-items-center flex-row ${styles.border_fix}`}>
+                                                            <div
+                                                                className="d-flex justify-content-between flex-column text-black"
+                                                                style={{ padding: "40px 40px 0 40px", marginTop: "10px" }}
+                                                            >
+
+
+                                                                <div className={`d-flex justify-content-between align-items-center  flex-row ${styles.border_fix}`}>
                                                                     <div
                                                                         className=""
                                                                         style={{
@@ -248,6 +265,7 @@ const App = ({ offer }) => {
                                                                             fontStyle: "normal",
                                                                             fontWeight: 700,
                                                                             lineHeight: "24px",
+                                                                            paddingTop: "4px",
                                                                         }}
                                                                     >
                                                                         ₹{plan?.ticket_price}
@@ -255,7 +273,7 @@ const App = ({ offer }) => {
 
                                                                     <div>{plan?.coins_per_campaign} Coins</div>
                                                                 </div>
-                                                                <div className="d-flex justify-content-between align-items-center flex-row">
+                                                                <div className="d-flex justify-content-between align-items-center flex-row pt-2 pb-2">
                                                                     <div
                                                                         className=""
                                                                         style={{
@@ -288,18 +306,34 @@ const App = ({ offer }) => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="d-flex justify-content-between align-items-center">
+                                                            <div className="d-flex  align-items-center">
                                                                 <div className="w-50">
-                                                                    <p className="text-muted small m-0"></p>
-                                                                    {/* *Validity up to {formatDate(offer?.start_date)} */}
-                                                                </div>
-                                                                <div>
-                                                                    <button
-                                                                        className={`btn w-100 fw-bold rounded-pill ${styles.kutoot__button}`} onClick={() => viewCampaign(offer)}
+                                                                    <p
+                                                                        className="m-0"
+                                                                        style={{
+                                                                            color: "#3B322B",
+                                                                            fontFamily: "Poppins",
+                                                                            fontSize: "14px",
+                                                                            fontStyle: "normal",
+                                                                            fontWeight: 400,
+                                                                            lineHeight: "16px",
+                                                                        }}
                                                                     >
-                                                                        Enter Now .
+                                                                        *Validity up to<br /> {formatDate(offer?.start_date)}
+                                                                    </p>
+                                                                </div>
+
+                                                                <div className=""   >
+                                                                    <button
+                                                                        className={`btn w-100 fw-bold features__button rounded-pill ${styles.kutoot__button}`}
+                                                                       
+                                                                        onClick={() => viewCampaign(offer)}
+                                                                    >
+                                                                        <FaArrowRight className="features__button-icon" />
+                                                                        Enter Now
                                                                     </button>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>

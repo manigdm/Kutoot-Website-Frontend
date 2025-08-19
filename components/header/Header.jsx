@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import "./Header.scss";
-import { FaShareAlt } from "react-icons/fa";
-import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { FaShareAlt, FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [user, setUser] = useState(null);
+  const [copied, setCopied] = useState(false); // popup state
   const router = useRouter();
 
   useEffect(() => {
@@ -20,13 +20,18 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      setIsHovered(scrollY > 0);
+      setIsHovered(window.scrollY > 0);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // 📌 Copy link + show popup
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText("https://kutoot.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
 
   return (
     <>
@@ -36,6 +41,7 @@ const Header = () => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="header__center-logo" />
+
         <div className="header__left">
           <div className="header__progress-container">
             <p className="header__label">Lucky Draw Countdown</p>
@@ -51,46 +57,38 @@ const Header = () => {
               </div>
             </div>
           </div>
-          {/* <button className="kutoot--header__button">
-            <FaArrowRight className="kutoot--header__button-icon" />
-            Enter Now
-          </button> */}
 
           <a href="/campaign" className="kutoot--header__button">
             <FaArrowRight className="kutoot--header__button-icon" />
             Enter Now
           </a>
-
         </div>
 
         <div className="header__right">
           <nav className="header__nav">
             <a href="/campaign">Campaigns</a>
-            {/* <a href="#">Winners</a>
-            <a href="#">My Coupons</a> */}
           </nav>
+
           <button className="kutoot--header__button">
             <FaArrowRight className="kutoot--header__button-icon" />
             Shop Now
           </button>
+
           {user ? (
-            // If logged in, show profile image
-            <div style={{marginLeft: '1rem'}}>
+            <div style={{ marginLeft: "1rem" }}>
               <img
-                src={user?.image || "/images/campaign/profile-after-login.svg"} // adjust key if different
+                src={user?.image || "/images/campaign/profile-after-login.svg"}
                 alt="Profile"
                 style={{
                   width: "40px",
                   height: "40px",
                   borderRadius: "50%",
                   cursor: "pointer",
-
                 }}
-                onClick={() => router.push("/user")} // optional: go to profile page
+                onClick={() => router.push("/user")}
               />
             </div>
           ) : (
-            // If not logged in, show login button
             <button
               className="header__button outline"
               onClick={() => router.push("/login")}
@@ -98,11 +96,57 @@ const Header = () => {
               Log in
             </button>
           )}
+
+          {/* 📌 Share Icon */}
           <div className="header__icon">
-            <FaShareAlt />
+            <FaShareAlt onClick={handleCopyLink} style={{ cursor: "pointer" }} />
           </div>
         </div>
       </header>
+
+      {/* 📌 Popup (toast style) */}
+      {copied && (
+       <div
+    style={{
+      position: "fixed",
+      top: "20%",
+      left: "80%",
+      transform: "translate(-50%, -50%)",
+      background: "#333",
+      color: "white",
+      padding: "15px 25px",
+      borderRadius: "10px",
+      fontSize: "16px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+      zIndex: 1000,
+      animation: "fadeInOut 2.5s ease",
+    }}
+  >
+          ✅ Link copied: kutoot.com
+        </div>
+      )}
+
+      {/* Animation */}
+      <style jsx>{`
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+          }
+          10% {
+            opacity: 1;
+            transform: translate(-50%, 0);
+          }
+          90% {
+            opacity: 1;
+            transform: translate(-50%, 0);
+          }
+          100% {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+          }
+        }
+      `}</style>
     </>
   );
 };
