@@ -55,16 +55,17 @@ const Footer = () => {
               <a href="/about">About</a>
             </li>
             <li>
-              <a href="/faqs">FAQs</a>
+              <a href="/faq">FAQs</a>
             </li>
             <li>
-              <a href="/charity-partners">Our Charity Partners</a>
+              <a href="/#charity-partners">Our Charity Partners</a>
             </li>
             <li>
-              <a href="/partners">Our Partners</a>
+              <a href="/#charity-partners">Our Partners</a>
             </li>
+
             <li>
-              <a href="/careers">Careers</a>
+              <a href="/career">Careers</a>
             </li>
           </ul>
         </div>
@@ -90,19 +91,39 @@ const Footer = () => {
             support@kutoot.com
           </a>
           <div className="social-icons">
-            <a href="#">
+            <a
+              href="https://wa.me/919380384568"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaWhatsapp />
             </a>
-            <a href="#">
+
+            <a
+              href="https://x.com/kutootindia?s=21"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaXTwitter />
             </a>
-            <a href="#">
+
+            <a
+              href="https://www.instagram.com/kutoot_india/?igsh=dGNoa3F3bnJ3NGMz&utm_source=qr#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaInstagram />
             </a>
-            <a href="#">
+
+            <a
+              href="https://www.facebook.com/share/19gaKaJHi8/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaFacebookF />
             </a>
           </div>
+
         </div>
       </div>
 
@@ -141,7 +162,7 @@ const Footer = () => {
             }}
           >
             🚀 Launching Soon!
-            <div>
+            {/* <div>
               <button
                 onClick={() => setShowPopup(false)}
                 style={{
@@ -154,9 +175,9 @@ const Footer = () => {
                   cursor: "pointer",
                 }}
               >
-                OK
+                
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
