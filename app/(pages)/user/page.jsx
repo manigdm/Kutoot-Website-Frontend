@@ -1,15 +1,16 @@
+"use client"; // ← make this page a client component
+
 import LeftSideMenu from "@/components/common/LeftSideMenu";
 import Myprofile from "@/components/user/Myprofile";
 import RightSide from "@/components/user/RightSide";
 
-const page = () => {
+const Page = () => {
   return (
     <>
-       <Myprofile />
+      <Myprofile />
       <div className="mt-minus-150">
         <div className="container">
-          <div className="row ">
-           
+          <div className="row">
             {/* left side menu */}
             {/* <LeftSideMenu /> */}
 
@@ -22,4 +23,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "@/components/home/components/Footer/Footer";
 import { FaArrowRight } from "react-icons/fa";
