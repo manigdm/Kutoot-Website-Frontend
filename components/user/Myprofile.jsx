@@ -2,7 +2,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import axios from "axios";
 import Coupons from "@/components/user/coupons";
-import Mycampaigns from "@/components/user/Mycampaigns";
+
 
 const Myprofile = () => {
   const [file, setFile] = useState(null);
