@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState, Fragment } from "react";
+import React, { useEffect, useMemo, useState, Fragment, Suspense } from "react";
 import { AiOutlineClockCircle, AiOutlineLeft } from "react-icons/ai";
 import auth from "@/utils/auth";
 import Image from "next/image";
@@ -14,6 +14,21 @@ import {
   Badge,
   Card,
 } from "react-bootstrap";
+
+const Loader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <p className="text-lg font-medium">Loading campaign...</p>
+  </div>
+);
+
+const Page = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <Coupon />
+    </Suspense>
+  );
+};
+
 
 // Small pill used during manual entry (no Tailwind)
 const DottedCircle = ({ value }) => (
@@ -38,7 +53,8 @@ const DottedCircle = ({ value }) => (
   </span>
 );
 
-const Page = () => {
+
+const Coupon = () => {
   const [coupons, setCoupons] = useState([]);
   const [timeLeft, setTimeLeft] = useState(300); // seconds
   const [selectedNumbers, setSelectedNumbers] = useState([]); // numbers (1..49)
@@ -67,13 +83,13 @@ const Page = () => {
       if (!baseUrl.endsWith("/")) baseUrl += "/";
       const apiUrl = `${baseUrl}api/user/coinpurchase`;
 
-      const userData = auth?.();
+      const token = auth?.();
 
-      if (!userData) {
+      if (!token) {
         setError("No user data found. Please login.");
         return;
       }
-      const token = JSON.parse(userData);
+
       if (!token?.access_token) {
         setError("You are not authenticated.");
         return;
@@ -178,7 +194,6 @@ const Page = () => {
     const apiUrl = `${baseUrl}api/user/singlecoderegenerate`;
 
     const authData = auth?.();
-    console.log({ authData });
     
     if (!authData) {
       setError("You are not authenticated.");
