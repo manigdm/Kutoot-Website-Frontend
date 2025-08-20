@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Campaign from "@/components/campaignpage/campaign";
-
 const page = () => {
   return (
   	<Suspense fallback={<div>Loading...</div>}>
@@ -10,5 +9,4 @@ const page = () => {
     </Suspense>
   )
 }
-
 export default page
