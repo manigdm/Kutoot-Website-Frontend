@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import axios from "axios";
+import { useRouter } from "next/navigation";
  function Campaign() {
   return (
     <Suspense fallback={<div>Loading campaign...</div>}>
@@ -18,6 +19,7 @@ import axios from "axios";
     </Suspense>
   );
 }
+
 const CampaignPage = () => {
 
   const [campaignData, setCampaignData] = useState(null);
@@ -27,8 +29,11 @@ const CampaignPage = () => {
   const searchParams = useSearchParams();
   const [imagesArray, setImagesArray] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const campaignId = searchParams.get('id'); 
+
+  
 
   useEffect(() => {
     // Only proceed if campaignId has a value
@@ -752,6 +757,7 @@ const CampaignPage = () => {
                         cursor: "pointer",
                         marginTop: "20px",
                       }}
+                      onClick={() => handleBuyNow(tier, campaignData.id)}
                     >
                       Buy now .
                     </button>
