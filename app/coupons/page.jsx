@@ -67,7 +67,8 @@ const Page = () => {
       if (!baseUrl.endsWith("/")) baseUrl += "/";
       const apiUrl = `${baseUrl}api/user/coinpurchase`;
 
-      const userData = localStorage.getItem("userData");
+      const userData = auth?.();
+
       if (!userData) {
         setError("No user data found. Please login.");
         return;
@@ -112,7 +113,7 @@ const Page = () => {
   }, []);
   // ========== Generate coupons from API response (only once) ==========
   useEffect(() => {
-    const list = response?.data?.coupons;
+    const list = response?.data?.coupons?.slice(0, 10) || [];
     if (Array.isArray(list) && list.length && coupons.length === 0) {
       const newCoupons = list.map((c, i) => ({
         serialNo: i + 1,
@@ -177,6 +178,8 @@ const Page = () => {
     const apiUrl = `${baseUrl}api/user/singlecoderegenerate`;
 
     const authData = auth?.();
+    console.log({ authData });
+    
     if (!authData) {
       setError("You are not authenticated.");
       setSaveLoading(false);
@@ -270,9 +273,8 @@ const Page = () => {
 
       {!initialLoading && error && (
 
-        <Alert variant="danger" className="mb-3">
+        <Alert variant="danger" style={{ marginTop: '50px' }}>
           <strong>Error:</strong> {error}
-
         </Alert>
       )}
 

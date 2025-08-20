@@ -74,6 +74,14 @@ const CampaignPage = () => {
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
   }
+
+const handleBuyNow = (tier, campaignId) => {
+    router.push(
+      `/coupons?campaignId=${campaignId}&baseplanId=${tier.id}&ticketPrice=${tier.ticket_price}`
+    );
+  };
+
+
   const getLabelIcon = () => {
     return (
       <svg
