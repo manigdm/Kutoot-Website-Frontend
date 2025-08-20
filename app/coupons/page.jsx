@@ -1,18 +1,38 @@
-"use client"
+"use client";
 import React, { useEffect, useMemo, useState, Fragment } from "react";
 import { AiOutlineClockCircle, AiOutlineLeft } from "react-icons/ai";
 import auth from "@/utils/auth";
 import Image from "next/image";
 import Loading from "@/components/common/loading";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";// NEW: react-bootstrap
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Alert,
+  Badge,
+  Card,
+} from "react-bootstrap";
 
-// Small pill used during manual entry
+// Small pill used during manual entry (no Tailwind)
 const DottedCircle = ({ value }) => (
   <span
-    className={
-      "w-7 h-7 mx-[2px] rounded-full border-2 border-dashed border-gray-400 flex items-center justify-center text-base font-bold bg-white" +
-      (value ? " border-[#A7192E] text-[#A7192E]" : " text-gray-300")
-    }
+    style={{
+      width: 28,
+      height: 28,
+      margin: "0 2px",
+      borderRadius: "9999px",
+      border: "2px dashed",
+      borderColor: value ? "#A7192E" : "#9CA3AF",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 14,
+      fontWeight: 700,
+      background: "#fff",
+      color: value ? "#A7192E" : "#9CA3AF",
+    }}
   >
     {value || ""}
   </span>
@@ -32,7 +52,7 @@ const Page = () => {
   const campaignId = searchParams.get("campaignId");
   const baseplanId = searchParams.get("baseplanId");
   const ticketPrice = searchParams.get("ticketPrice");
-  
+
   // ========== Initial purchase call ==========
   useEffect(() => {
     const fetchCoinPurchase = async () => {
@@ -42,49 +62,42 @@ const Page = () => {
         quantity: "1",
         base_plan_id: baseplanId,
       };
-  
+
       let baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
       if (!baseUrl.endsWith("/")) baseUrl += "/";
       const apiUrl = `${baseUrl}api/user/coinpurchase`;
-  
-      const userData = localStorage.getItem('userData');
+
+      const userData = localStorage.getItem("userData");
       if (!userData) {
         setError("No user data found. Please login.");
         return;
       }
-  
       const token = JSON.parse(userData);
-  
       if (!token?.access_token) {
         setError("You are not authenticated.");
         return;
       }
-  
+
       setInitialLoading(true);
       setError("");
-  
       try {
         const res = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Use token.access_token here
             authorization: `Bearer ${token.access_token}`,
           },
           body: JSON.stringify(payload),
         });
-  
         if (!res.ok) {
           const errorText = await res.text().catch(() => "");
           throw new Error(
             `API error (${res.status}): ${errorText || res.statusText}`
           );
         }
-  
         const data = await res.json().catch(() => {
           throw new Error("Invalid JSON response");
         });
-  
         setResponse(data);
       } catch (err) {
         setResponse(null);
@@ -93,11 +106,10 @@ const Page = () => {
         setInitialLoading(false);
       }
     };
-  
-    fetchCoinPurchase();
-  }, []);
-  
 
+    fetchCoinPurchase();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // ========== Generate coupons from API response (only once) ==========
   useEffect(() => {
     const list = response?.data?.coupons;
@@ -151,7 +163,11 @@ const Page = () => {
   };
 
   const handleSaveManualCoupon = async () => {
-    if (selectedNumbers.length !== response?.data?.numbers_per_ticket || editingCouponId == null) return;
+    if(
+      selectedNumbers.length !== response?.data?.numbers_per_ticket ||
+      editingCouponId == null
+    )
+    return;
 
     setSaveLoading(true);
     setError("");
@@ -176,8 +192,8 @@ const Page = () => {
     }
 
     const payload = {
-      order_id: response?.data?.id, // adjust if different in your API
-      coupon_id: editingCoupon?.id ?? editingCoupon?.coupon_id, // choose correct server id
+      order_id: response?.data?.id,
+      coupon_id: editingCoupon?.id ?? editingCoupon?.coupon_id,
       coupon_code: selectedNumbers
         .map((n) => n.toString().padStart(2, "0"))
         .join(""),
@@ -224,162 +240,391 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDF2] pt-6 pb-24" style={{ padding: '30px 60px' }}>
+
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#FFFDF2",
+        paddingTop: 24,
+        paddingBottom: 96,
+        paddingLeft: 60,
+        paddingRight: 60,
+      }}
+    >
       {/* Top loader / error */}
       {initialLoading && (
-        <div className="mb-4" style={{
-          background: '#fdfae5',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 'calc(100vh - 80px)'
-        }}>
+
+        <div
+          style={{
+            background: "#fdfae5",
+            height: "calc(100vh - 80px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 16,
+          }}
+        >
           <Loading />
         </div>
       )}
+
       {!initialLoading && error && (
-        <div className="mb-4 text-red-600 text-sm">
+
+        <Alert variant="danger" className="mb-3">
           <strong>Error:</strong> {error}
-        </div>
+
+        </Alert>
       )}
+
       {!initialLoading && !error && (
-        <div
-          className="flex flex-col items-center"
+        <Container
+          fluid
           style={{
-            background: '#fff',
-            padding: '30px',
-            height: '100%',
-            width: '100%',
-            borderRadius: '6px',
-            boxShadow: '0px 0px 9px #3B322B1A'
+            background: "#fff",
+            padding: 30,
+            marginTop: '60px',
+            borderRadius: 6,
+            boxShadow: "0px 0px 9px #3B322B1A",
           }}
         >
-          <div className="w-full max-w-7xl bg-white overflow-hidden">
+          <div style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
             {/* Table Header */}
-            <div className="grid grid-cols-6 text-xs font-semibold px-6 py-3 border-b rounded-t-xl" style={{ borderColor: '#3B322B' }}>
-              <div className="text-center">Order ID</div>
-              <div className="text-center">Campaign</div>
-              <div className="text-center">Quantity</div>
-              <div className="text-center">Coins</div>
-              <div className="text-center">Coupons</div>
-              <div className="text-center">Price</div>
-            </div>
+            <Row
+              className="align-items-center"
+              style={{
+                fontSize: 17,
+                fontWeight: 600,
+                padding: "12px 24px",
+                borderBottom: "1px solid #3B322B",
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+              }}
+            >
+              <Col xs={2} className="text-center">
+                Order ID
+              </Col>
+              <Col xs={2} className="text-center">
+                Campaign
+              </Col>
+              <Col xs={2} className="text-center">
+                Quantity
+              </Col>
+              <Col xs={2} className="text-center">
+                Coins
+              </Col>
+              <Col xs={2} className="text-center">
+                Coupons
+              </Col>
+              <Col xs={2} className="text-center">
+                Price
+              </Col>
+            </Row>
 
             {/* Order Details */}
-            <div className="grid grid-cols-6 px-6 py-2 text-center border-b text-sm font-medium">
-              <div>{response?.data?.id ?? "-"}</div>
-              <div>{response?.data?.camp_title ?? "-"}</div>
-              <div>{response?.data?.quantity ?? "-"}</div>
-              <div>{response?.data?.camp_coins_per_campaign ?? "-"}</div>
-              <div>{response?.data?.camp_coupons_per_campaign ?? "-"}</div>
-              <div>₹{response?.data?.camp_ticket_price ?? "-"}</div>
-            </div>
+            <Row
+              style={{
+                padding: "10px 24px",
+                textAlign: "center",
+                fontSize: 17,
+                fontWeight: 500,
+              }}
+            >
+              <Col xs={2}>{response?.data?.id ?? "-"}</Col>
+              <Col xs={2}>{response?.data?.camp_title ?? "-"}</Col>
+              <Col xs={2}>{response?.data?.quantity ?? "-"}</Col>
+              <Col xs={2}>{response?.data?.camp_coins_per_campaign ?? "-"}</Col>
+              <Col xs={2}>
+                {response?.data?.camp_coupons_per_campaign ?? "-"}
+              </Col>
+              <Col xs={2}>₹{response?.data?.camp_ticket_price ?? "-"}</Col>
+            </Row>
 
             {/* Eligibility & Timer */}
-            <div className="bg-[#FDF3EC] border-b px-6 py-2 flex items-center">
-              <span className="text-[13px] text-[#3B322B]" style={{ fontWeight: 'bold' }}>
-                You can manually edit up to 10 coupons. Remaining ones will be auto-generated for you.
-              </span>
-            </div>
+            <Row
+              style={{
+                background: "#FDF3EC",
+                padding: "2px 2px 6px",
+                alignItems: "center",
+                marginBottom: '30px'
+              }}
+            >
+              <Col>
+                <span
+                  style={{
+                    fontSize: 14,
+                    color: "#3B322B",
+                    fontWeight: "bold",
+                  }}
+                >
+                  You can manually edit up to 10 coupons. Remaining ones will be
+                  auto-generated for you.
+                </span>
+              </Col>
+            </Row>
 
             {/* Status Row */}
-            <div style={{ background: "#FFFDF2" }}>
-              <div className="flex justify-between items-center px-6 py-3 border-b bg-white">
-                <span className="text-green-600 font-semibold text-sm">
-                  {coupons.length - autoGeneratedCount}/{coupons.length} coupons
-                  generated
-                </span>
-                <div className="flex items-center gap-2 text-sm text-white font-medium bg-[#ED1B36] px-3 py-1" style={{
-                  borderR
-                    : '4px'
-                }}>
-                  <AiOutlineClockCircle className="w-4 h-4" />
-                  <span className="hidden sm:inline">
-                    Please choose your lucky numbers within
+            <div style={{ background: "#FDF3EC" }}>
+              <Row
+                className="align-items-center"
+                style={{
+                  padding: "18px 30px 18px 60px",
+                  borderBottom: "1px solid #3B322B", background: "#FDF3EC"
+                }}
+              >
+                <Col xs="auto">
+                  <span
+                    style={{
+                      color: "#12B347",
+                      fontWeight: 600,
+                      fontSize: 17,
+                    }}
+                  >
+                    {coupons.length - autoGeneratedCount}/{coupons.length}{" "}
+                    coupons generated
                   </span>
-                  <strong className="font-mono">{formattedTime}</strong> mins
-                </div>
-                <button className="flex items-center text-gray-500 text-xs hover:underline">
-                  <AiOutlineLeft className="mr-1" />
-                  Go back
-                </button>
-              </div>
+                </Col>
+
+                <Col className="d-flex justify-content-center">
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      fontSize: 14,
+                      color: "#fff",
+                      fontWeight: 400,
+                      background: "#ED1B36",
+                      padding: "6px 12px",
+                      borderRadius: 4,
+                    }}
+                  >
+                    <AiOutlineClockCircle size={16} />
+                    <span className="d-none d-sm-inline" style={{ color: '#fff' }}>
+                      Please choose your lucky numbers within
+                    </span>
+                    <strong
+                      style={{
+                        marginLeft: 4,
+                        marginRight: 4, color: '#fff'
+                      }}
+                    >
+                      {formattedTime}
+                    </strong>
+                    mins
+                  </div>
+                </Col>
+
+                <Col xs="auto">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="text-muted p-0"
+                    onClick={() => history.back()}
+                  >
+                    <AiOutlineLeft style={{ marginRight: 4 }} />
+                    Go back
+                  </Button>
+                </Col>
+              </Row>
 
               {/* Coupon Table Header */}
-              <div className="grid grid-cols-12 px-6 py-2 border-b text-xs font-semibold text-gray-600 uppercase">
-                <div className="col-span-1 text-center">Serial no.</div>
-                <div className="col-span-4 text-center">Coupon</div>
-                <div className="col-span-1 text-center">Series</div>
-                <div className="col-span-3 text-center">Coupon ID</div>
-                <div className="col-span-3 text-center">Coupon Generation</div>
-              </div>
+              <Row
+                style={{
+                  padding: "8px 24px",
+                  fontSize: 15,
+                  fontWeight: 600,
+                  color: "#ACACAC",
+                  background: "#FDF3EC",
+                }}
+              >
+                <Col xs={1} className="text-center">
+                  Serial no.
+                </Col>
+                <Col xs={4} className="text-center">
+                  Coupon
+                </Col>
+                <Col xs={1} className="text-center">
+                  Series
+                </Col>
+                <Col xs={3} className="text-center">
+                  Coupon ID
+                </Col>
+                <Col xs={3} className="text-center">
+                  Coupon Generation
+                </Col>
+              </Row>
 
               {/* Coupon List */}
               {coupons.map((coupon) => (
-                <div
+                <Row
                   key={coupon.id ?? coupon.serialNo}
-                  className="grid grid-cols-12 py-3 px-6 border-b text-sm relative bg-[#FCFBF5]"
+                  style={{
+                    padding: "12px 24px",
+                    borderBottom: "1px solid #3B322B",
+                    background: "#FDF3EC",
+                    position: "relative",
+                    alignItems: "stretch",
+                  }}
                 >
                   {/* Serial No */}
-                  <div className="col-span-1 flex justify-center">
+                  <Col xs={1} className="d-flex justify-content-center">
                     <span
                       style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "9999px",
+                        color: "#fff",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 15,
+                        fontWeight: 600,
                         background:
                           editingCouponId === (coupon.id ?? coupon.serialNo)
                             ? "#4D4236"
-                            : "#9f9f9f",
+                            : "#ACACAC",
                       }}
-                      className="w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-semibold"
                     >
                       {String(coupon.serialNo).padStart(2, "0")}
                     </span>
-                  </div>
+                  </Col>
 
                   {/* Coupon ticket */}
-                  <div className="col-span-4 flex items-center gap-2">
-                    <div className="relative py-4">
-                      <div className=" bg-white rounded-xl border border-gray-300 flex overflow-hidden w-[340px] min-h-[100px] shadow-sm">
-                        {/* Left side */}
-                        <div className="flex flex-col items-start justify-center w-[35%] pl-3 pr-3 py-3">
+                  <Col xs={4} className="d-flex align-items-center">
+                    <div style={{ position: "relative", paddingTop: 8, paddingBottom: 8 }}>
+                      <div
+                        style={{
+                          background: "#fff",
+                          borderRadius: 12,
+                          border: "1px solid #d1d5db",
+                          display: "flex",
+                          overflow: "hidden",
+                          width: 380,
+                          minHeight: 100,
+                          boxShadow: "0 .125rem .25rem rgba(0,0,0,.075)",
+                          position: "relative",
+                        }}
+                      >
+                        {/* Left */}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            justifyContent: "center",
+                            width: "40%",
+                            padding: "12px 12px",
+                          }}
+                        >
                           <Image
-                            width="200"
-                            height="80"
+                            width={200}
+                            height={80}
                             style={{ objectFit: "contain" }}
                             src="/public/images/logo-kutoot.png"
                             alt="logo"
                           />
-                          <div className="mt-1 text-[14px] font-semibold leading-6 text-gray-800">
+                          <div
+                            style={{
+                              marginTop: 4,
+                              fontSize: 14,
+                              fontWeight: 600,
+                              lineHeight: 1.3,
+                              color: "#1f2937",
+                            }}
+                          >
                             {response?.data?.camp_title}
                           </div>
                         </div>
-
-                        {/* Notches + divider */}
-                        <div className=" flex flex-col justify-between items-center h-full">
-                          <div className="absolute top-3">
-                            <div className="w-5 h-4 bg-[#FDFBF6] rounded-b-full" />
-                          </div>
-                          <div className="h-full border-l border-dashed border-gray-300 mx-2" />
-                          <div className="absolute bottom-3">
-                            <div className="w-5 h-4 bg-[#FDFBF6] rounded-t-full" />
-                          </div>
+                        {/* Divider w/ notches */}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            height: "100%",
+                            position: "relative",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 12,
+                              width: 20,
+                              height: 16,
+                              background: "#FDFBF6",
+                              borderBottomLeftRadius: "9999px",
+                              borderBottomRightRadius: "9999px",
+                            }}
+                          />
+                          <div
+                            style={{
+                              height: "100%",
+                              borderLeft: "1px dashed #d1d5db",
+                              margin: "0 8px",
+                            }}
+                          />
+                          <div
+                            style={{
+                              position: "absolute",
+                              bottom: 12,
+                              width: 20,
+                              height: 16,
+                              background: "#FDFBF6",
+                              borderTopLeftRadius: "9999px",
+                              borderTopRightRadius: "9999px",
+                            }}
+                          />
                         </div>
-
-                        {/* Right side */}
-                        <div className="flex flex-col justify-center flex-1 pl-2 pr-2">
-                          <div className="text-xs text-gray-500">Campaign ID</div>
-                          <div className="font-normal text-base text-gray-700 mb-1">
+                        {/* Right */}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            flex: 1,
+                            padding: "0 8px",
+                          }}
+                        >
+                          <div style={{ fontSize: 12, color: "#6b7280" }}>
+                            Campaign ID
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              color: "#374151",
+                              marginBottom: 4,
+                            }}
+                          >
                             {coupon?.id ?? "-"}
                           </div>
-                          <div className="text-xs text-gray-500">Coupon ID</div>
-                          <div className="font-normal text-sm text-gray-800 tracking-wider">
-                            <span>{response.data?.['series-prefix']} </span>
-                            <span className="text-lg text-gray-700">-</span>
+                          <div style={{ fontSize: 12, color: "#6b7280" }}>
+                            Coupon ID
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 14,
+                              color: "#1f2937",
+                              letterSpacing: 1,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>{response?.data?.["series-prefix"]} </span>
+                            <span style={{ fontSize: 18, color: "#374151" }}>
+                              -
+                            </span>
                             {coupon.numbers.map((num, i) => (
                               <Fragment key={i}>
                                 <span>{num}</span>
                                 {i < coupon.numbers.length - 1 && (
-                                  <span className="text-lg text-gray-700">-</span>
+                                  <span style={{ fontSize: 18, color: "#374151" }}>
+                                    -
+                                  </span>
                                 )}
                               </Fragment>
                             ))}
@@ -387,22 +632,39 @@ const Page = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Col>
 
                   {/* Series */}
-                  <div className="col-span-1 text-center font-semibold text-lg">
-                    {coupon.series}
-                  </div>
+                  <Col xs={1} className="text-center">
+                    <span style={{ fontWeight: 600, fontSize: 18 }}>
+                      {response.data?.['series-prefix']}
+                    </span>
+                  </Col>
 
                   {/* Coupon ID or Editing UI */}
                   {editingCouponId === coupon.id ? (
-                    <div className="col-span-3 flex flex-col justify-center items-center">
-                      <div className="flex items-center gap-1 justify-center">
-                        <span className="font-bold text-lg text-gray-700">
-                          {response.data?.['series-prefix']}
+                    <Col
+                      xs={3}
+                      className="d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <div
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ gap: 4 }}
+                      >
+                        <span
+                          style={{
+                            fontWeight: 700,
+                            fontSize: 18,
+                            color: "#374151",
+                          }}
+                        >
+                          {response?.data?.["series-prefix"]}
                         </span>
-                        <span className="text-xl text-gray-700">-</span>
-                        {[...Array((response?.data?.numbers_per_ticket))].map((_, i) => (
+                        <span style={{ fontSize: 20, color: "#374151" }}>-</span>
+                        {Array.from(
+                          { length: response?.data?.numbers_per_ticket ?? 0 },
+                          (_, i) => i
+                        ).map((i) => (
                           <Fragment key={i}>
                             <DottedCircle
                               value={
@@ -413,61 +675,105 @@ const Page = () => {
                                   : ""
                               }
                             />
-                            {i < 5 && (
-                              <span className="text-xl text-gray-700">-</span>
-                            )}
+                            {i <
+                              (response?.data?.numbers_per_ticket ?? 0) - 1 && (
+                                <span style={{ fontSize: 20, color: "#374151" }}>
+                                  -
+                                </span>
+                              )}
                           </Fragment>
                         ))}
                       </div>
-
-                      <div className="mt-3 bg-white rounded-xl shadow border border-gray-200 px-4 py-3 w-[280px]">
-                        <div className="flex justify-end mb-1">
-                          <button
-                            className="text-gray-400 hover:text-gray-700"
-                            onClick={() => setEditingCouponId(null)}
-                            aria-label="Close number pad"
-                          >
-                            ×
-                          </button>
-                        </div>
-                        <div className="grid grid-cols-10 gap-4 text-xs">
-                          {Array.from(
-                            { length: response.data?.number_max - response.data?.number_min + 1 },
-                            (_, i) => response.data?.number_min + i
-                          ).map((num) => (
-                            <button
-                              key={num}
-                              onClick={() => handleNumberSelect(num)}
-                              // disabled={
-                              //   selectedNumbers.includes(num) ||
-                              //   selectedNumbers.length >= 6
-                              // }
-                              className={`w-6 h-6 rounded-full border font-medium 
-      bg-white text-gray-700 border-gray-200 hover:bg-gray-100
-    `}
+                      <Card
+                        style={{
+                          marginTop: 12,
+                          borderRadius: 12,
+                        }}
+                      >
+                        <Card.Body style={{ padding: 12 }}>
+                          <div className="d-flex justify-content-end mb-1">
+                            <Button
+                              variant="link"
+                              size="sm"
+                              onClick={() => setEditingCouponId(null)}
+                              aria-label="Close number pad"
+                              style={{ color: "#6c757d", textDecoration: "none" }}
                             >
-                              {num.toString().padStart(2, "0")}
-                            </button>
-                          ))}
-
-                        </div>
-                      </div>
-                    </div>
+                              ×
+                            </Button>
+                          </div>
+                          <div
+                            style={{
+                              display: "grid",
+                              gridTemplateColumns: "repeat(10, 1fr)",
+                              gap: 8,
+                              fontSize: 12,
+                            }}
+                          >
+                            {Array.from(
+                              {
+                                length:
+                                  (response?.data?.number_max ?? 0) -
+                                  (response?.data?.number_min ?? 0) +
+                                  1 || 0,
+                              },
+                              (_, i) =>
+                                (response?.data?.number_min ?? 0) + i
+                            ).map((num) => (
+                              <Button
+                                key={num}
+                                variant="outline-secondary2"
+                                size="sm"
+                                onClick={() => handleNumberSelect(num)}
+                                style={{
+                                  width: 28,
+                                  height: 28,
+                                  padding: 0,
+                                  borderColor: '#EA6B1E',
+                                  borderRadius: "9999px",
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {num.toString().padStart(2, "0")}
+                              </Button>
+                            ))}
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
                   ) : (
-                    <div className="col-span-3 text-center font-mono">
-                      <div className="flex items-center gap-2">
-                        <div className="flex gap-1 ml-1 items-center">
-                          <span className="font-semibold text-lg text-gray-700">
-                            {response.data?.['series-prefix']}
+                    <Col xs={3} className="text-center">
+                      <div className="d-flex align-items-center" style={{ gap: 8 }}>
+                        <div className="d-flex align-items-center" style={{ gap: 4, marginLeft: 4 }}>
+                          <span
+                            style={{
+                              fontWeight: 700,
+                              fontSize: 18,
+                              color: "#374151",
+                            }}
+                          >
+                            {response?.data?.["series-prefix"]}
                           </span>
-                          <span className="text-2xl text-gray-700">-</span>
+                          <span style={{ fontSize: 24, color: "#374151" }}>-</span>
                           {coupon.numbers.map((num, i) => (
                             <Fragment key={i}>
-                              <span className="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold">
+                              <span
+                                style={{
+                                  width: 24,
+                                  height: 24,
+                                  borderRadius: "9999px",
+                                  background: "#dc3545",
+                                  color: "#fff",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  fontSize: 12,
+                                }}
+                              >
                                 {num}
                               </span>
                               {i < coupon.numbers.length - 1 && (
-                                <span className="text-2xl text-gray-700">
+                                <span style={{ fontSize: 24, color: "#374151" }}>
                                   -
                                 </span>
                               )}
@@ -475,56 +781,85 @@ const Page = () => {
                           ))}
                         </div>
                       </div>
-                    </div>
+                    </Col>
                   )}
 
                   {/* Coupon Generation */}
-                  <div className="col-span-3 flex flex-col items-center">
+                  <Col xs={3} className="d-flex flex-column align-items-center">
                     {editingCouponId === coupon.id ? (
-                      <div className="flex flex-col items-center w-full">
-                        <button
-                          className={`w-28 mb-2 py-1 rounded-full font-semibold ${(selectedNumbers.length === response?.data?.numbers_per_ticket) && !saveLoading
-                            ? "bg-[#ea580c] text-white"
-                            : "bg-[#D9D9D9] text-white cursor-not-allowed"
-                            }`}
-                          disabled={(selectedNumbers.length !== response?.data?.numbers_per_ticket) || saveLoading}
+                      <div className="d-flex flex-column align-items-center w-100">
+                        <Button
+                          variant={
+                            selectedNumbers.length ===
+                              response?.data?.numbers_per_ticket && !saveLoading
+                              ? "warning"
+                              : "secondary"
+                          }
+                          disabled={
+                            selectedNumbers.length !==
+                            response?.data?.numbers_per_ticket || saveLoading
+                          }
                           onClick={handleSaveManualCoupon}
+                          style={{
+                            width: 112, marginBottom: 8, borderRadius: 9999, fontWeight: 700, background: (selectedNumbers.length ===
+                              response?.data?.numbers_per_ticket && !saveLoading) ? '#EA6B1E' : '', color: (selectedNumbers.length ===
+                                response?.data?.numbers_per_ticket && !saveLoading) ? '#fff' : ''
+                          }}
                         >
                           {saveLoading ? "Saving..." : "Save"}
-                        </button>
-                        <button
-                          className="w-28 mb-2 py-1 rounded-full font-semibold bg-transparent text-[#000000b0]"
-                          style={{ border: "1px solid #00000017" }}
+                        </Button>
+                        <Button
+                          variant="light"
                           onClick={() => setEditingCouponId(null)}
+                          style={{
+                            width: 112,
+                            marginBottom: 8,
+                            borderRadius: 9999,
+                            border: "1px solid #00000017",
+                            color: "#000000b0",
+                          }}
                         >
                           Cancel
-                        </button>
+                        </Button>
                       </div>
                     ) : (
-                      <u
-                        className="text-xs transition font-medium cursor-pointer"
+                      <Button
+                        variant="link1"
+                        style={{ fontSize: 12, fontWeight: 600, textDecoration: "underline", cursor: "pointer", color: '#3A3A3A' }}
                         onClick={() => handleManualGenerate(coupon.id)}
                       >
                         Edit &rsaquo;
-                      </u>
+                      </Button>
                     )}
-                  </div>
-                </div>
+                  </Col>
+                </Row>
               ))}
             </div>
           </div>
 
           {/* Checkout Fixed Footer */}
-          <div className="fixed bottom-0 left-0 w-full bg-orange-600 py-3 flex justify-center z-50">
-            <button
+          <div
+            className="fixed-bottom d-flex justify-content-center"
+            style={{ background: "#fd7e14", padding: "12px 0", zIndex: 1050 }}
+          >
+            <Button
               disabled={formattedTime === "00:00"}
               onClick={() => alert("Proceeding to checkout...")}
-              className="w-full max-w-4xl text-center text-white text-lg font-semibold"
+              variant="link"
+              style={{
+                width: "100%",
+                maxWidth: 768,
+                textAlign: "center",
+                color: "#fff",
+                fontSize: 18,
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
             >
               Proceed to Checkout &nbsp; &rarr;
-            </button>
+            </Button>
           </div>
-        </div>
+        </Container>
       )}
     </div>
   );
